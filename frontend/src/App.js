@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import axios from 'axios';
+import NavBar from './NavBar';
 import './App.css';
 
 class App extends Component {
@@ -11,23 +12,23 @@ class App extends Component {
     }
 
     UNSAFE_componentWillMount(){
-        fetch('http://localhost:5000/').then(response => {
-            return response.text();
-        }).then(data => {
-            this.setState({phrase: data});
-        })
+        axios.get('/hello')
+            .then(response => {
+                console.log(response);
+                this.setState({phrase: response.data});
+            });
+
+        axios.get('/analyze')
+            .then(response => {
+                console.log(response);
+            });
     }
 
     render() {
         return (
-            <div className="App">
-                <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <h1 className="App-title">Welcome to React</h1>
-                </header>
-                <p className="App-intro">
-                    {this.state.phrase}
-                </p>
+            <div>
+                <NavBar/>
+                {this.state.phrase}
             </div>
         );
   }
