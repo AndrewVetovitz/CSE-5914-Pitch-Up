@@ -45,14 +45,19 @@
             </nav>
 
             <main class="col-sm-9 ml-sm-auto col-md-10 pt-4" role="main">
+
                 <div class="row page-title-heading">
                     <div class="col-sm-10 col-xs-4 page-title-heading-title">
                         <h1>{{ title }}</h1>
                     </div>
                 </div>
-
+                
                 <!-- Content -->
-                {{ !base }}
+                <div class="row justify-content-center">
+                    <div class="col-xs-12 col-sm-12 col-md-9">
+                        {{ !base }}
+                    </div>
+                </div>
 
             </main>
         </div>
