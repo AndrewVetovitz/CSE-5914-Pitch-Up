@@ -29,8 +29,12 @@ def dashboard():
     return template('dashboard')
 
 @route('/recording')
-def recording():
+def recording(id):
     return template('recording')
+
+@route('/recording/<id>')
+def recording(id):
+    return template('recording_summary', data=id)
 
 @route('/analyzing')
 def analyzing():

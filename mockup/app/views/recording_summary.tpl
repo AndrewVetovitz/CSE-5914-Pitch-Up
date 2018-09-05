@@ -1,4 +1,4 @@
-% rebase('base.tpl', title='My Dashboard > Recording #1')
+% rebase('base.tpl', title='Recording Summary')
 
 <div>
 
