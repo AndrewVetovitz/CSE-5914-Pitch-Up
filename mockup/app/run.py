@@ -36,6 +36,10 @@ def recording():
 def analyzing():
     return template('analyzing')
 
+@route('/results')
+def results():
+    return template('results')
+
 
 
 # Run the application
