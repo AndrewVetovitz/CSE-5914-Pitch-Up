@@ -14,7 +14,10 @@
     <link href="/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/assets/css/custom/dashboard.css" rel="stylesheet">
     <link href="/assets/css/custom/app.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+
 </head>
 
 <body>
@@ -55,7 +58,6 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 
     <script>
         window.jQuery || document.write('<script src="assets/js/vendor/jquery.min.js"><\/script>')
@@ -64,39 +66,7 @@
     <script src="dist/js/bootstrap.min.js"></script> <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
 
-    <script type="text/javascript">
-        new Chart(document.getElementById("line-chart"), {
-            type: 'line',
-            data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September",
-                    "October", "November", "December"
-                ],
-                datasets: [{
-                    data: [45, 55, 68, 75, 77, 79, 81, 84, 78, 87, 90, 92],
-                    label: "John Smith",
-                    borderColor: "#c45850",
-                    fill: false
-                }]
-            },
-            options: {
-                legend: {
-                    display: false
-                },
-                title: {
-                    display: true,
-                    text: 'John Smith Scores'
-                },
-                scales: {
-                    yAxes: [{
-                        display: true,
-                        ticks: {
-                            suggestedMin: 20
-                        }
-                    }]
-                }
-            }
-        });
-    </script>
+    
 
 </body>
 </html>

@@ -79,3 +79,37 @@
   </div>
   
 </div>
+
+<script type="text/javascript">
+    new Chart(document.getElementById("line-chart"), {
+        type: 'line',
+        data: {
+            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+                "October", "November", "December"
+            ],
+            datasets: [{
+                data: [45, 55, 68, 75, 77, 79, 81, 84, 78, 87, 90, 92],
+                label: "John Smith",
+                borderColor: "#c45850",
+                fill: false
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            },
+            title: {
+                display: true,
+                text: 'John Smith Scores'
+            },
+            scales: {
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        suggestedMin: 20
+                    }
+                }]
+            }
+        }
+    });
+</script>
