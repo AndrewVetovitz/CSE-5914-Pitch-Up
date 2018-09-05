@@ -21,7 +21,9 @@
 
     <!-- Top Header -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">PitchUp</a> <button aria-controls="navbarsExampleDefault" aria-expanded="false"
+        <a class="navbar-brand" href="#">
+            <img src="/assets/img/pitchup-logo-flat-trans-sm.png" alt="PitchUp" style="max-height: 40px" />
+        </a> <button aria-controls="navbarsExampleDefault" aria-expanded="false"
             aria-label="Toggle navigation" class="navbar-toggler d-lg-none" data-target="#navbarsExampleDefault"
             data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
     </nav>
