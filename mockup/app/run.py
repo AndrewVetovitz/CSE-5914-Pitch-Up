@@ -20,16 +20,20 @@ def server_static(filepath):
     return static_file(filepath, root='dist/')
 
 # Add any routes manually here
+@route('/')
+def index():
+    return template('index')
+
 @route('/dashboard')
 def dashboard():
     return template('dashboard')
 
 @route('/recording')
-def dashboard():
+def recording():
     return template('recording')
 
 @route('/analyzing')
-def dashboard():
+def analyzing():
     return template('analyzing')
 
 
