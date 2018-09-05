@@ -36,12 +36,15 @@
             <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
                 <ul class="nav nav-pills flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" href="index.html">Sidebar Menu<span class="sr-only">(current)</span></a>
+                        <a class="nav-link active" href="/dashboard">My Pitch Summary<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Create New Pitch</a>
                     </li>
                 </ul>
             </nav>
 
-            <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
+            <main class="col-sm-9 ml-sm-auto col-md-10 pt-4" role="main">
                 <div class="row page-title-heading">
                     <div class="col-sm-10 col-xs-4 page-title-heading-title">
                         <h1>{{ title }}</h1>

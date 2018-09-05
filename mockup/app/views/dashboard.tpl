@@ -1,4 +1,4 @@
-% rebase('base.tpl', title='Dashboard')
+% rebase('base.tpl', title='My Pitch Summary')
 
 <div class="col-sm-8" style="margin-top: 20px;">
   
