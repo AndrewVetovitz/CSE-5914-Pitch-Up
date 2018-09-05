@@ -28,6 +28,10 @@ def dashboard():
 def dashboard():
     return template('recording')
 
+@route('/analyzing')
+def dashboard():
+    return template('analyzing')
+
 
 
 # Run the application

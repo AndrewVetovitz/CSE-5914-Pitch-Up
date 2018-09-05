@@ -41,7 +41,7 @@
             <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
                 <div class="row page-title-heading">
                     <div class="col-sm-10 col-xs-4 page-title-heading-title">
-                        <h1>My Dashboard</h1>
+                        <h1>{{ title }}</h1>
                     </div>
                 </div>
 
