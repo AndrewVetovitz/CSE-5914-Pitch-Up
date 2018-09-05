@@ -40,6 +40,10 @@ def analyzing():
 def results():
     return template('results')
 
+@route('/new')
+def results():
+    return template('new')
+
 
 
 # Run the application
