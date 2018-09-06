@@ -1,3 +1,8 @@
-% rebase('base.tpl', title='Now recording...')
+% rebase('base.tpl', title='Recording Studio')
 
-This template is for blaze.
+<div class="text-center">
+
+    <h3 id="recordingTimer"> <h3>
+    <a id="recordingButton" class="btn btn-primary btn-lg">Start Recording</a>
+    <div id="recordingVisual"></div>
+</div>
