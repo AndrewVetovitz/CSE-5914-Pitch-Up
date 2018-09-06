@@ -12,7 +12,7 @@ from bottle import route, run, template, static_file
 
 # Static files
 @route('/assets/<filepath:path>')
-def server_static(filepath):
+def assets_static(filepath):
     return static_file(filepath, root='assets/')
 
 @route('/dist/<filepath:path>')

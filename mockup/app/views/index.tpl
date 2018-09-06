@@ -9,6 +9,5 @@
         <h4>Start a <a href="/new">new recording</a>, <a href="/new">pitch</a>, or <a href="/dashboard">view your progress.</a></h4>
 
     </div>
-
-
+    
 </div>
