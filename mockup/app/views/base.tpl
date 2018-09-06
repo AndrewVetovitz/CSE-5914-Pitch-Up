@@ -39,7 +39,7 @@
                         <a class="nav-link" href="/dashboard">My Pitch Summary<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Create New Pitch</a>
+                        <a class="nav-link" href="/new_pitch">Create New Pitch</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/new">Practice a Pitch</a>

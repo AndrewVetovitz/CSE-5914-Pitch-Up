@@ -48,6 +48,10 @@ def results():
 def new():
     return template('new')
 
+@route('/new_pitch')
+def new_pitch():
+    return template('new_pitch')
+
 
 
 # Run the application
