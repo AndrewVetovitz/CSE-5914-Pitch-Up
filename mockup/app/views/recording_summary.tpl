@@ -7,7 +7,13 @@
     <h2>Audio Playback</h2>
     <div style="margin-top: 15px;">
         <audio controls>
-            <source src="music.mp3" type="audio/mpeg">
+            %if id == '1':
+                <source src="/assets/recording1.mp3" type="audio/mpeg">
+            %elif id == '2':
+                <source src="/assets/recording2.mp3" type="audio/mpeg">
+            %elif id == '3':
+                <source src="/assets/recording3.mp3" type="audio/mpeg">
+            %end
             Your browser does not support the audio element.
         </audio>
     </div>
@@ -21,14 +27,14 @@
         your time. I am looking for a software job and um wanted to get... To do some fun work.
         Thank you again. Bye.
     %elif id == '2':
-        Hi. My name is Andrew Vetovitz and this is my interview. I just wanted to say thank you for
+        Hi. My name is Andrew Vetovitz and this is um my interview. I just wanted to say thank you for
         your time. I am looking for a software engineering job. I really like your company.
         Thank you again. Bye.
     %elif id == '3':
-        Hi. My name is Andrew Vetovitz. I just wanted to say thank you for
-        your time. I am looking for a software engineering job. I find the work that your company to be
-        very interesting. It looks challenging is something that can help me grow as well as give your
-        company value. Thank you again for your time.
+        Hi. My name is Andrew Vetovitz. I just wanted to say thank you for your time. 
+        I am looking for a software engineering job. I find the work that your company 
+        does to be very interesting. It looks challenging and is something that can help me 
+        grow as well as give your company value.
     %end
 
     <br/>
@@ -73,7 +79,7 @@
         Words: 38
     %elif id == '3':
         Length: 90 seconds<br/>
-        Words: 58
+        Words: 54
     %end
 
     <br/>
