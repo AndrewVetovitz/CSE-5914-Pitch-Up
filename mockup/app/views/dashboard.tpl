@@ -16,19 +16,19 @@
           <td><input type="checkbox"></td>
           <td onclick="location.href='/recording_summary/1';">Recording #1</td>
           <td onclick="location.href='/recording_summary/1';">09-12-2018 08:30 PM</td>
-          <td onclick="location.href='/recording_summary/1';">78%</td>
+          <td onclick="location.href='/recording_summary/1';">56%</td>
       </tr>
       <tr class="table-row" style="cursor: pointer;">
         <td><input type="checkbox"></td>
         <td onclick="location.href='/recording_summary/2';">Recording #2</td>
         <td onclick="location.href='/recording_summary/2';">09-12-2018 07:30 PM</td>
-        <td onclick="location.href='/recording_summary/2';">70%</td>
+        <td onclick="location.href='/recording_summary/2';">82%</td>
       </tr>
       <tr class="table-row" style="cursor: pointer;">
         <td><input type="checkbox"></td>
         <td onclick="location.href='/recording_summary/3';">Recording #3</td>
         <td onclick="location.href='/recording_summary/3';">09-12-2018 08:30 PM</td>
-        <td onclick="location.href='/recording_summary/3';">20%</td>
+        <td onclick="location.href='/recording_summary/3';">88%</td>
       </tr>
     </tbody>
   </table>
@@ -69,7 +69,7 @@
                           <i class="fa fa-twitter fa-4x"></i>
                       </div>
                       <h6 class="text-uppercase">Average Score</h6>
-                      <h1 class="display-4">58</h1>
+                      <h1 class="display-4">75</h1>
                   </div>
               </div>
           </div>
