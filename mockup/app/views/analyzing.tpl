@@ -9,7 +9,7 @@
         </div>
         <h2 id="statustext" class="text-center text-info" style="display: none"></h2>
         <div id="results" style="display: none;">
-            <a class="btn btn-primary btn-lg" href="/results">See Results</a>
+            <a class="btn btn-primary btn-lg" href="/recording_summary/3">See Results</a>
         </div>
     
     </div>
@@ -21,9 +21,9 @@ $(document).ready(function() {
 
         var i = 0;
         var status_text = [
-            'Beginning Analyzing...',
+            'Beginning analysis...',
             'Almost there...',
-            'Complete.'
+            'Analysis complete.'
         ];
         var status_container = $('#statustext');
 
