@@ -10,8 +10,18 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.get('*', (req, res) => {
+app.get('/hello', (req, res) => {
     res.send('hello');
+});
+
+app.get('/analyze', (req, res) => {
+    const response =
+        {
+            "bad": 3,
+            "good": 5
+        };
+
+    res.send(response);
 });
 
 app.listen(port, () => {

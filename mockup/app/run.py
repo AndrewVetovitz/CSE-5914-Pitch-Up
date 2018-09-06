@@ -32,9 +32,9 @@ def dashboard():
 def recording():
     return template('recording')
 
-@route('/recording/<id>')
-def recording(id):
-    return template('recording_summary', data=id)
+@route('/recording_summary/<id>')
+def recording_summary(id):
+    return template('recording_summary', id=id)
 
 @route('/analyzing')
 def analyzing():
@@ -45,7 +45,7 @@ def results():
     return template('results')
 
 @route('/new')
-def results():
+def new():
     return template('new')
 
 

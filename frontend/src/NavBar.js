@@ -18,7 +18,7 @@ function NavBar(props) {
       <AppBar position="static" color="default">
         <Toolbar>
           <Typography variant="title" color="inherit">
-            Photos
+            Pitch Up
           </Typography>
         </Toolbar>
       </AppBar>

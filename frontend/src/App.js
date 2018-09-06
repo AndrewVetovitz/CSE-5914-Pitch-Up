@@ -4,14 +4,14 @@ import NavBar from './NavBar';
 import './App.css';
 
 class App extends Component {
-    constructor(){
+    constructor() {
         super();
         this.state = {
             phrase: ''
         };
     }
 
-    UNSAFE_componentWillMount(){
+    UNSAFE_componentWillMount() {
         axios.get('/hello')
             .then(response => {
                 console.log(response);
@@ -31,7 +31,7 @@ class App extends Component {
                 {this.state.phrase}
             </div>
         );
-  }
+    }
 }
 
 export default App;

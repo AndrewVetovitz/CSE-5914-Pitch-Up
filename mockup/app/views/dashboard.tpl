@@ -14,21 +14,21 @@
     <tbody>
       <tr class="table-row" style="cursor: pointer;">
           <td><input type="checkbox"></td>
-          <td onclick="location.href='/recording';">Recording #1</td>
-          <td onclick="location.href='/recording';">09-12-2018 08:30 PM</td>
-          <td onclick="location.href='/recording';">78%</td>
+          <td onclick="location.href='/recording_summary/1';">Recording #1</td>
+          <td onclick="location.href='/recording_summary/1';">09-12-2018 08:30 PM</td>
+          <td onclick="location.href='/recording_summary/1';">78%</td>
       </tr>
       <tr class="table-row" style="cursor: pointer;">
         <td><input type="checkbox"></td>
-        <td onclick="location.href='/recording';">Recording #2</td>
-        <td onclick="location.href='/recording';">09-12-2018 07:30 PM</td>
-        <td onclick="location.href='/recording';">70%</td>
+        <td onclick="location.href='/recording_summary/2';">Recording #2</td>
+        <td onclick="location.href='/recording_summary/2';">09-12-2018 07:30 PM</td>
+        <td onclick="location.href='/recording_summary/2';">70%</td>
       </tr>
       <tr class="table-row" style="cursor: pointer;">
         <td><input type="checkbox"></td>
-        <td onclick="location.href='/recording';">Recording #3</td>
-        <td onclick="location.href='/recording';">09-12-2018 08:30 PM</td>
-        <td onclick="location.href='/recording';">20%</td>
+        <td onclick="location.href='/recording_summary/3';">Recording #3</td>
+        <td onclick="location.href='/recording_summary/3';">09-12-2018 08:30 PM</td>
+        <td onclick="location.href='/recording_summary/3';">20%</td>
       </tr>
     </tbody>
   </table>
