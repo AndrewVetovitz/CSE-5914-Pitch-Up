@@ -46,7 +46,11 @@ def results():
 
 @route('/new')
 def new():
-    return template('new')
+    return template('recording')
+
+@route('/new_pitch')
+def new_pitch():
+    return template('new_pitch')
 
 
 
