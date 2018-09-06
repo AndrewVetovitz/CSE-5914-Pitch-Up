@@ -75,4 +75,17 @@
         Length: 90 seconds<br/>
         Words: 58
     %end
+
+    <br/>
+    <br/>
+
+    <h2>Score: 
+    %if id == '1':
+        56
+    %elif id == '2':
+        82
+    %elif id == '3':
+        88
+    %end
+    </h2>
 </div>
