@@ -1,5 +1,6 @@
 from flask import Flask
 from controllers.user import user_blueprint
+from controllers.reports import report_blueprint
 
 app = Flask(__name__)
 
