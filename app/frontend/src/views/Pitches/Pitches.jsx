@@ -39,7 +39,7 @@ const styles = {
   }
 };
 
-function TableList(props) {
+function Pitches(props) {
   const { classes } = props;
   return (
     <GridContainer>
@@ -109,4 +109,4 @@ function TableList(props) {
   );
 }
 
-export default withStyles(styles)(TableList);
+export default withStyles(styles)(Pitches);
