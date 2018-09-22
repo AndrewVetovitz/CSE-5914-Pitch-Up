@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 
 from app.database import db
+
 
 class User(db.Model):
 
@@ -12,8 +13,8 @@ class User(db.Model):
     password = Column(String)
 
     def __repr__(self):
-        return "<User(name='%s', fullname='%s', email='%s', password='%s')>" % (
-                self.name, self.fullname, self.email, self.password
+        return "<User(Id: {}, Name: {}, Email: {}')>".format(
+                str(self.id), self.name, self.email
             )
 
 
@@ -26,4 +27,24 @@ class Pitch(db.Model):
     name = Column(String)
     
     def __repr__(self):
-        return "<Pitch(Id: '%s', Name: '%s')>" % (str(id), self.name)
+        return "<Pitch(Id: {}, Name: {})>".format(
+            str(self.id), self.name
+            )
+
+
+class PitchTry(db.Model):
+
+    __tablename__ = 'pitch_tries'
+
+    id = Column(Integer, primary_key=True)
+    pitch_id = Column(Integer, ForeignKey('pitches.id'))
+    date = Column(DateTime)
+    total_words = Column(Integer)
+    
+    
+    def __repr__(self):
+        return "<PitchTry(Id: {}, PitchId: {})>".format(
+            str(self.id), self.name
+            )
+
+
