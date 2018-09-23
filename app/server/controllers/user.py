@@ -11,3 +11,5 @@ def loginUser():
 @user_blueprint.route('/<user>')
 def getUser(user):
     return user + '!!!!!!'
+
+

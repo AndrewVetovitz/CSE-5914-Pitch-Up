@@ -1,8 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
-
-Base = declarative_base()
+from models import Base
 
 class User(Base):
     __tablename__ = 'users'
@@ -11,7 +8,6 @@ class User(Base):
     name = Column(String)
     email = Column(String)
     password = Column(String)
-    document = relationship("Report")
 
     def __repr__(self):
         return "<User(name='%s', fullname='%s', email='%s', password='%s')>" % (
