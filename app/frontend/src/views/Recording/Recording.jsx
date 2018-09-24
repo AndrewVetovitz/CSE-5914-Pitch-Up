@@ -12,6 +12,7 @@ import Danger from "components/Typography/Danger.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+import Button from "components/CustomButtons/Button.jsx"
 
 const style = {
   typo: {
@@ -49,110 +50,85 @@ const style = {
     textDecoration: "none"
   }
 };
-function RecordingStudio(props) {
-  const { classes } = props;
-  return (
-    <Card>
-      <CardHeader color="primary">
-        <h4 className={classes.cardTitleWhite}>Material Dashboard Heading</h4>
-        <p className={classes.cardCategoryWhite}>
-          Created using Roboto Font Family
-        </p>
-      </CardHeader>
-      <CardBody>
-        <div className={classes.typo}>
-          <div className={classes.note}>Header 1</div>
-          <h1>The Life of Material Dashboard</h1>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Header 2</div>
-          <h2>The Life of Material Dashboard</h2>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Header 3</div>
-          <h3>The Life of Material Dashboard</h3>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Header 4</div>
-          <h4>The Life of Material Dashboard</h4>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Header 5</div>
-          <h5>The Life of Material Dashboard</h5>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Header 6</div>
-          <h6>The Life of Material Dashboard</h6>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Paragraph</div>
-          <p>
-            I will be the leader of a company that ends up being worth billions
-            of dollars, because I got the answers. I understand culture. I am
-            the nucleus. I think that’s a responsibility that I have, to push
-            possibilities, to show people, this is the level that things could
-            be at.
+class RecordingStudio extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      finalTranscript: [],
+      interimResult: '',
+      recording: false,
+      currentPitch: "Kitten Mittenz",
+    }
+    const BrowserSpeechRecognition =
+      typeof window !== 'undefined' &&
+      (window.SpeechRecognition ||
+        window.webkitSpeechRecognition ||
+        window.mozSpeechRecognition ||
+        window.msSpeechRecognition ||
+        window.oSpeechRecognition)
+    
+    this.recognition = new BrowserSpeechRecognition();
+    this.recognition.continuous = true
+    this.recognition.interimResults = true
+    this.recognition.onresult = (event) => {
+      var {finalTranscript} = this.state;
+      var interimResult = ''
+      console.log(event)
+      for(var i = event.resultIndex; i < event.results.length; i++){
+        if(event.results[i].isFinal){
+          finalTranscript.push(event.results[i][0].transcript)
+        } else {
+          interimResult += event.results[i][0].transcript
+        }
+      }
+      console.log(interimResult)
+      this.setState({
+        finalTranscript: finalTranscript,
+        interimResult: interimResult
+      })
+    }
+  }
+
+  toggleRecording() {
+    this.setState({
+      recording: !this.state.recording
+    }, () => {
+      if(this.state.recording){
+        this.recognition.start()
+      } else {
+        this.recognition.stop()
+      }
+    })
+  }
+
+
+  render() {
+    const { classes } = this.props;
+    return (
+      <Card>
+        <CardHeader color="primary">
+          <h4 className={classes.cardTitleWhite}>Welcome to the Recording Studio!</h4>
+          <p className={classes.cardCategoryWhite}>
+            Currently recording pitch for <b>{this.state.currentPitch}</b>
           </p>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Quote</div>
-          <Quote
-            text="I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus. I think that’s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at."
-            author=" Kanye West, Musician"
-          />
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Muted Text</div>
-          <Muted>
-            I will be the leader of a company that ends up being worth billions
-            of dollars, because I got the answers...
-          </Muted>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Primary Text</div>
-          <Primary>
-            I will be the leader of a company that ends up being worth billions
-            of dollars, because I got the answers...
-          </Primary>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Info Text</div>
-          <Info>
-            I will be the leader of a company that ends up being worth billions
-            of dollars, because I got the answers...
-          </Info>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Success Text</div>
-          <Success>
-            I will be the leader of a company that ends up being worth billions
-            of dollars, because I got the answers...
-          </Success>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Warning Text</div>
-          <Warning>
-            I will be the leader of a company that ends up being worth billions
-            of dollars, because I got the answers...
-          </Warning>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Danger Text</div>
-          <Danger>
-            I will be the leader of a company that ends up being worth billions
-            of dollars, because I got the answers...
-          </Danger>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Small Tag</div>
-          <h2>
-            Header with small subtitle<br />
-            <small>Use "Small" tag for the headers</small>
-          </h2>
-        </div>
-      </CardBody>
-    </Card>
-  );
+        </CardHeader>
+        <CardBody style={{height: '600px', display: 'flex', flexDirection: 'column'}}>
+          <h3> Ready to start Recording? </h3>
+          <div style={{alignSelf: 'center'}}>
+            <Button onClick={this.toggleRecording.bind(this)}> {!this.state.recording ? "Start Recording": "Stop Recording"} </Button>
+            <div style={{color: 'grey', height: '80px'}}> {this.state.interimResult}</div>
+            <div>
+              {this.state.finalTranscript.map((line, index) => (
+                <div key={index}> {line} </div>
+              )
+              )}
+            </div>
+          </div>
+        </CardBody>
+      </Card>
+    );
+  
+  }
 }
 
 export default withStyles(style)(RecordingStudio);
