@@ -1,7 +1,10 @@
 import os
-from os.path import join, dirname
+from os.path import join
+from os.path import dirname
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from authlib.flask.client import OAuth
+from six.moves.urllib.parse import urlencode
 
 from controllers.user import user_blueprint
 from controllers.report import report_blueprint
@@ -10,7 +13,7 @@ from controllers.watson.speech_to_text import SpeechToText
 from controllers.watson.discovery import Discovery
 from controllers.watson.tone_analyzer import ToneAnalyzer
 
-from helpers.authentication import AuthError
+from helpers.authenticate import AuthError
 
 app = Flask(__name__)
 
@@ -26,6 +29,7 @@ def handle_auth_error(ex):
 # db = SQLAlchemy(app)
 
 app.register_blueprint(user_blueprint)
+app.register_blueprint(report_blueprint)
 
 def test():
     '''TEST CODE START'''

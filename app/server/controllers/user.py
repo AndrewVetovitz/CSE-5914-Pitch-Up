@@ -1,16 +1,16 @@
-from flask import Blueprint, request
+from flask import Blueprint
+from six.moves.urllib.parse import urlencode
+
 user_blueprint = Blueprint('user', __name__, template_folder=None)
 
-from helpers.authentication import requires_auth
-
-@user_blueprint.route('/login')
-def loginUser():
-    email  = request.args.get('email', None)
-    password  = request.args.get('password', None)
-
-    return email + ' ' + password
+from helpers.authenticate import requires_auth
 
 @user_blueprint.route('/<user>')
 @requires_auth
 def getUser(user):
-    return user + '!!!!!!'
+    # Get user info here
+    return user
+
+@requires_auth
+def upload(user, info):
+    pass
