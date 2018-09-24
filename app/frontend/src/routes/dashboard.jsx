@@ -15,18 +15,18 @@ import RecordingPage from "views/Recording/Recording.jsx";
 
 const dashboardRoutes = [
   {
-    path: "/dashboard",
-    sidebarName: "Dashboard",
-    navbarName: "Material Dashboard",
-    icon: Dashboard,
-    component: DashboardPage
-  },
-  {
     path: "/user",
     sidebarName: "User Profile",
     navbarName: "Profile",
     icon: Person,
     component: UserProfile
+  },
+  {
+    path: "/recording",
+    sidebarName: "Recording Studio",
+    navbarName: "Recording Studio",
+    icon: LibraryBooks,
+    component: RecordingPage
   },
   {
     path: "/pitches",
@@ -36,11 +36,11 @@ const dashboardRoutes = [
     component: PitchesPage
   },
   {
-    path: "/recording",
-    sidebarName: "Recording Studio",
-    navbarName: "Recording Studio",
-    icon: LibraryBooks,
-    component: RecordingPage
+    path: "/dashboard",
+    sidebarName: "Pitch Results",
+    navbarName: "Material Dashboard",
+    icon: Dashboard,
+    component: DashboardPage
   },
   { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
 ];
