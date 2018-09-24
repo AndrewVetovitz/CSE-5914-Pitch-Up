@@ -1,40 +1,54 @@
 import os
 from os.path import join, dirname
-from flask import Flask
+from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 from controllers.user import user_blueprint
 from controllers.report import report_blueprint
 
-# SQLITE_DB_LOCATION = 'sqlite:///db/test.db'
-
 from controllers.watson.speech_to_text import SpeechToText
 from controllers.watson.discovery import Discovery
 from controllers.watson.tone_analyzer import ToneAnalyzer
 
+from helpers.authentication import AuthError
+
 app = Flask(__name__)
+
+@app.errorhandler(AuthError)
+def handle_auth_error(ex):
+    response = jsonify(ex.error)
+    response.status_code = ex.status_code
+    return response
+
+# SQLITE_DB_LOCATION = 'sqlite:///db/test.db'
+
 # app.config['SQLALCHEMY_DATABASE_URI'] = SQLITE_DB_LOCATION
 # db = SQLAlchemy(app)
 
 app.register_blueprint(user_blueprint)
 
-# speechToText = SpeechToText()
+def test():
+    '''TEST CODE START'''
+    # speechToText = SpeechToText()
 
-# audio_file = open(join(dirname(__file__), 'audio/1/1/recording1.mp3'), 'rb')
+    # audio_file = open(join(dirname(__file__), 'audio/1/1/recording1.mp3'), 'rb')
 
-# speechToText.translateSpeech(audio_file)
+    # speechToText.translateSpeech(audio_file)
 
-# print('finished')
+    # print('finished')
 
-# audio_file.close()
+    # audio_file.close()
 
-# discovery = Discovery()
+    # discovery = Discovery()
 
-# discovery.createCollection('0', '0', 'test', 'test collection', 'en')
+    # discovery.createCollection('0', '0', 'test', 'test collection', 'en')
 
-tone = ToneAnalyzer()
+    # tone = ToneAnalyzer()
 
-tone.analyzeTone('Hi my name is Andrew. I love life a lot. Life is great!')
+    # tone.analyzeTone('Hi my name is Andrew. I love life a lot. Life is great!')
+    # '''TEST CODE END'''
+
+test()
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
