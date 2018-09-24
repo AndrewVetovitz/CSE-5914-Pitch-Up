@@ -17,6 +17,8 @@ from helpers.authenticate import AuthError
 
 app = Flask(__name__)
 
+app.config["UPLOAD_FOLDER"] = os.getenv("UPLOAD_FOLDER")
+
 @app.errorhandler(AuthError)
 def handle_auth_error(ex):
     response = jsonify(ex.error)
