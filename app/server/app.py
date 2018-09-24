@@ -52,7 +52,7 @@ def test():
     # tone = ToneAnalyzer()
 
     # tone.analyzeTone('Hi my name is Andrew. I love life a lot. Life is great!')
-    # '''TEST CODE END'''
+    '''TEST CODE END'''
 
 test()
 
