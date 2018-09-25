@@ -6,6 +6,9 @@ from flask_sqlalchemy import SQLAlchemy
 from authlib.flask.client import OAuth
 from six.moves.urllib.parse import urlencode
 
+from database import db
+from config import SQLITE_DB_LOCATION
+
 from controllers.user import user_blueprint
 from controllers.report import report_blueprint
 
@@ -15,46 +18,36 @@ from controllers.watson.tone_analyzer import ToneAnalyzer
 
 from helpers.authenticate import AuthError
 
-app = Flask(__name__)
+################################################################################
+# Application driver
+#
+#   To run application from shell: python app.py
+#
+################################################################################
 
-app.config["UPLOAD_FOLDER"] = os.getenv("UPLOAD_FOLDER")
+from flask import Flask
 
-@app.errorhandler(AuthError)
-def handle_auth_error(ex):
-    response = jsonify(ex.error)
-    response.status_code = ex.status_code
-    return response
+def create_app():
+    app = Flask(__name__)
 
-# SQLITE_DB_LOCATION = 'sqlite:///db/test.db'
+    app.config["UPLOAD_FOLDER"] = os.getenv("UPLOAD_FOLDER")
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = SQLITE_DB_LOCATION
-# db = SQLAlchemy(app)
+    @app.errorhandler(AuthError)
+    def handle_auth_error(ex):
+        response = jsonify(ex.error)
+        response.status_code = ex.status_code
+        return response
 
-app.register_blueprint(user_blueprint)
-app.register_blueprint(report_blueprint)
+    # Database
+    app.config['SQLALCHEMY_DATABASE_URI'] = SQLITE_DB_LOCATION
+    db.init_app(app)
 
-def test():
-    '''TEST CODE START'''
-    # speechToText = SpeechToText()
+    # Views/Blueprints
+    app.register_blueprint(user_blueprint)
+    # app.register_blueprint(pitch_)
 
-    # audio_file = open(join(dirname(__file__), 'audio/1/1/recording1.mp3'), 'rb')
-
-    # speechToText.translateSpeech(audio_file)
-
-    # print('finished')
-
-    # audio_file.close()
-
-    # discovery = Discovery()
-
-    # discovery.createCollection('0', '0', 'test', 'test collection', 'en')
-
-    # tone = ToneAnalyzer()
-
-    # tone.analyzeTone('Hi my name is Andrew. I love life a lot. Life is great!')
-    '''TEST CODE END'''
-
-test()
+    return app
 
 if __name__ == "__main__":
+    app = create_app()
     app.run(debug=True, port=5000)

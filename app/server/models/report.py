@@ -1,9 +1,7 @@
 from sqlalchemy import Column, Integer, Date, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
+from database import db
 
-Base = declarative_base()
-
-class Report(Base):
+class Report(db.Model):
     __tablename__ = 'reports'
 
     id = Column(Integer, primary_key=True)

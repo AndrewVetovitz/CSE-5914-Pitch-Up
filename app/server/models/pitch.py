@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
-from models import Base
+from database import db
 
-class Pitch(Base):
+class Pitch(db.Model):
     __tablename__ = 'pitches'
 
     id = Column(Integer, primary_key=True)
@@ -9,4 +9,4 @@ class Pitch(Base):
     name = Column(String)
     
     def __repr__(self):
-        return "<Pitch(Id: '%s', Name: '%s')>" % (str(id), self.name)
+        return "<Pitch(Id: '%s', Name: '%s')>" % (str(self.id), self.name)

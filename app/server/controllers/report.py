@@ -1,4 +1,7 @@
 from flask import Blueprint, request
+
+from database import db
+
 report_blueprint = Blueprint('report', __name__, template_folder=None)
 
 @report_blueprint.route('/report/<id>')
