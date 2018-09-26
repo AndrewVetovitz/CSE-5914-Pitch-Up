@@ -12,6 +12,8 @@ import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import UserProfile from "views/UserProfile/UserProfile.jsx";
 import PitchesPage from "views/Pitches/Pitches.jsx";
 import RecordingPage from "views/Recording/Recording.jsx";
+import Pitch from "views/Pitch/Pitch.jsx"
+
 
 const dashboardRoutes = [
   {
@@ -42,7 +44,7 @@ const dashboardRoutes = [
     icon: Dashboard,
     component: DashboardPage
   },
-  { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
+  {path:"/pitch", component: Pitch, invisible: true}
 ];
 
 export default dashboardRoutes;
