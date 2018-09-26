@@ -101,9 +101,14 @@ class RecordingStudio extends React.Component {
     })
   }
 
+  analyzePitch() {
+
+  }
+
 
   render() {
     const { classes } = this.props;
+    const transcriptAvailable = (this.state.finalTranscript.length > 0)
     return (
       <Card>
         <CardHeader color="primary">
@@ -123,6 +128,11 @@ class RecordingStudio extends React.Component {
               )
               )}
             </div>
+          </div>
+          <div style={{alignSelf: ''}}>
+              {
+                transcriptAvailable && !this.state.recording ? <Button onClick={this.analyzePitch.bind(this)}> Analyze Pitch Attempt </Button> : null
+              }
           </div>
         </CardBody>
       </Card>
