@@ -4,9 +4,11 @@
 ################################################################################
 
 from database import db
-import models
+from models.pitch import Pitch
+from models.pitch_try import PitchTry
+from models.user import User
 
-from app import create_app
+from run import create_app
 
 flask_app = create_app()
 flask_app.app_context().push()

@@ -2,10 +2,10 @@ import os
 from flask import Blueprint, request, current_app
 from six.moves.urllib.parse import urlencode
 
+from config import FILESTORE_USER_DOCUMENT_TEMPLATE
+
 from models.user import User
 from models.pitch import Pitch
-
-from config import FILESTORE_USER_DOCUMENT_TEMPLATE
 
 from database import db
 
@@ -62,7 +62,7 @@ def add_pitch(single_id):
 
     try:
         # Make sure user exists
-        user = User.query.filter_by(id=single_id)
+        user = User.query.filter_by(id=single_id).first()
 
         if user:
             # Get args and provide defaults
@@ -82,6 +82,7 @@ def add_pitch(single_id):
                 print(pitch)
 
                 return str(pitch.id)
+
             else:
                 return 'pitch not created'
         else:

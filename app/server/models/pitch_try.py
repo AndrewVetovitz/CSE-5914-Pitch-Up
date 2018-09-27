@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Boolean
 from database import db
 
 class PitchTry(db.Model):
@@ -7,9 +7,10 @@ class PitchTry(db.Model):
     id = Column(Integer, primary_key=True)
     pitch_id = Column(Integer, ForeignKey('pitches.id'))
     date = Column(DateTime)
-    total_words = Column(Integer)
-    
+    is_analyzed = Column(Boolean, default = False)
+    duration = Column(Integer)
+    transcription = Column(String)
     
     def __repr__(self):
-        return "<PitchTry(Id: '%s', PitchId: '%s')>" % (str(self.id), self.name)
+        return "<PitchTry(Id: '{}')>".format(str(self.id))
     
