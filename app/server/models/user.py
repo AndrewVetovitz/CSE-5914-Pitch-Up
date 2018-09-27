@@ -10,6 +10,4 @@ class User(db.Model):
     password = Column(String)
 
     def __repr__(self):
-        return "<User(name='%s', fullname='%s', email='%s', password='%s')>" % (
-                self.name, self.fullname, self.email, self.password
-            )
+        return "<User(Id: '{}', Name: '{}', Email: '{}')>".format(self.id, self.name, self.email)

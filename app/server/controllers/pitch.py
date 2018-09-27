@@ -5,7 +5,6 @@ from flask import Blueprint, render_template, jsonify, request
 from database import db
 from models.pitch import Pitch
 from models.pitch_try import PitchTry
-from helpers.analysis import analyze_pitch_try
 
 
 pitch_blueprint = Blueprint('pitch', __name__, url_prefix='/pitch')
@@ -31,7 +30,6 @@ def new_pitch_try(pitch_id):
 
             # Get args and provide defaults
             inc_data = request.json
-            timestamp = datetime.now()
             transcription = inc_data.get('transcription', '')
             duration = inc_data.get('pitch_duration', 0)
 
@@ -41,7 +39,6 @@ def new_pitch_try(pitch_id):
             # Create pitch try and analyze
             pitch_try = PitchTry(
                 pitch_id = pitch.id,
-                date = timestamp,
                 transcription = transcription,
                 duration = duration
             )
