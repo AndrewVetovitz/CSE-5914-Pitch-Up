@@ -44,11 +44,12 @@ def new_pitch_try(pitch_id):
                 date = timestamp,
                 transcription = transcription,
                 duration = duration
-            )           
+            )
+            
 
             if pitch_try:
 
-                analyze_pitch_try(pitch_try)  
+                pitch_try.analyze()
 
                 db.session.add(pitch_try)
                 db.session.commit()

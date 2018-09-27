@@ -1,10 +1,10 @@
 import os
-from os.path import join
-from os.path import dirname
+from os.path import join, dirname
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from authlib.flask.client import OAuth
 from six.moves.urllib.parse import urlencode
+from flask_cors import CORS
 
 from database import db
 from config import SQLITE_DB_LOCATION
@@ -42,6 +42,9 @@ def create_app():
     # Views/Blueprints
     app.register_blueprint(user_blueprint)
     app.register_blueprint(pitch_blueprint)
+    
+    # CORS
+    CORS(app)
 
     return app
 
