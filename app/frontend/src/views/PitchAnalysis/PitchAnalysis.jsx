@@ -42,7 +42,15 @@ import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardS
 class PitchAnalysis extends React.Component {
   state = {
     transcript: '',
-    value: 0
+    duration: 0,
+    pitch_try: {
+      analysis_concepts: {},
+      analysis_words: {
+        stop_words: '',
+        explitives: ''
+      },
+      transcription: null
+    }
   };
   componentDidMount() {
     const pitch_attempt_id = this.props.location.hash.split('#')[1]
@@ -52,12 +60,26 @@ class PitchAnalysis extends React.Component {
         transcript: localStorage.getItem('pitch_transcription'),
         num_ums: 0,
         num_explict: 0,
+        pitch_try: {
+          analysis_concepts: {},
+          analysis_words: {
+            stop_words: '',
+            explitives: ''
+          },
+          transcription: null
+        }    
       })
     } else {
-
+      fetch('http://localhost:5000/pitch_try/' + pitch_attempt_id).then((resp) => resp.json()).then((json) => {
+        this.setState({
+          pitch_try: json
+        })
+      })
     }
-    console.log('Pitch Attempt Id')
-    console.log(pitch_attempt_id)
+    this.setState({
+      transcript: localStorage.getItem('pitch_transcription'),
+      duration: localStorage.getItem('pitch_duration')
+    })
   }
   handleChange = (event, value) => {
     this.setState({ value });
@@ -68,6 +90,9 @@ class PitchAnalysis extends React.Component {
   };
   render() {
     const { classes } = this.props;
+    var pitch_try = this.state.pitch_try
+    pitch_try.duration = this.state.duration
+    console.log(pitch_try)
     return (
       <div>
         <GridContainer>
@@ -77,9 +102,9 @@ class PitchAnalysis extends React.Component {
                 <CardIcon color="warning">
                   <Icon>content_copy</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory}>Number of Ummmms</p>
+                <p className={classes.cardCategory}>Number of Stop Words</p>
                 <h3 className={classes.cardTitle}>
-                  4 <small>Umms</small>
+                1337
                 </h3>
               </CardHeader>
               <CardFooter stats>
@@ -94,9 +119,26 @@ class PitchAnalysis extends React.Component {
                 <CardIcon color="danger">
                   <Icon>warning</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory}>Number of Explicatives</p>
+                <p className={classes.cardCategory}>Number of Expletives </p>
                 <h3 className={classes.cardTitle}>
-                  4 <small>FUCKS</small>
+                  1337 <small>curses</small>
+                </h3>
+              </CardHeader>
+              <CardFooter stats>
+                <div className={classes.stats}>
+                </div>
+              </CardFooter>
+            </Card>
+          </GridItem>
+          <GridItem xs={12} sm={6} md={3}>
+            <Card>
+              <CardHeader color="success" stats icon>
+                <CardIcon color="success">
+                  <Icon>watch_later</Icon>
+                </CardIcon>
+                <p className={classes.cardCategory}>Pitch Duration</p>
+                <h3 className={classes.cardTitle}>
+                  {this.state.duration} <small>sec</small>
                 </h3>
               </CardHeader>
               <CardFooter stats>
@@ -118,6 +160,21 @@ class PitchAnalysis extends React.Component {
               <CardBody>
                 <p> 
                 {this.state.transcript}
+                </p>
+              </CardBody>
+            </Card>
+          </GridItem>
+          <GridItem xs={12} sm={12} md={6}>
+            <Card>
+              <CardHeader color="warning">
+                <h4 className={classes.cardTitleWhite}>Raw JSON</h4>
+                <p className={classes.cardCategoryWhite}>
+                  Raw analysis from our model
+               </p>
+              </CardHeader>
+              <CardBody>
+                <p> 
+                  {JSON.stringify(pitch_try, null, 4)}
                 </p>
               </CardBody>
             </Card>

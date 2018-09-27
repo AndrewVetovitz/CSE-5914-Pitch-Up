@@ -112,9 +112,10 @@ class RecordingStudio extends React.Component {
 
   analyzePitch() {
     let transcript = this.state.finalTranscript.reduce((acum, curr) => acum + ' ' + curr, '')
-    let duration = this.state.time * 1000
-    console.log(transcript)
-    console.log(duration)
+    let duration = this.state.time
+    localStorage.setItem('pitch_transcription', transcript)
+    localStorage.setItem('pitch_duration', duration)
+
     fetch('http://localhost:5000/pitch/1/new_try', {
       method: 'POST',
       headers: {
@@ -125,11 +126,10 @@ class RecordingStudio extends React.Component {
       if(!resp.ok){
         throw Error("ruh roh")
       }
-      return resp.text()
-    }).then((txt) => {
-      this.props.history.push('/pitch_analysis#' + txt)
+      return resp.json()
+    }).then((json) => {
+      this.props.history.push('/pitch_analysis#' + json.pitch_try_id)
     }).catch((err) => {
-      localStorage.setItem('pitch_transcription', 'look at me dipshit')
       this.props.history.push('/pitch_analysis#13371337')
     })
   }
