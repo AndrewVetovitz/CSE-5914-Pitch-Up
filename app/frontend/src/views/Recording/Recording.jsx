@@ -1,4 +1,6 @@
 import React from "react";
+import {withRouter} from 'react-router-dom'
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // core components
@@ -58,6 +60,7 @@ class RecordingStudio extends React.Component {
       interimResult: '',
       recording: false,
       currentPitch: "Kitten Mittenz",
+      time: 0
     }
     const BrowserSpeechRecognition =
       typeof window !== 'undefined' &&
@@ -94,15 +97,48 @@ class RecordingStudio extends React.Component {
       recording: !this.state.recording
     }, () => {
       if(this.state.recording){
-        this.recognition.start()
+        this.setState({
+          finalTranscript: []
+        }, () => {
+          this.recognition.start()
+          this.startTimer()  
+        })
       } else {
         this.recognition.stop()
+        this.stopTimer()
       }
     })
   }
 
   analyzePitch() {
+    let transcript = this.state.finalTranscript.reduce((acum, curr) => acum + ' ' + curr)
+    let duration = this.state.time * 1000
+    console.log(transcript)
+    console.log(duration)
+    fetch('http://localhost:5000/pitch/1/new_try', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }, 
+      body: JSON.stringify({transcription: transcript, duration: duration})
+    }).then((resp) => resp.text()).then((txt) => {
+      this.props.history.push('/pitch_analysis#' + txt)
+    })
+  }
 
+  startTimer() {
+    this.startTime = Date.now()
+    this.timer = setInterval(() => {
+      this.setState({
+        time: ((Date.now() - this.startTime) / 1000).toFixed(2)
+      })
+    }, 16.6)
+  }
+
+  stopTimer() {
+    if(this.timer){
+      clearInterval(this.timer)
+    }
   }
 
 
@@ -119,9 +155,10 @@ class RecordingStudio extends React.Component {
         </CardHeader>
         <CardBody style={{height: '600px', display: 'flex', flexDirection: 'column'}}>
           <h3> Ready to start Recording? </h3>
-          <div style={{alignSelf: 'center'}}>
-            <Button onClick={this.toggleRecording.bind(this)}> {!this.state.recording ? "Start Recording": "Stop Recording"} </Button>
-            <div style={{color: 'grey', height: '80px'}}> {this.state.interimResult}</div>
+          <div style={{alignSelf: 'center', display: 'flex', flexDirection: 'column'}}>
+            <Button style={{alignSelf: 'center'}}onClick={this.toggleRecording.bind(this)}> {!this.state.recording ? "Start Recording": "Stop Recording"} </Button>
+            <h2 style={{alignSelf: 'center'}}> {this.state.time} </h2>
+            <div style={{color: 'grey', height: '40px'}}> {this.state.interimResult}</div>
             <div>
               {this.state.finalTranscript.map((line, index) => (
                 <div key={index}> {line} </div>
@@ -141,4 +178,4 @@ class RecordingStudio extends React.Component {
   }
 }
 
-export default withStyles(style)(RecordingStudio);
+export default withRouter(withStyles(style)(RecordingStudio));

@@ -8,7 +8,7 @@ import LocationOn from "@material-ui/icons/LocationOn";
 import Notifications from "@material-ui/icons/Notifications";
 import Unarchive from "@material-ui/icons/Unarchive";
 // core components/views
-import DashboardPage from "views/Dashboard/Dashboard.jsx";
+import PitchAnalysisPage from "views/PitchAnalysis/PitchAnalysis.jsx";
 import UserProfile from "views/UserProfile/UserProfile.jsx";
 import PitchesPage from "views/Pitches/Pitches.jsx";
 import RecordingPage from "views/Recording/Recording.jsx";
@@ -38,11 +38,11 @@ const dashboardRoutes = [
     component: PitchesPage
   },
   {
-    path: "/dashboard",
+    path: "/pitch_analysis",
     sidebarName: "Pitch Results",
     navbarName: "Material Dashboard",
     icon: Dashboard,
-    component: DashboardPage
+    component: PitchAnalysisPage
   },
   {path:"/pitch", component: Pitch, invisible: true}
 ];
