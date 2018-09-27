@@ -11,7 +11,7 @@ WORDS_UMM = ''
 def analyze_pitch_try(pitch_try):
     ''' Analyze pitch '''
 
-    trans = pitch_try.Transcription
+    trans = pitch_try.transcription
 
     # Words
     word_analysis = {}
