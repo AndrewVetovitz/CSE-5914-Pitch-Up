@@ -94,16 +94,16 @@ def add_pitch(single_id):
 # @requires_auth
 def upload(user_id, pitch_id):
 
-    print("hit ep")
-    files = request.files.to_dict()
-    file_names = []
-    for file_i in files:
+    files = request.files.to_dict(flat=False)
 
-        print("Getting file:", files[file_i])
+    file_names = []
+    for file_obj in files['files']:
+
+        print("Getting file:", file_obj)
 
         # Add file name to a list to use for Discovery
-        file_names.append(files[file_i].filename)
-        files[file_i].save(os.path.join(FILESTORE_USER_DOCUMENT_TEMPLATE.format(user_id, pitch_id), files[file_i].filename))
+        file_names.append(file_obj.filename)
+        file_obj.save(os.path.join(FILESTORE_USER_DOCUMENT_TEMPLATE.format(user_id, pitch_id), file_obj.filename))
 
 
     # Error checking for later, more or less
@@ -120,8 +120,6 @@ def upload(user_id, pitch_id):
         user_collection = wat.createUserCollection(user_id, pitch_id)
 
     user_collection_id = user_collection['collection_id']
-
-    print("User collection:", user_collection)
 
     # Upload all documents to collection
     for file_name in file_names:
