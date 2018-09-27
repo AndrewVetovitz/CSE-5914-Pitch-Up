@@ -5,7 +5,7 @@ class Pitch(db.Model):
     __tablename__ = 'pitches'
 
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('user.id'))
+    user_id = Column(Integer, ForeignKey('users.id'))
     name = Column(String)
     
     def __repr__(self):

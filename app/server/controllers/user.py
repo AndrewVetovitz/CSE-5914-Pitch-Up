@@ -1,21 +1,23 @@
 import os
-from flask import Blueprint
-from flask import request
-from flask import current_app
+from flask import Blueprint, request, current_app
 from six.moves.urllib.parse import urlencode
 
 from models.user import User
 from models.pitch import Pitch
 
+from config import FILESTORE_USER_DOCUMENT_TEMPLATE
+
 from database import db
 
 from helpers.authenticate import requires_auth
+from watson.discovery import Discovery
 
-user_blueprint = Blueprint('user', __name__, template_folder=None)
+user_blueprint = Blueprint('user', __name__, template_folder=None, url_prefix='/user')
 
 @user_blueprint.route('/<int:single_id>', methods=['GET'])
 def single(single_id):
     ''' Get a single user given an id '''
+
     try:
         user = User.query.filter_by(id=single_id).first()
 
@@ -25,6 +27,7 @@ def single(single_id):
             return 'user not found'
     except Exception as e:
         raise e
+
 
 @user_blueprint.route('/', methods=['POST'])
 def add_single():
@@ -86,12 +89,42 @@ def add_pitch(single_id):
     except Exception as e:
         raise e
 
-@user_blueprint.route('/upload', methods=['GET', 'POST'])
-# @requires_auth
-def upload():
-    file = request.files['file']
-    filename = file.filename
 
-    file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-    
+@user_blueprint.route('/<int:user_id>/upload/<int:pitch_id>', methods=['POST'])
+# @requires_auth
+def upload(user_id, pitch_id):
+
+    print("hit ep")
+    files = request.files.to_dict()
+    file_names = []
+    for file_i in files:
+
+        print("Getting file:", files[file_i])
+
+        # Add file name to a list to use for Discovery
+        file_names.append(files[file_i].filename)
+        files[file_i].save(os.path.join(FILESTORE_USER_DOCUMENT_TEMPLATE.format(user_id, pitch_id), files[file_i].filename))
+
+
+    # Error checking for later, more or less
+    # if 'file' not in request.files:
+    #     print("No file uploaded")
+    #     return ("No file uploaded", 400)
+
+    # Create a Discovery instance and upload this doc for the user
+    wat = Discovery()
+
+    user_collection = wat.getUserCollection(user_id, pitch_id)
+
+    if not user_collection:
+        user_collection = wat.createUserCollection(user_id, pitch_id)
+
+    user_collection_id = user_collection['collection_id']
+
+    print("User collection:", user_collection)
+
+    # Upload all documents to collection
+    for file_name in file_names:
+        wat.addDocument(user_id, pitch_id, user_collection_id, file_name)
+
     return ('', 200)

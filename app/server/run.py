@@ -12,9 +12,9 @@ from config import SQLITE_DB_LOCATION
 from controllers.user import user_blueprint
 from controllers.report import report_blueprint
 
-from controllers.watson.speech_to_text import SpeechToText
-from controllers.watson.discovery import Discovery
-from controllers.watson.tone_analyzer import ToneAnalyzer
+# from controllers.watson.speech_to_text import SpeechToText
+# from controllers.watson.discovery import Discovery
+# from controllers.watson.tone_analyzer import ToneAnalyzer
 
 from helpers.authenticate import AuthError
 
@@ -44,10 +44,9 @@ def create_app():
 
     # Views/Blueprints
     app.register_blueprint(user_blueprint)
-    # app.register_blueprint(pitch_)
 
     return app
 
 if __name__ == "__main__":
     app = create_app()
-    app.run(debug=True, port=5000)
+    app.run(debug=True, host='localhost', port=5000)

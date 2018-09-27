@@ -18,6 +18,7 @@ class DataCallback(RecognizeCallback):
     def on_inactivity_timeout(self, error):
         print('Inactivity timeout: {}'.format(error))
 
+
 class SpeechToText(object):
     def __init__(self):
         self.speech_to_text = SpeechToTextV1(
