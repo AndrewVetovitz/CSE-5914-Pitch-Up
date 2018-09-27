@@ -41,8 +41,24 @@ import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardS
 
 class PitchAnalysis extends React.Component {
   state = {
+    transcript: '',
     value: 0
   };
+  componentDidMount() {
+    const pitch_attempt_id = this.props.location.hash.split('#')[1]
+    // Dummy ID value
+    if(pitch_attempt_id == "13371337"){
+      this.setState({
+        transcript: localStorage.getItem('pitch_transcription'),
+        num_ums: 0,
+        num_explict: 0,
+      })
+    } else {
+
+    }
+    console.log('Pitch Attempt Id')
+    console.log(pitch_attempt_id)
+  }
   handleChange = (event, value) => {
     this.setState({ value });
   };
@@ -101,7 +117,7 @@ class PitchAnalysis extends React.Component {
               </CardHeader>
               <CardBody>
                 <p> 
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                {this.state.transcript}
                 </p>
               </CardBody>
             </Card>

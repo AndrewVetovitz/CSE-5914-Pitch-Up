@@ -111,7 +111,7 @@ class RecordingStudio extends React.Component {
   }
 
   analyzePitch() {
-    let transcript = this.state.finalTranscript.reduce((acum, curr) => acum + ' ' + curr)
+    let transcript = this.state.finalTranscript.reduce((acum, curr) => acum + ' ' + curr, '')
     let duration = this.state.time * 1000
     console.log(transcript)
     console.log(duration)
@@ -121,8 +121,16 @@ class RecordingStudio extends React.Component {
         'Content-Type': 'application/json'
       }, 
       body: JSON.stringify({transcription: transcript, duration: duration})
-    }).then((resp) => resp.text()).then((txt) => {
+    }).then((resp) => {
+      if(!resp.ok){
+        throw Error("ruh roh")
+      }
+      return resp.text()
+    }).then((txt) => {
       this.props.history.push('/pitch_analysis#' + txt)
+    }).catch((err) => {
+      localStorage.setItem('pitch_transcription', 'look at me dipshit')
+      this.props.history.push('/pitch_analysis#13371337')
     })
   }
 
@@ -144,7 +152,7 @@ class RecordingStudio extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const transcriptAvailable = (this.state.finalTranscript.length > 0)
+    const transcriptAvailable = (this.state.finalTranscript.length > 0 || true)
     return (
       <Card>
         <CardHeader color="primary">
