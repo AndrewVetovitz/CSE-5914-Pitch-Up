@@ -24,18 +24,18 @@ const dashboardRoutes = [
     component: UserProfile
   },
   {
-    path: "/recording",
-    sidebarName: "Recording Studio",
-    navbarName: "Recording Studio",
-    icon: LibraryBooks,
-    component: RecordingPage
-  },
-  {
     path: "/pitches",
     sidebarName: "Pitches",
     navbarName: "Pitches",
     icon: "content_paste",
     component: PitchesPage
+  },
+  {
+    path: "/recording",
+    sidebarName: "Recording Studio",
+    navbarName: "Recording Studio",
+    icon: LibraryBooks,
+    component: RecordingPage
   },
   {
     path: "/pitch_analysis",
