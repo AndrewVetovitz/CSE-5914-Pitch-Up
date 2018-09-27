@@ -32,3 +32,8 @@ pitch_try = PitchTry(pitch_id=pitch.id, transcription="Hey there you're such shi
 db.session.add(pitch_try)
 db.session.commit()
 print("Added:", pitch_try)
+
+pitch_try = PitchTry(pitch_id=pitch.id, transcription="Hey i am interested in audio engineering how about you there are some cool things we can do with it", duration=20)
+db.session.add(pitch_try)
+db.session.commit()
+print("Added:", pitch_try)

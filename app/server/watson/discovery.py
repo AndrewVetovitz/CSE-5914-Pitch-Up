@@ -115,6 +115,25 @@ class Discovery(object):
         else:
             return False
 
+
+    def queryCollection(self, collection_id):
+        ''' Query a collection '''
+
+        # based on this:
+        #https://gateway.watsonplatform.net/discovery/api/v1/environments/70fc388b-3358-4a63-aa02-946b3e1fb3aa/collections/24bd2e65-aa3f-43e5-8e35-f45b58208dcd/query?version=2018-08-01&aggregation=term%28enriched_text.concepts.text%2Ccount%3A10%29&deduplicate=false&highlight=true&passages=true&passages.count=5&query=
+            
+        query_response = self.discovery.query(
+            environment_id = self.environment_id,
+            collection_id = collection_id,
+            count = 10,
+            aggregation = 'term(enriched_text.concepts.text,count:10)'
+        ).get_result()
+
+        if query_response:
+            return query_response.get('aggregations')
+        else:
+            return False
+
     
     def addDocument(self, user_id, pitch_id, collection_id, file_name):
         ''' Add a document to a collection '''
@@ -147,7 +166,6 @@ class Discovery(object):
 
         return add_doc
 
-    
 if __name__ == '__main__':
 
     #init Watson

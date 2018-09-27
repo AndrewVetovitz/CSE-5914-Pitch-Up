@@ -11,6 +11,7 @@ from config import SQLITE_DB_LOCATION
 
 from controllers.user import user_blueprint
 from controllers.pitch import pitch_blueprint
+from controllers.pitch_try import pitch_try_blueprint
 # from controllers.report import report_blueprint
 
 from helpers.authenticate import AuthError
@@ -42,6 +43,7 @@ def create_app():
     # Views/Blueprints
     app.register_blueprint(user_blueprint)
     app.register_blueprint(pitch_blueprint)
+    app.register_blueprint(pitch_try_blueprint)
     
     # CORS
     CORS(app)

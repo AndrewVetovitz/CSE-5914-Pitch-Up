@@ -3,6 +3,8 @@ from database import db
 import json
 from datetime import datetime
 
+from models.pitch import Pitch
+
 import re
 
 WORDS_UMM = ''
@@ -20,6 +22,7 @@ class PitchTry(db.Model):
     duration = Column(Integer)
     transcription = Column(String)
     analysis_words = Column(String)
+    analysis_concepts = Column(String)
 
     def __init__(self, pitch_id, transcription, duration):
         self.pitch_id = pitch_id
@@ -28,6 +31,7 @@ class PitchTry(db.Model):
         self.date = datetime.now()
         self.is_analyzed = False
         self.analysis_words = ''
+        self.analysis_concepts = ''
 
         # Analyze pitch try
         self.analyze()
@@ -63,7 +67,20 @@ class PitchTry(db.Model):
 
         self.analysis_words = json.dumps(word_analysis)
 
-        # TODO send to Watson
+        # Watson
+        # Simple for now... Check if any words matched the concepts from Watson
+        concept_analysis = {}
+        pitch = Pitch.query.filter_by(id = self.pitch_id).first()
+        print("got pitch:", pitch)
+        print(pitch.related_concepts)
+        if pitch.related_concepts:
+            concepts = (" ".join(json.loads(pitch.related_concepts)).lower()).split()
+            for word in trans_list:
+                if word in concepts:
+                    concept_analysis[word] = concept_analysis.get(word,0) + 1
+            
+            self.analysis_concepts = json.dumps(concept_analysis)
+            print(self.analysis_concepts)
 
         # Finally, set to analyzed and we're done.
         self.is_analyzed = True
