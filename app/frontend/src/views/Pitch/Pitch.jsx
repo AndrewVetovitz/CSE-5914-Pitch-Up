@@ -96,7 +96,7 @@ class Pitch extends React.Component {
                       <GridItem sm={6}>
                         <div className={classes.fileUploadDiv}>
                           <label>
-                            <input type="file" ref={this.filesInput} multiple required/>
+                            <input type="file" ref={this.filesInput} multiple required name="files"/>
                           </label>
                         </div>
                       </GridItem>
