@@ -62,19 +62,15 @@ class Dashboard extends React.Component {
                 <CardIcon color="warning">
                   <Icon>content_copy</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory}>Used Space</p>
+                <p className={classes.cardCategory}>Pitch Length</p>
                 <h3 className={classes.cardTitle}>
-                  49/50 <small>GB</small>
+                  1:23 minutes
                 </h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
-                  <Danger>
-                    <Warning />
-                  </Danger>
-                  <a href="#pablo" onClick={e => e.preventDefault()}>
-                    Get more space
-                  </a>
+                  <DateRange />
+                  Last Pitch
                 </div>
               </CardFooter>
             </Card>

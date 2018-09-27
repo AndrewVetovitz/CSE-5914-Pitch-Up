@@ -27,43 +27,88 @@ import {
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
 class Pitch extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.filesInput = React.createRef();
+  }
+
   state = {
     value: 0
   };
+
   goToStudio() {
     this.props.history.push('/recording')
-  }
+  };
+
   handleChange = (event, value) => {
     this.setState({ value });
   };
 
+  handleSubmit(event){
+    event.preventDefault();
+    
+    /*
+    for(var i in this.filesInput.current.files){
+      console.log(this.filesInput.current.files[i]);
+    }*/
+
+    const data = new FormData();
+
+    for (const file of this.filesInput.current.files){
+      data.append('files[]',file,file.name);
+    }
+
+    return fetch('http://localhost:5000/user/1/upload/1',{
+      method: 'POST',
+      body: data,
+      mode: 'no-cors'
+    });
+
+
+
+  }
+
   handleChangeIndex = index => {
     this.setState({ value: index });
   };
+  
   render() {
     const { classes } = this.props;
     return (
       <div>
         <GridContainer>
-          <GridItem xs={12} sm={6} md={3}>
+          <GridItem xs={12} sm={6} md={6} lg={6}>
             <Card>
               <CardHeader color="warning" stats icon>
                 <CardIcon color="warning">
                   <Icon>content_copy</Icon>
                 </CardIcon>
                 <p className={classes.cardCategory}>Knowledge Base</p>
-                <h3 className={classes.cardTitle}>
-                  2/5 <small>Docs</small>
+                <h3 className={classes.cardTitle} >
+                  Upload Documents
                 </h3>
               </CardHeader>
               <CardFooter stats>
-                <div className={classes.stats}>
-                    <Button>Upload Document</Button>
-                </div>
+                <form onSubmit={this.handleSubmit}>
+                  <GridContainer>
+                      <GridItem sm={6}>
+                        <div className={classes.fileUploadDiv}>
+                          <label>
+                            <input type="file" ref={this.filesInput} multiple required/>
+                          </label>
+                        </div>
+                      </GridItem>
+                      <GridItem sm={6}>
+                        <Button type="submit">Upload Files</Button>  
+                      </GridItem>
+                  </GridContainer>
+                </form> 
               </CardFooter>
             </Card>
           </GridItem>
-          <GridItem xs={12} sm={6} md={3}>
+          <GridItem xs={12} sm={6} md={6} lg={6}>
             <Card>
               <CardHeader color="success" stats icon>
                 <CardIcon color="success">
@@ -81,7 +126,7 @@ class Pitch extends React.Component {
           </GridItem>
         </GridContainer>
         <GridContainer>
-          <GridItem xs={12} sm={12} md={6}>
+          <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="warning">
                 <h4 className={classes.cardTitleWhite}>Pitch Attempts</h4>

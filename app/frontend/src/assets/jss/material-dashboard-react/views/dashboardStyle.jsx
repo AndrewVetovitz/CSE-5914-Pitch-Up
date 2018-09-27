@@ -71,6 +71,9 @@ const dashboardStyle = {
       fontWeight: "400",
       lineHeight: "1"
     }
+  },
+  fileUploadDiv: {
+    marginTop: "14px"
   }
 };
 

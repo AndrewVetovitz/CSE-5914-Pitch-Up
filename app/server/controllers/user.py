@@ -95,7 +95,11 @@ def add_pitch(single_id):
 # @requires_auth
 def upload(user_id, pitch_id):
 
+    print(request.files)
+    '''
     files = request.files.to_dict(flat=False)
+
+    print(files)
 
     file_names = []
     for file_obj in files['files']:
@@ -125,5 +129,6 @@ def upload(user_id, pitch_id):
     # Upload all documents to collection
     for file_name in file_names:
         wat.addDocument(user_id, pitch_id, user_collection_id, file_name)
-
+    
+    '''
     return ('', 200)
