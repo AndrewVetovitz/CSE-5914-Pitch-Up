@@ -4,11 +4,6 @@ from watson_developer_cloud import DiscoveryV1
 
 from config import APP_ROOT, FILESTORE_PATH, FILESTORE_USER_DOCUMENT_ROOT, FILESTORE_USER_DOCUMENT_TEMPLATE
 
-# APP_ROOT = '/home/zizonia/dev/college/5914/CSE-5904-Pitch-Up/app/server'
-# FILESTORE_PATH = os.path.join(APP_ROOT, 'filestore')
-# FILESTORE_USER_DOCUMENT_ROOT = os.path.join(FILESTORE_PATH, 'user')
-# FILESTORE_USER_DOCUMENT_TEMPLATE = FILESTORE_USER_DOCUMENT_ROOT + '/user_{}/pitch_{}'
-
 PITCHUP_DISCOVERY_SERVICE_NAME = 'pitchup_discovery'
 USER_COLLECTION_NAME_TEMPLATE = 'user_{}_pitch_{}'
 
@@ -173,6 +168,6 @@ if __name__ == '__main__':
     user_collection_id = user_collection['collection_id']
 
     # Upload a document to collection
-    file_path = ''
-    file_name = 'test.pdf'
-    wat.addDocument(user_id, pitch_id, user_collection_id, file_name)
+    # file_path = ''
+    # file_name = 'test.pdf'
+    # wat.addDocument(user_id, pitch_id, user_collection_id, file_name)
