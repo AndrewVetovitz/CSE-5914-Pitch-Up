@@ -101,7 +101,11 @@ def new_pitch_try(pitch_id):
                 # debug
                 print(pitch_try)
 
-                return str(pitch_try.id)
+                data = {
+                    'pitch_try_id': pitch_try.id
+                }
+
+                return jsonify(data)
 
             else:
                 return 'pitch not created'
