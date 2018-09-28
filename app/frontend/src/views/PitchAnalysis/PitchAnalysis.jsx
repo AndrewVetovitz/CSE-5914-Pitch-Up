@@ -52,6 +52,7 @@ class PitchAnalysis extends React.Component {
       transcription: null
     }
   };
+
   componentDidMount() {
     const pitch_attempt_id = this.props.location.hash.split('#')[1]
     // Dummy ID value
@@ -71,6 +72,7 @@ class PitchAnalysis extends React.Component {
       })
     } else {
       fetch('http://localhost:5000/pitch_try/' + pitch_attempt_id).then((resp) => resp.json()).then((json) => {
+        console.log(json.pitch_try);
         this.setState({
           pitch_try: json
         })
@@ -81,6 +83,7 @@ class PitchAnalysis extends React.Component {
       duration: localStorage.getItem('pitch_duration')
     })
   }
+
   handleChange = (event, value) => {
     this.setState({ value });
   };
@@ -88,11 +91,18 @@ class PitchAnalysis extends React.Component {
   handleChangeIndex = index => {
     this.setState({ value: index });
   };
+
   render() {
     const { classes } = this.props;
+    
+
+    console.log(this.state);
     var pitch_try = this.state.pitch_try
+
+    let test = (pitch_try.pitch_try && pitch_try.pitch_try.analysis_words && pitch_try.pitch_try.analysis_words.stop_words) ? pitch_try.pitch_try.analysis_words.stop_words : 0;
+    let c = (pitch_try.pitch_try && pitch_try.pitch_try.analysis_words && pitch_try.pitch_try.analysis_words.explitives) ? pitch_try.pitch_try.analysis_words.explitives : 0;
     pitch_try.duration = this.state.duration
-    console.log(pitch_try)
+
     return (
       <div>
         <GridContainer>
@@ -104,7 +114,7 @@ class PitchAnalysis extends React.Component {
                 </CardIcon>
                 <p className={classes.cardCategory}>Number of Stop Words</p>
                 <h3 className={classes.cardTitle}>
-                1337
+                  {test}
                 </h3>
               </CardHeader>
               <CardFooter stats>
@@ -121,7 +131,7 @@ class PitchAnalysis extends React.Component {
                 </CardIcon>
                 <p className={classes.cardCategory}>Number of Expletives </p>
                 <h3 className={classes.cardTitle}>
-                  1337 <small>curses</small>
+                    {c} <small>curses</small>
                 </h3>
               </CardHeader>
               <CardFooter stats>

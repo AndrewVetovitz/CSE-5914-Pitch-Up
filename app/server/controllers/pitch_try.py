@@ -8,7 +8,6 @@ from models.pitch import Pitch
 from models.pitch_try import PitchTry
 from watson.discovery import Discovery
 
-
 pitch_try_blueprint = Blueprint('pitch_try', __name__, url_prefix='/pitch_try')
 
 
@@ -20,13 +19,14 @@ def get_pitch_try(pitch_try_id):
         pitch_try = PitchTry.query.filter_by(id=pitch_try_id).first()
 
         if pitch_try:
+            # print(pitch_try.analysis_words)
 
             data = {
                 'pitch_try': {
                     'id': pitch_try.id,
                     'is_analyzed': pitch_try.is_analyzed,
                     'transcription': pitch_try.transcription,
-                    'analysis_words': pitch_try.analysis_words,
+                    'analysis_words': json.loads(pitch_try.analysis_words),
                     'analysis_concepts': pitch_try.analysis_concepts,
                     'duration': pitch_try.duration,
                     # TODO need date still, but needs special json parsing usually.
