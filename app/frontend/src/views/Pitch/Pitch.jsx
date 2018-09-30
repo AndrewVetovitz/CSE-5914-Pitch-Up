@@ -65,9 +65,6 @@ class Pitch extends React.Component {
       body: data,
       mode: 'no-cors'
     });
-
-
-
   }
 
   handleChangeIndex = index => {

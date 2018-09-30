@@ -71,12 +71,14 @@ class PitchAnalysis extends React.Component {
         }    
       })
     } else {
-      fetch('http://localhost:5000/pitch_try/' + pitch_attempt_id).then((resp) => resp.json()).then((json) => {
-        console.log(json.pitch_try);
-        this.setState({
-          pitch_try: json
+        console.log("***************: ", pitch_attempt_id);
+        fetch('http://localhost:5000/pitch_try/' + pitch_attempt_id).then((resp) => resp.json())
+            .then((res_json) => {
+                console.log(res_json.pitch_try);
+                this.setState({
+                    pitch_try: res_json
+                })
         })
-      })
     }
     this.setState({
       transcript: localStorage.getItem('pitch_transcription'),
@@ -99,22 +101,24 @@ class PitchAnalysis extends React.Component {
     console.log(this.state);
     var pitch_try = this.state.pitch_try
 
-    let test = (pitch_try.pitch_try && pitch_try.pitch_try.analysis_words && pitch_try.pitch_try.analysis_words.stop_words) ? pitch_try.pitch_try.analysis_words.stop_words : 0;
-    let c = (pitch_try.pitch_try && pitch_try.pitch_try.analysis_words && pitch_try.pitch_try.analysis_words.explitives) ? pitch_try.pitch_try.analysis_words.explitives : 0;
+    let stop_words = (pitch_try.pitch_try && pitch_try.pitch_try.analysis_words && pitch_try.pitch_try.analysis_words.stop_words) ? pitch_try.pitch_try.analysis_words.stop_words : 0;
+    let explitives = (pitch_try.pitch_try && pitch_try.pitch_try.analysis_words && pitch_try.pitch_try.analysis_words.explitives) ? pitch_try.pitch_try.analysis_words.explitives : 0;
+    let words_per_minute = (pitch_try.pitch_try && pitch_try.pitch_try.words_per_minute) ? pitch_try.pitch_try.words_per_minute : 0;
     pitch_try.duration = this.state.duration
 
     return (
       <div>
         <GridContainer>
+
           <GridItem xs={12} sm={6} md={3}>
             <Card>
               <CardHeader color="warning" stats icon>
                 <CardIcon color="warning">
                   <Icon>content_copy</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory}>Number of Stop Words</p>
+                <p className={classes.cardCategory}>Total Stop Words</p>
                 <h3 className={classes.cardTitle}>
-                  {test}
+                  {stop_words}
                 </h3>
               </CardHeader>
               <CardFooter stats>
@@ -123,15 +127,16 @@ class PitchAnalysis extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
+
           <GridItem xs={12} sm={6} md={3}>
             <Card>
               <CardHeader color="danger" stats icon>
                 <CardIcon color="danger">
                   <Icon>warning</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory}>Number of Expletives </p>
+                <p className={classes.cardCategory}>Number of Expletives</p>
                 <h3 className={classes.cardTitle}>
-                    {c} <small>curses</small>
+                    {explitives} <small>curses</small>
                 </h3>
               </CardHeader>
               <CardFooter stats>
@@ -140,6 +145,7 @@ class PitchAnalysis extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
+
           <GridItem xs={12} sm={6} md={3}>
             <Card>
               <CardHeader color="success" stats icon>
@@ -157,6 +163,25 @@ class PitchAnalysis extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
+
+        <GridItem xs={12} sm={6} md={3}>
+            <Card>
+              <CardHeader color="success" stats icon>
+                <CardIcon color="success">
+                  <Icon>watch_later</Icon>
+                </CardIcon>
+                <p className={classes.cardCategory}>Words per minute</p>
+                <h3 className={classes.cardTitle}>
+                  {words_per_minute}
+                </h3>
+              </CardHeader>
+              <CardFooter stats>
+                <div className={classes.stats}>
+                </div>
+              </CardFooter>
+            </Card>
+          </GridItem>
+
         </GridContainer>
         <GridContainer>
           <GridItem xs={12} sm={12} md={6}>

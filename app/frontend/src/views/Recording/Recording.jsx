@@ -116,11 +116,13 @@ class RecordingStudio extends React.Component {
     localStorage.setItem('pitch_transcription', transcript)
     localStorage.setItem('pitch_duration', duration)
 
+    console.log(duration);
+
     fetch('http://localhost:5000/pitch/1/new_try', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
-      }, 
+      },
       body: JSON.stringify({transcription: transcript, duration: duration})
     }).then((resp) => {
       if(!resp.ok){

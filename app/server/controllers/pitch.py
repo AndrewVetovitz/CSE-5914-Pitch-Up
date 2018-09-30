@@ -8,19 +8,15 @@ from models.pitch import Pitch
 from models.pitch_try import PitchTry
 from watson.discovery import Discovery
 
-
 pitch_blueprint = Blueprint('pitch', __name__, url_prefix='/pitch')
-
 
 @pitch_blueprint.route('/<int:pitch_id>')
 def get_pitch(pitch_id):
     
     try:
-     
         pitch = Pitch.query.filter_by(id=pitch_id).first()
 
         if pitch:
-
             pitch_try_ids = [x.id for x in PitchTry.query.filter_by(pitch_id=pitch.id)]
 
             wat = Discovery()
@@ -72,13 +68,12 @@ def new_pitch_try(pitch_id):
         pitch = Pitch.query.filter_by(id=pitch_id).first()
 
         if pitch:
-
             print("Pitch:", pitch)
 
             # Get args and provide defaults
             inc_data = request.json
             transcription = inc_data.get('transcription', '')
-            duration = inc_data.get('pitch_duration', 0)
+            duration = inc_data.get('duration', 0)
 
             # debug
             print(inc_data)
@@ -89,10 +84,8 @@ def new_pitch_try(pitch_id):
                 transcription = transcription,
                 duration = duration
             )
-            
 
             if pitch_try:
-
                 pitch_try.analyze()
 
                 db.session.add(pitch_try)
@@ -106,13 +99,10 @@ def new_pitch_try(pitch_id):
                 }
 
                 return jsonify(data)
-
             else:
                 return 'pitch not created'
-
         else:
             return 'pitch does not exist in db'
 
     except Exception as e:
         raise e
-

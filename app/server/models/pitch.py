@@ -12,4 +12,4 @@ class Pitch(db.Model):
     top_entities = Column(String)
     
     def __repr__(self):
-        return "<Pitch(Id: '%s', Name: '%s')>" % (str(self.id), self.name)
+        return "<Pitch(Id: '{}', Name: '{}')>".format(str(self.id), self.name)
