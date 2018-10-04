@@ -86,8 +86,6 @@ def new_pitch_try(pitch_id):
             )
 
             if pitch_try:
-                pitch_try.analyze()
-
                 db.session.add(pitch_try)
                 db.session.commit()
                 

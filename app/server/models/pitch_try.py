@@ -4,6 +4,7 @@ import json
 from datetime import datetime
 
 from models.pitch import Pitch
+from helpers.analysis import Analysis
 
 import re
 
@@ -31,64 +32,23 @@ class PitchTry(db.Model):
         self.date = datetime.now()
         self.is_analyzed = False
         self.analysis_words = ''
-        self.analysis_concepts = ''
 
-        # Analyze pitch try
-        self.analyze()
+        analysis = Analysis()
 
-    
-    def __repr__(self):
-        return "<PitchTry(Id: '{}', pitch_id: '{}', date: '{}', is_analyzed: '{}', duration: '{}', words_per_minute: '{}', transcription: '{}', analysis_words: '{}', analysis_concepts: '{}')>".format(
-            str(self.id), self.pitch_id, self.date, self.is_analyzed, self.duration, self.words_per_minute, self.transcription, self.analysis_words, self.analysis_concepts)
-    
-    def analyze(self):
-        trans_list = self.transcription.split()
-
-        # Words per minute
-        if self.duration == 0:
-            self.words_per_minute = 0
-        else:
-            words_per_minute = float(len(trans_list) * 60) / float(self.duration)
-            self.words_per_minute = round(words_per_minute, 2)
-
-        # Words
-        num_explitives = 0
-        for word in WORDS_EXPLITIVES:
-            if word in trans_list:
-                num_explitives += 1
-
-        num_stop_words = 0
-        for word in WORDS_STOP:
-            if word in trans_list:
-                num_stop_words += 1
-
-        num_umms = 0
-        # for word in WORDS_EXPLITIVES:
-        #     if word in self.transcription:
-        #         num_explitives += 1
+        self.words_per_minute = analysis.words_per_minute(transcription, duration)
 
         word_analysis = {
-            'explitives': num_explitives,
-            'stop_words': num_stop_words
+            'explitives': analysis.num_occurences(transcription, WORDS_EXPLITIVES),
+            'stop_words': analysis.num_occurences(transcription, WORDS_STOP)
         }
 
         self.analysis_words = json.dumps(word_analysis)
-
-        # Watson
-        # Simple for now... Check if any words matched the concepts from Watson
-        concept_analysis = {}
+        
         pitch = Pitch.query.filter_by(id = self.pitch_id).first()
-        print("got pitch:", pitch)
-        print(pitch.related_concepts)
-        if pitch.related_concepts:
-            concepts = (" ".join(json.loads(pitch.related_concepts)).lower()).split()
-            for word in trans_list:
-                if word in concepts:
-                    concept_analysis[word] = concept_analysis.get(word, 0) + 1
-            
-            self.analysis_concepts = json.dumps(concept_analysis)
-            print(self.analysis_concepts)
-
-        # Finally, set to analyzed and we're done.
+        self.analysis_concepts = analysis.discovery_analysis(transcription, pitch)
+        
         self.is_analyzed = True
 
+    def __repr__(self):
+        return "<PitchTry(Id: '{}', pitch_id: '{}', date: '{}', is_analyzed: '{}', duration: '{}', words_per_minute: '{}', transcription: '{}', analysis_words: '{}', analysis_concepts: '{}')>".format(
+            str(self.id), self.pitch_id, self.date, self.is_analyzed, self.duration, self.words_per_minute, self.transcription, self.analysis_words, self.analysis_concepts)
