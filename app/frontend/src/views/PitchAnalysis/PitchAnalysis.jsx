@@ -40,50 +40,48 @@ import {
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
 class PitchAnalysis extends React.Component {
-  state = {
-    transcript: '',
-    duration: 0,
-    pitch_try: {
-      analysis_concepts: {},
-      analysis_words: {
-        stop_words: '',
-        explitives: ''
-      },
-      transcription: null
-    }
-  };
+    state = {
+        pitch_try: {
+            transcript: '',
+            duration: 0,
+            analysis_concepts: {},
+            analysis_words: {
+                explitives: '',
+                stop_words: ''
+            },
+            transcription: null,
+            words_per_minute: 0
+        }
+    };
 
   componentDidMount() {
     const pitch_attempt_id = this.props.location.hash.split('#')[1]
-    // Dummy ID value
-    if(pitch_attempt_id == "13371337"){
-      this.setState({
-        transcript: localStorage.getItem('pitch_transcription'),
-        num_ums: 0,
-        num_explict: 0,
-        pitch_try: {
-          analysis_concepts: {},
-          analysis_words: {
-            stop_words: '',
-            explitives: ''
-          },
-          transcription: null
-        }    
-      })
+
+    if(pitch_attempt_id === undefined){
+        this.setState({
+            pitch_try: {
+                transcription: null,
+                duration: null,
+                analysis_concepts: {},
+                analysis_words: {
+                    explitives: null,
+                    stop_words: null
+                },
+                words_per_minute: null  
+            }
+        })
     } else {
-        console.log("***************: ", pitch_attempt_id);
         fetch('http://localhost:5000/pitch_try/' + pitch_attempt_id).then((resp) => resp.json())
             .then((res_json) => {
-                console.log(res_json.pitch_try);
                 this.setState({
-                    pitch_try: res_json
-                })
+                    pitch_try: {
+                        ...res_json.pitch_try
+                    }
+                });
+
+                console.log(this.state);
         })
     }
-    this.setState({
-      transcript: localStorage.getItem('pitch_transcription'),
-      duration: localStorage.getItem('pitch_duration')
-    })
   }
 
   handleChange = (event, value) => {
@@ -97,14 +95,13 @@ class PitchAnalysis extends React.Component {
   render() {
     const { classes } = this.props;
     
-
-    console.log(this.state);
-    var pitch_try = this.state.pitch_try
-
-    let stop_words = (pitch_try.pitch_try && pitch_try.pitch_try.analysis_words && pitch_try.pitch_try.analysis_words.stop_words) ? pitch_try.pitch_try.analysis_words.stop_words : 0;
-    let explitives = (pitch_try.pitch_try && pitch_try.pitch_try.analysis_words && pitch_try.pitch_try.analysis_words.explitives) ? pitch_try.pitch_try.analysis_words.explitives : 0;
-    let words_per_minute = (pitch_try.pitch_try && pitch_try.pitch_try.words_per_minute) ? pitch_try.pitch_try.words_per_minute : 0;
-    pitch_try.duration = this.state.duration
+    const pitch_try = this.state.pitch_try;    
+    
+    const duration = pitch_try.duration;
+    const words_per_minute = pitch_try.words_per_minute;
+    const stop_words = pitch_try.analysis_words.stop_words;
+    const explitives = pitch_try.analysis_words.explitives;
+    const transcription = pitch_try.transcription;
 
     return (
       <div>
@@ -154,7 +151,7 @@ class PitchAnalysis extends React.Component {
                 </CardIcon>
                 <p className={classes.cardCategory}>Pitch Duration</p>
                 <h3 className={classes.cardTitle}>
-                  {this.state.duration} <small>sec</small>
+                  {duration} <small>sec</small>
                 </h3>
               </CardHeader>
               <CardFooter stats>
@@ -193,8 +190,8 @@ class PitchAnalysis extends React.Component {
                 </p>
               </CardHeader>
               <CardBody>
-                <p> 
-                {this.state.transcript}
+                <p>
+                {transcription}
                 </p>
               </CardBody>
             </Card>

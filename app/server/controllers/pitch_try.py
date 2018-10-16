@@ -32,6 +32,8 @@ def get_pitch_try(pitch_try_id):
                 }
             }
 
+            print(data)
+
             return jsonify(data)
         else:
             return ('', 404)
