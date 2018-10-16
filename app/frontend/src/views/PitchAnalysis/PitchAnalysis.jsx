@@ -28,6 +28,10 @@ import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import Button from "components/CustomButtons/Button.jsx"
+import StopWordsCard from "components/DashCards/StopWordsCard.jsx"
+import CursesCard from "components/DashCards/CursesCard.jsx"
+import PitchDurationCard from "components/DashCards/PitchDurationCard.jsx"
+import WPMCard from "components/DashCards/WPMCard.jsx"
 
 import { bugs, website, server } from "variables/general";
 
@@ -106,77 +110,20 @@ class PitchAnalysis extends React.Component {
     return (
       <div>
         <GridContainer>
-
           <GridItem xs={12} sm={6} md={3}>
-            <Card>
-              <CardHeader color="warning" stats icon>
-                <CardIcon color="warning">
-                  <Icon>content_copy</Icon>
-                </CardIcon>
-                <p className={classes.cardCategory}>Total Stop Words</p>
-                <h3 className={classes.cardTitle}>
-                  {stop_words}
-                </h3>
-              </CardHeader>
-              <CardFooter stats>
-                <div className={classes.stats}>
-                </div>
-              </CardFooter>
-            </Card>
+            <StopWordsCard stopWords={stop_words} classes={classes}/>
           </GridItem>
 
           <GridItem xs={12} sm={6} md={3}>
-            <Card>
-              <CardHeader color="danger" stats icon>
-                <CardIcon color="danger">
-                  <Icon>warning</Icon>
-                </CardIcon>
-                <p className={classes.cardCategory}>Number of Expletives</p>
-                <h3 className={classes.cardTitle}>
-                    {explitives} <small>curses</small>
-                </h3>
-              </CardHeader>
-              <CardFooter stats>
-                <div className={classes.stats}>
-                </div>
-              </CardFooter>
-            </Card>
+            <CursesCard explitives={explitives} classes={classes}/>
           </GridItem>
 
           <GridItem xs={12} sm={6} md={3}>
-            <Card>
-              <CardHeader color="success" stats icon>
-                <CardIcon color="success">
-                  <Icon>watch_later</Icon>
-                </CardIcon>
-                <p className={classes.cardCategory}>Pitch Duration</p>
-                <h3 className={classes.cardTitle}>
-                  {duration} <small>sec</small>
-                </h3>
-              </CardHeader>
-              <CardFooter stats>
-                <div className={classes.stats}>
-                </div>
-              </CardFooter>
-            </Card>
+            <PitchDurationCard duration={duration} classes={classes}/>
           </GridItem>
 
-        <GridItem xs={12} sm={6} md={3}>
-            <Card>
-              <CardHeader color="success" stats icon>
-                <CardIcon color="success">
-                  <Icon>watch_later</Icon>
-                </CardIcon>
-                <p className={classes.cardCategory}>Words per minute</p>
-                <h3 className={classes.cardTitle}>
-                  {words_per_minute}
-                </h3>
-              </CardHeader>
-              <CardFooter stats>
-                <div className={classes.stats}>
-                </div>
-              </CardFooter>
-            </Card>
+          <GridItem xs={12} sm={6} md={3}>
+            <WPMCard classes={classes} wpm={words_per_minute}/>
           </GridItem>
 
         </GridContainer>
