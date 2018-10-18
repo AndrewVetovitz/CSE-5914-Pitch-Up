@@ -84,8 +84,6 @@ class PitchAnalysis extends React.Component {
                         ...res_json.pitch_try
                     }
                 });
-
-                console.log(this.state);
         })
     }
   }
@@ -106,8 +104,6 @@ class PitchAnalysis extends React.Component {
     const { duration, words_per_minute, transcription } = pitch_try;
     const { stop_words, explitives, tone } = pitch_try.analysis_words;
 
-    console.log(pitch_try);
-
     return (
       <React.Fragment>
         <GridContainer>
@@ -124,7 +120,7 @@ class PitchAnalysis extends React.Component {
           </GridItem>
 
           <GridItem xs={12} sm={6} md={3}>
-            <WPMCard classes={classes} wpm={words_per_minute}/>
+            <WPMCard wpm={words_per_minute} classes={classes}/>
           </GridItem>
 
         </GridContainer>
@@ -154,7 +150,7 @@ class PitchAnalysis extends React.Component {
               </CardHeader>
               <CardBody>
                 <p>
-                {JSON.stringify(tone, null, 2)}
+                {tone === null ? '' : JSON.stringify(tone, null, 2)}
                 </p>
               </CardBody>
             </Card>
@@ -168,7 +164,7 @@ class PitchAnalysis extends React.Component {
                </p>
               </CardHeader>
               <CardBody>
-                <p> 
+                <p>
                   {JSON.stringify(pitch_try, null, 4)}
                 </p>
               </CardBody>

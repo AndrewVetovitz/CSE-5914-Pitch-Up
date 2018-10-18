@@ -40,7 +40,7 @@ const dashboardRoutes = [
   {
     path: "/pitch_analysis",
     sidebarName: "Pitch Results",
-    navbarName: "Material Dashboard",
+    navbarName: "Pitch Results",
     icon: Dashboard,
     component: PitchAnalysisPage
   },
