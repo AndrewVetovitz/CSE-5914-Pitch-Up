@@ -1,5 +1,7 @@
 import json
 
+from watson.tone_analyzer import ToneAnalyzer 
+
 class Analysis(object):
     def words_per_minute(self, transcript, duration):
         if duration == 0:
@@ -34,3 +36,8 @@ class Analysis(object):
             analysis_concepts = json.dumps(concept_analysis)
 
         return analysis_concepts
+
+    def tone_anaysis(self, transcript):
+        ta = ToneAnalyzer()
+
+        return ta.analyzeTone(transcript)

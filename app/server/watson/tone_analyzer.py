@@ -12,8 +12,6 @@ class ToneAnalyzer(object):
         )
 
     def analyzeTone(self, text):
-        tone_analysis = self.tone_analyzer.tone(
+        return self.tone_analyzer.tone(
             {'text': text},
             'application/json').get_result()
-            
-        print(json.dumps(tone_analysis, indent=2))

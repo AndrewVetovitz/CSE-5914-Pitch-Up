@@ -51,7 +51,8 @@ class PitchAnalysis extends React.Component {
             analysis_concepts: {},
             analysis_words: {
                 explitives: '',
-                stop_words: ''
+                stop_words: '',
+                tone: ''
             },
             transcription: null,
             words_per_minute: 0
@@ -69,7 +70,8 @@ class PitchAnalysis extends React.Component {
                 analysis_concepts: {},
                 analysis_words: {
                     explitives: null,
-                    stop_words: null
+                    stop_words: null,
+                    tone: null
                 },
                 words_per_minute: null  
             }
@@ -101,14 +103,13 @@ class PitchAnalysis extends React.Component {
     
     const pitch_try = this.state.pitch_try;    
     
-    const duration = pitch_try.duration;
-    const words_per_minute = pitch_try.words_per_minute;
-    const stop_words = pitch_try.analysis_words.stop_words;
-    const explitives = pitch_try.analysis_words.explitives;
-    const transcription = pitch_try.transcription;
+    const { duration, words_per_minute, transcription } = pitch_try;
+    const { stop_words, explitives, tone } = pitch_try.analysis_words;
+
+    console.log(pitch_try);
 
     return (
-      <div>
+      <React.Fragment>
         <GridContainer>
           <GridItem xs={12} sm={6} md={3}>
             <StopWordsCard stopWords={stop_words} classes={classes}/>
@@ -146,6 +147,21 @@ class PitchAnalysis extends React.Component {
           <GridItem xs={12} sm={12} md={6}>
             <Card>
               <CardHeader color="warning">
+                <h4 className={classes.cardTitleWhite}>Tone Analysis (RAW JASON)</h4>
+                <p className={classes.cardCategoryWhite}>
+                  Tone Anaylsis of pitch
+                </p>
+              </CardHeader>
+              <CardBody>
+                <p>
+                {JSON.stringify(tone, null, 2)}
+                </p>
+              </CardBody>
+            </Card>
+          </GridItem>
+          <GridItem xs={12} sm={12} md={6}>
+            <Card>
+              <CardHeader color="warning">
                 <h4 className={classes.cardTitleWhite}>Raw JSON</h4>
                 <p className={classes.cardCategoryWhite}>
                   Raw analysis from our model
@@ -159,7 +175,7 @@ class PitchAnalysis extends React.Component {
             </Card>
           </GridItem>
         </GridContainer>
-      </div>
+      </React.Fragment>
     );
   }
 }
