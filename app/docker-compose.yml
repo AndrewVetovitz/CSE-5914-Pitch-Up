@@ -1,13 +1,14 @@
 version: '3'
-services:
 
-  backend:
-    build: ./server/.
+services:
+  app:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
     ports:
-      - "5000:5000"
+      - 5000:5000
     expose:
       - 5000
-    #env_file: .env
       
 
   # Eventually postgres?

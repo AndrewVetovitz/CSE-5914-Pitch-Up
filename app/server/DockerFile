@@ -1,7 +1,6 @@
-FROM python:3.5.6-alpine
+FROM python:3.5.6
 
-RUN apt-get update -y && \
-    apt-get install -y python-pip python-dev
+RUN pip install --upgrade setuptools
 
 # We copy just the requirements.txt first to leverage Docker cache
 
