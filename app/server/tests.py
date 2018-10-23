@@ -4,17 +4,22 @@ import unittest
 from run import create_app
 from database import db
 from models.user import User
-from db_create
+from db_create import create_database
+from db_dummy import add_dummy_data
 
-app = create_app('TESTING')
+env = 'TESTING'
+
+app = create_app(env)
 
 class UserTests(unittest.TestCase):
     ''' User entity test suite '''
 
     def setUp(self):
         self.app = app.test_client()
+        create_database(env)
+        add_dummy_data(env)
         db.init_app(self.app)
-        add_dummy_data
+        
 
     def tearDown(self):
         db.session.remove()
@@ -25,3 +30,6 @@ class UserTests(unittest.TestCase):
         db.session.add(new_user)
         db.session.commit()
     
+
+if __name__ == "__main__":
+    unittest.main()

@@ -21,6 +21,7 @@ def create_database(environment):
 
     db.create_all()
 
+
 if __name__ == "__main__":
 
     env = 'DEVELOPMENT'

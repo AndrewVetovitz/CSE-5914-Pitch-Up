@@ -3,12 +3,13 @@
 #
 ################################################################################
 
+import os, sys
+from datetime import datetime
+
 from database import db
 from models.pitch import Pitch
 from models.pitch_try import PitchTry
 from models.user import User
-from datetime import datetime
-
 from run import create_app
 
 def add_dummy_data(environment):
@@ -41,3 +42,14 @@ def add_dummy_data(environment):
     db.session.add(pitch_try)
     db.session.commit()
     print("Added:", pitch_try)
+
+
+if __name__ == "__main__":
+
+    env = 'DEVELOPMENT'
+    if len(sys.argv) > 1:
+        env = sys.argv[1]
+    
+    add_dummy_data(env)
+
+    print("[~] Successfully added dummy data in the database for the", env, "environment.")
