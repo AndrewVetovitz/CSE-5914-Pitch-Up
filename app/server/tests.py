@@ -2,7 +2,9 @@ import os
 import unittest
 
 from run import create_app
+from database import db
 from models.user import User
+from db_create
 
 app = create_app('TESTING')
 
@@ -11,6 +13,8 @@ class UserTests(unittest.TestCase):
 
     def setUp(self):
         self.app = app.test_client()
+        db.init_app(self.app)
+        add_dummy_data
 
     def tearDown(self):
         db.session.remove()

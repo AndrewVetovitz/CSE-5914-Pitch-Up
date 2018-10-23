@@ -3,6 +3,8 @@
 #
 ################################################################################
 
+import os, sys
+
 from database import db
 from models.pitch import Pitch
 from models.pitch_try import PitchTry
@@ -11,29 +13,43 @@ from datetime import datetime
 
 from run import create_app
 
-flask_app = create_app()
-flask_app.app_context().push()
+def create_database(environment):
+    ''' Create a database for the given environment '''
 
-db.create_all()
+    flask_app = create_app(environment)
+    flask_app.app_context().push()
+
+    db.create_all()
+
+if __name__ == "__main__":
+
+    env = 'DEVELOPMENT'
+    if len(sys.argv) > 1:
+        env = sys.argv[1]
+    
+    create_database(env)
+
+    print("[~] Successfully created a database for the", env, "environment.")
+
 
 # Create some dummy data
-user = User(name = "Chris Ellis", email = "chris@bingoogle.com", password="123456")
-db.session.add(user)
-db.session.commit()
-print("Added:", user)
+# user = User(name = "Chris Ellis", email = "chris@bingoogle.com", password="123456")
+# db.session.add(user)
+# db.session.commit()
+# print("Added:", user)
 
-pitch = Pitch(name = "Amazing new speaker technology", user_id = user.id)
-db.session.add(pitch)
-db.session.commit()
-print("Added:", pitch)
+# pitch = Pitch(name = "Amazing new speaker technology", user_id = user.id)
+# db.session.add(pitch)
+# db.session.commit()
+# print("Added:", pitch)
 
 
-pitch_try = PitchTry(pitch_id=pitch.id, transcription="Hey there you're such shit", duration=12)
-db.session.add(pitch_try)
-db.session.commit()
-print("Added:", pitch_try)
+# pitch_try = PitchTry(pitch_id=pitch.id, transcription="Hey there you're such shit", duration=12)
+# db.session.add(pitch_try)
+# db.session.commit()
+# print("Added:", pitch_try)
 
-pitch_try = PitchTry(pitch_id=pitch.id, transcription="Hey i am interested in audio engineering how about you there are some cool things we can do with it", duration=20)
-db.session.add(pitch_try)
-db.session.commit()
-print("Added:", pitch_try)
+# pitch_try = PitchTry(pitch_id=pitch.id, transcription="Hey i am interested in audio engineering how about you there are some cool things we can do with it", duration=20)
+# db.session.add(pitch_try)
+# db.session.commit()
+# print("Added:", pitch_try)
