@@ -42,7 +42,8 @@ def get_pitch(pitch_id):
             data = {
                 'pitch': {
                     'name': pitch.name,
-                    'content_analysis': watson_data                
+                    'content_analysis': watson_data,
+                    'documents': ['abc','def','xyz']               
                 },
                 'pitch_try_ids': pitch_try_ids
             }
@@ -82,7 +83,7 @@ def new_pitch_try(pitch_id):
             pitch_try = PitchTry(
                 pitch_id = pitch.id,
                 transcription = transcription,
-                duration = duration
+                duration = duration,
             )
 
             if pitch_try:
@@ -103,4 +104,45 @@ def new_pitch_try(pitch_id):
             return 'pitch does not exist in db'
 
     except Exception as e:
+        raise e
+
+@pitch_blueprint.route('/<int:pitch_id>/pitch_tries')
+def get_pitch_tries_for_pitch(pitch_id):
+    
+    data = {
+        'pitches': []
+    }
+    
+    try:
+        pitch = Pitch.query.filter_by(id=pitch_id).first()
+
+        if pitch:
+            pitch_tries = PitchTry.query.filter_by(pitch_id=pitch.id)
+
+            if pitch_tries:
+                
+                for pitch_try in pitch_tries:
+                    pitch_try_data = {
+                        'id': pitch_try.id,
+                        'duration': pitch_try.duration,
+                        'timestamp': '123', # make date
+                        'score': 88 # make metric
+                    }
+
+                    data['pitches'].append(pitch_try_data)
+
+
+            else:
+                data['msg'] = "No pitch tries for this pitch ID"
+
+            
+            return jsonify(data)
+
+
+        else:
+
+            return ('This pitch ID does not exist.', 404)
+
+    except Exception as e:
+        # TODO something meaningful
         raise e

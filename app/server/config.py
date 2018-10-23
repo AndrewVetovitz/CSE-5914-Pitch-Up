@@ -7,6 +7,7 @@
 ################################################################################
 
 import os
+from dotenv import load_dotenv
 
 APP_NAME = 'PitchUp: Backend Application'
 APP_VERSION = "0.0.1"
