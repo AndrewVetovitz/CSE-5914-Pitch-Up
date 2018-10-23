@@ -1,4 +1,4 @@
-import os
+import os, sys
 from os.path import join, dirname
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
@@ -7,7 +7,7 @@ from six.moves.urllib.parse import urlencode
 from flask_cors import CORS
 
 from database import db
-from config import SQLITE_DB_LOCATION
+from config import get_environment_config
 
 from controllers.user import user_blueprint
 from controllers.pitch import pitch_blueprint
@@ -25,10 +25,15 @@ from helpers.authenticate import AuthError
 
 from flask import Flask
 
-def create_app():
-    app = Flask(__name__)
+def create_app(environment='DEVELOPMENT'):
+    ''' Create the application with the provided enviornment variable.
+        environment: 'DEVELOPMENT', 'TESTING', 'PRODUCTION'
+            - Defaults to 'DEVELOPMENT' 
+    '''
 
-    app.config["UPLOAD_FOLDER"] = os.getenv("UPLOAD_FOLDER")
+    env_config = get_environment_config(environment)
+
+    app = Flask(__name__)
 
     @app.errorhandler(AuthError)
     def handle_auth_error(ex):
@@ -36,8 +41,15 @@ def create_app():
         response.status_code = ex.status_code
         return response
 
+    # Apply configurations
+    if not env_config:
+        print("[!] There was an error configuring the application. Exiting.")
+
+    app.config["UPLOAD_FOLDER"] = os.getenv("UPLOAD_FOLDER")
+    app.config['SQLALCHEMY_DATABASE_URI'] = env_config['RDBMS_DATABASE_URI']
+    app.config['TESTING'] = env_config['TESTING']
+
     # Database
-    app.config['SQLALCHEMY_DATABASE_URI'] = SQLITE_DB_LOCATION
     db.init_app(app)
 
     # Views/Blueprints
@@ -50,6 +62,21 @@ def create_app():
 
     return app
 
+
 if __name__ == "__main__":
-    app = create_app()
+
+    # Load the environment, checking first passed in as CLI argument, 
+    # then global variable, then default.
+    # TODO this needs to eventually be a simple function call to parse args,
+    # so we can have dynamic host names, etc.
+    env = False
+    if len(sys.argv) > 1:
+        env = sys.argv[1]
+
+    if not env:
+        env = os.getenv('APP_ENVIRONMENT', 'DEVELOPMENT')
+
+    print("[~] Starting application in", env, "environment.")
+
+    app = create_app(env)
     app.run(debug=True, host='localhost', port=5000)
