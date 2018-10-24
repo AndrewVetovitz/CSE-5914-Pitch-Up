@@ -10,7 +10,6 @@ USER_COLLECTION_NAME_TEMPLATE = 'user_{}_pitch_{}'
 class Discovery(object):
 
     def __init__(self):
-        print(os.getenv('DISCOVERY_VERSION'))
         self.discovery = DiscoveryV1(
             version = os.getenv('DISCOVERY_VERSION'),
             url = os.getenv('DISCOVERY_URL'),
@@ -28,7 +27,7 @@ class Discovery(object):
                 print("Found environment")
         
         if not self.environment_id:
-            env = wat.createEnvironment(PITCHUP_DISCOVERY_SERVICE_NAME, "PitchUp Discovery Service Environment")
+            env = self.createEnvironment(PITCHUP_DISCOVERY_SERVICE_NAME, "PitchUp Discovery Service Environment")
             self.environment_id = env.get('environment_id', False)
 
         if not self.environment_id:
@@ -108,7 +107,7 @@ class Discovery(object):
             environment_id = self.environment_id,
             name = USER_COLLECTION_NAME_TEMPLATE.format(user_id, pitch_id),
             description = "User {}, Pitch {} - Discovery Docs Collection".format(user_id, pitch_id)
-        ).get_result()
+        )
 
         if collection:
             return collection.get('collections', False)[0]
@@ -184,8 +183,3 @@ if __name__ == '__main__':
 
     print("User collection:", user_collection)
     user_collection_id = user_collection['collection_id']
-
-    # Upload a document to collection
-    # file_path = ''
-    # file_name = 'test.pdf'
-    # wat.addDocument(user_id, pitch_id, user_collection_id, file_name)

@@ -1,16 +1,14 @@
 import os
+
 from flask import Blueprint, request, current_app
 from six.moves.urllib.parse import urlencode
-
-from config import FILESTORE_USER_DOCUMENT_TEMPLATE
+from watson.discovery import Discovery
 
 from models.user import User
 from models.pitch import Pitch
-
 from database import db
-
 from helpers.authenticate import requires_auth
-from watson.discovery import Discovery
+
 
 user_blueprint = Blueprint('user', __name__, template_folder=None, url_prefix='/user')
 
@@ -90,6 +88,7 @@ def add_pitch(single_id):
     except Exception as e:
         raise e
 
+
 @user_blueprint.route('/<int:single_id>/pitches', methods=['GET'])
 def get_user_pitches(single_id):
     ''' Get all pitches associated with a user ID '''
@@ -105,14 +104,19 @@ def get_user_pitches(single_id):
         if user:
             pitches = Pitch.query.filter_by(user_id=user.id).all()
 
+            # Add pitches that we found, otherwise, the return will be the
+            # empty list
             if pitches:
                 
                 for pitch in pitches:
                     pitch_data = {
+                        'id': pitch.id,
+                        'name': pitch.name,
 
                     }
                     data['pitches'].append(pitch_data)
 
+            
                 return jsonify(data)
 
             else:
@@ -123,46 +127,3 @@ def get_user_pitches(single_id):
 
     except Exception as e:
         raise e
-
-
-@user_blueprint.route('/<int:user_id>/upload/<int:pitch_id>', methods=['POST'])
-# @requires_auth
-def upload(user_id, pitch_id):
-
-    # Using the bottom version to account for multi-file upload.
-    # files = request.files.to_dict(flat=False)
-
-    files = request.files.getlist('files[]')
-
-    print(files)
-
-    file_names = []
-    for file_obj in files:
-
-        print("Getting file:", file_obj)
-
-        # Add file name to a list to use for Discovery
-        file_names.append(file_obj.filename)
-        file_obj.save(os.path.join(FILESTORE_USER_DOCUMENT_TEMPLATE.format(user_id, pitch_id), file_obj.filename))
-
-
-    # Error checking for later, more or less
-    # if 'file' not in request.files:
-    #     print("No file uploaded")
-    #     return ("No file uploaded", 400)
-
-    # Create a Discovery instance and upload this doc for the user
-    wat = Discovery()
-
-    user_collection = wat.getUserCollection(user_id, pitch_id)
-
-    if not user_collection:
-        user_collection = wat.createUserCollection(user_id, pitch_id)
-
-    user_collection_id = user_collection['collection_id']
-
-    # Upload all documents to collection
-    for file_name in file_names:
-        wat.addDocument(user_id, pitch_id, user_collection_id, file_name)
-    
-    return ('', 200)
