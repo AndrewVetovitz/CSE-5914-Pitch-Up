@@ -13,9 +13,7 @@ from models.user import User
 from run import create_app
 
 def add_dummy_data(environment):
-    ''' Create dummy data for the given environment
-    
-    '''
+    ''' Create dummy data for the given environment'''
 
     flask_app = create_app(environment)
     flask_app.app_context().push()
