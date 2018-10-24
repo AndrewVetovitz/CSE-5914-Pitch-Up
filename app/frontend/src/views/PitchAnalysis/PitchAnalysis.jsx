@@ -106,7 +106,7 @@ class PitchAnalysis extends React.Component {
 
     const tone_sentence = [];
 
-    if (tone['sentences_tone'] !== undefined) {
+    if (tone !== null && tone['sentences_tone'] !== undefined) {
         tone['sentences_tone'].forEach((sent, index) => {
             if(sent['tones'].length === 0){
                 tone_sentence.push(<span key={index}>{sent['text'] + ' '}</span>);

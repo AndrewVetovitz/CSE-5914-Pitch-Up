@@ -90,6 +90,40 @@ def add_pitch(single_id):
     except Exception as e:
         raise e
 
+@user_blueprint.route('/<int:single_id>/pitches', methods=['GET'])
+def get_user_pitches(single_id):
+    ''' Get all pitches associated with a user ID '''
+
+    data = {
+        'pitches': []
+    }
+
+    try:
+        # Make sure user exists
+        user = User.query.filter_by(id=single_id).first()
+
+        if user:
+            pitches = Pitch.query.filter_by(user_id=user.id).all()
+
+            if pitches:
+                
+                for pitch in pitches:
+                    pitch_data = {
+
+                    }
+                    data['pitches'].append(pitch_data)
+
+                return jsonify(data)
+
+            else:
+                return ('No pitches available for this user ID', 404)
+
+        else:
+            return ('User does not exist in db', 404)
+
+    except Exception as e:
+        raise e
+
 
 @user_blueprint.route('/<int:user_id>/upload/<int:pitch_id>', methods=['POST'])
 # @requires_auth
