@@ -28,6 +28,8 @@ def get_environment_config(environment):
 
     conf = {}
 
+    load_dotenv()
+
     if environment == 'DEVELOPMENT':
         conf['RDBMS_DATABASE_URI'] = SQLITE_DB_LOCATION
         conf['TESTING'] = False
