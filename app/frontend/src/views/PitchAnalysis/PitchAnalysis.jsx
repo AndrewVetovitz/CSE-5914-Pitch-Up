@@ -42,6 +42,7 @@ import {
 } from "variables/charts";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
+import ToneCard from "../../components/DashCards/ToneCard";
 
 class PitchAnalysis extends React.Component {
     state = {
@@ -104,52 +105,6 @@ class PitchAnalysis extends React.Component {
     const { duration, words_per_minute, transcription } = pitch_try;
     const { stop_words, explitives, tone } = pitch_try.analysis_words;
 
-    const tone_sentence = [];
-
-    if (tone !== null && tone['sentences_tone'] !== undefined) {
-        tone['sentences_tone'].forEach((sent, index) => {
-            if(sent['tones'].length === 0){
-                tone_sentence.push(<span key={index}>{sent['text'] + ' '}</span>);
-            } else {
-                switch(sent['tones'][0]['tone_name']){
-                    case 'Anger': {
-                        tone_sentence.push(<span style={{color: 'red'}} key={index}>{sent['text'] + ' '}</span>);
-                        break;
-                    }
-                    case 'Fear': {
-                        tone_sentence.push(<span style={{color: 'green'}} key={index}>{sent['text'] + ' '}</span>);
-                        break;
-                    }
-                    case 'Joy': {
-                        tone_sentence.push(<span style={{color: 'yellow'}} key={index}>{sent['text'] + ' '}</span>);
-                        break;
-                    }
-                    case 'Sadness': {
-                        tone_sentence.push(<span style={{color: 'orange'}} key={index}>{sent['text'] + ' '}</span>);
-                        break;
-                    }
-                    case 'Analytical': {
-                        tone_sentence.push(<span style={{color: 'blue'}} key={index}>{sent['text'] + ' '}</span>);
-                        break;
-                    }
-                    case 'Confident': {
-                        tone_sentence.push(<span style={{color: 'purple'}} key={index}>{sent['text'] + ' '}</span>);
-                        break;
-                    }
-                    case 'Tentative': {
-                        tone_sentence.push(<span style={{color: 'blue'}} key={index}>{sent['text'] + ' '}</span>);
-                        break;
-                    }
-                    default: {
-                        tone_sentence.push(<span key={index}>{sent['text'] + ' '}</span>);
-                        console.log('Unknown');
-                    }
-                }
-            }
-
-        });
-    }
-
     return (
       <React.Fragment>
         <GridContainer>
@@ -186,21 +141,11 @@ class PitchAnalysis extends React.Component {
               </CardBody>
             </Card>
           </GridItem>
+
           <GridItem xs={12} sm={12} md={6}>
-            <Card>
-              <CardHeader color="warning">
-                <h4 className={classes.cardTitleWhite}>Tone Analysis (RAW JASON)</h4>
-                <p className={classes.cardCategoryWhite}>
-                  Tone Anaylsis of pitch
-                </p>
-              </CardHeader>
-              <CardBody>
-                <p>
-                {tone_sentence}
-                </p>
-              </CardBody>
-            </Card>
+            <ToneCard tone={tone} classes={classes}/>
           </GridItem>
+          
           <GridItem xs={12} sm={12} md={6}>
             <Card>
               <CardHeader color="warning">
