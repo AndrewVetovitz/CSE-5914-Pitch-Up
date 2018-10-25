@@ -71,10 +71,9 @@ class Pitches extends React.Component {
         }
         return dummyPitches
       }
-      console.log("YO WHAT UP")
       return resp.json()
     }).then((json) => {
-      console.log(json)
+      console.log(json);
       this.setState({
         showModal: false,
         pitches: json.pitches
@@ -105,48 +104,48 @@ class Pitches extends React.Component {
         <PitchCard name={p.name} id={p.id}/>
       </GridItem>
     )
-    console.log(pitchCards)
+
     return (
-      <div>
-      <GridContainer>
-        {pitchCards}
-        <GridItem xs={12} sm={6} md={3}>
-          <Card>
-            <CardHeader color="success" stats icon>
-              <CardIcon color="success">
-                <Icon>create</Icon>
-              </CardIcon>
-              <p className={classes.cardCategory}>New Pitch</p>
-              <h4 className={classes.cardTitle}>
-                Create A Pitch
-              </h4>
-            </CardHeader>
-            <CardFooter stats>
-              <div className={classes.stats}>
-                <Button onClick={this.showModal}>Create Pitch</Button>
-              </div>
-            </CardFooter>
-          </Card>
-        </GridItem>
-      </GridContainer>
-      <Modal open={this.state.showModal} onClose={this.closeModal}> 
-        <div style={modalStyle}>
-          <h5 variant="h6" id="modal-title">
-              Create a Pitch
-          </h5>
-          <TextField
-          id="pitchNameTextField"
-          label="Pitch Name"
-          onChange={this.handleTextInput}
-          placeholder="Enter Your Pitch Name"
-          className={classes.textField}
-          margin="normal"
-          variant="outlined"
-          />
-          <Button onClick={this.createPitch}>Create</Button>  
+        <div>
+            <GridContainer>
+                {pitchCards}
+                <GridItem xs={12} sm={6} md={3}>
+                <Card>
+                    <CardHeader color="success" stats icon>
+                    <CardIcon color="success">
+                        <Icon>create</Icon>
+                    </CardIcon>
+                    <p className={classes.cardCategory}>New Pitch</p>
+                    <h4 className={classes.cardTitle}>
+                        Create A Pitch
+                    </h4>
+                    </CardHeader>
+                    <CardFooter stats>
+                    <div className={classes.stats}>
+                        <Button onClick={this.showModal}>Create Pitch</Button>
+                    </div>
+                    </CardFooter>
+                </Card>
+                </GridItem>
+            </GridContainer>
+            <Modal open={this.state.showModal} onClose={this.closeModal}> 
+                <div style={modalStyle}>
+                <h5 variant="h6" id="modal-title">
+                    Create a Pitch
+                </h5>
+                <TextField
+                id="pitchNameTextField"
+                label="Pitch Name"
+                onChange={this.handleTextInput}
+                placeholder="Enter Your Pitch Name"
+                className={classes.textField}
+                margin="normal"
+                variant="outlined"
+                />
+                <Button onClick={this.createPitch}>Create</Button>  
+                </div>
+            </Modal>
         </div>
-      </Modal>
-    </div>
     ); 
   }
 }

@@ -31,8 +31,17 @@ class Pitch extends React.Component {
     value: 0,
     pitch_tries: []
   };
-  componentDidMount() {
 
+  componentDidMount() {
+      const id = this.getPitchId();
+    // fetch('http://localhost:5000/pitch_try/' + id).then((resp) => resp.json())
+    //     .then((res_json) => {
+    //         this.setState({
+    //             pitch_tries: [
+    //                 ...res_json.pitch_try
+    //             ]
+    //         });
+    // });
   }
 
   fetchPitchData() {
@@ -54,6 +63,9 @@ class Pitch extends React.Component {
     if(hashProps.length > 1){
       pitchId = hashProps[1]
     }
+
+    console.log(pitchId);
+
     return pitchId
   }
 

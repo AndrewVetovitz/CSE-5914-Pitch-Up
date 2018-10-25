@@ -56,7 +56,7 @@ class PitchAnalysis extends React.Component {
                         ...res_json.pitch_try
                     }
                 });
-        })
+        });
     }
   }
 
