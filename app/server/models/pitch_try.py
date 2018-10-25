@@ -37,6 +37,9 @@ class PitchTry(db.Model):
 
         self.words_per_minute = analysis.words_per_minute(transcription, duration)
 
+        print("\t\t", transcription)
+        print("\t\t", analysis.tone_anaysis(transcription))
+
         word_analysis = {
             'explitives': analysis.num_char_per_word(transcription, '*'),
             'stop_words': analysis.num_occurences(transcription, WORDS_STOP),

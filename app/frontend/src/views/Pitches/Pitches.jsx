@@ -1,11 +1,9 @@
 import React from "react";
-import { Link } from 'react-router-dom'
 
 // @material-ui/core
 import withStyles from "@material-ui/core/styles/withStyles";
 import Icon from "@material-ui/core/Icon";
 import Modal from '@material-ui/core/Modal';
-import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
 // core components

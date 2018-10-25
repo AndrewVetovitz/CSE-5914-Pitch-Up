@@ -9,7 +9,14 @@ export default class ToneCard extends Component {
 
     const tone_sentence = [];
 
+    if(tone !== null && tone['document_tone'] !== undefined && tone['document_tone']['tones'] !== undefined && tone['document_tone']['tones'].length !== 0){
+        tone_sentence.push(<span key={-1}>{'Document tone is ' + tone['document_tone']['tones'][0]['tone_name']}</span>);
+    } else if(tone !== null) {
+        tone_sentence.push(<span key={-1}>{'Document is neutral'}</span>); 
+    }
+
     if (tone !== null && tone['sentences_tone'] !== undefined) {
+        tone_sentence.push(<br/>);
         tone['sentences_tone'].forEach((sent, index) => {
             if(sent['tones'].length === 0){
                 tone_sentence.push(<span key={index}>{sent['text'] + ' '}</span>);
@@ -49,7 +56,6 @@ export default class ToneCard extends Component {
                     }
                 }
             }
-
         });
     }
 

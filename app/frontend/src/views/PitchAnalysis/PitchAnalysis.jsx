@@ -1,45 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-// react plugin for creating charts
-import ChartistGraph from "react-chartist";
 // @material-ui/core
 import withStyles from "@material-ui/core/styles/withStyles";
-import Icon from "@material-ui/core/Icon";
-// @material-ui/icons
-import Store from "@material-ui/icons/Store";
-import Warning from "@material-ui/icons/Warning";
-import DateRange from "@material-ui/icons/DateRange";
-import LocalOffer from "@material-ui/icons/LocalOffer";
-import Update from "@material-ui/icons/Update";
-import ArrowUpward from "@material-ui/icons/ArrowUpward";
-import AccessTime from "@material-ui/icons/AccessTime";
-import Accessibility from "@material-ui/icons/Accessibility";
-import BugReport from "@material-ui/icons/BugReport";
-import Code from "@material-ui/icons/Code";
-import Cloud from "@material-ui/icons/Cloud";
-import Mic from "@material-ui/icons/Mic";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
-import Table from "components/Table/Table.jsx";
-import Card from "components/Card/Card.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardIcon from "components/Card/CardIcon.jsx";
-import CardBody from "components/Card/CardBody.jsx";
-import CardFooter from "components/Card/CardFooter.jsx";
-import Button from "components/CustomButtons/Button.jsx"
-import StopWordsCard from "components/DashCards/StopWordsCard.jsx"
-import CursesCard from "components/DashCards/CursesCard.jsx"
-import PitchDurationCard from "components/DashCards/PitchDurationCard.jsx"
-import WPMCard from "components/DashCards/WPMCard.jsx"
-
-import { bugs, website, server } from "variables/general";
-
-import {
-  dailySalesChart,
-  emailsSubscriptionChart,
-  completedTasksChart
-} from "variables/charts";
+import StopWordsCard from "components/DashCards/StopWordsCard.jsx";
+import CursesCard from "components/DashCards/CursesCard.jsx";
+import PitchDurationCard from "components/DashCards/PitchDurationCard.jsx";
+import WPMCard from "components/DashCards/WPMCard.jsx";
+import TranscriptionCard from "components/DashCards/TranscriptionCard.jsx";
+import RawCard from "components/DashCards/RawCard.jsx";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 import ToneCard from "../../components/DashCards/ToneCard";
@@ -127,19 +98,7 @@ class PitchAnalysis extends React.Component {
         </GridContainer>
         <GridContainer>
           <GridItem xs={12} sm={12} md={6}>
-            <Card>
-              <CardHeader color="warning">
-                <h4 className={classes.cardTitleWhite}>Pitch Transcription</h4>
-                <p className={classes.cardCategoryWhite}>
-                  Complete Transcription of Your Pitch
-                </p>
-              </CardHeader>
-              <CardBody>
-                <p>
-                {transcription}
-                </p>
-              </CardBody>
-            </Card>
+            <TranscriptionCard transcription={transcription} classes={classes}></TranscriptionCard>
           </GridItem>
 
           <GridItem xs={12} sm={12} md={6}>
@@ -147,19 +106,7 @@ class PitchAnalysis extends React.Component {
           </GridItem>
           
           <GridItem xs={12} sm={12} md={6}>
-            <Card>
-              <CardHeader color="warning">
-                <h4 className={classes.cardTitleWhite}>Raw JSON</h4>
-                <p className={classes.cardCategoryWhite}>
-                  Raw analysis from our model
-               </p>
-              </CardHeader>
-              <CardBody>
-                <p>
-                  {JSON.stringify(pitch_try, null, 4)}
-                </p>
-              </CardBody>
-            </Card>
+            <RawCard json={pitch_try} classes={classes}/>
           </GridItem>
         </GridContainer>
       </React.Fragment>

@@ -18,16 +18,9 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import Button from "components/CustomButtons/Button.jsx"
 
-import {
-  dailySalesChart,
-  emailsSubscriptionChart,
-  completedTasksChart
-} from "variables/charts";
-
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
 class Pitch extends React.Component {
-
   constructor(props){
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -39,8 +32,8 @@ class Pitch extends React.Component {
   };
 
   fetchPitchData() {
-    const pitch_id = this.props.location.hash.split('#')[1]
-    
+      // TODO fix???????
+    // const pitch_id = this.props.location.hash.split('#')[1]
   }
 
   goToStudio() {

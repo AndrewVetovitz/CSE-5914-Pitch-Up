@@ -1,16 +1,9 @@
 import React from "react";
-import {withRouter} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // core components
-import Quote from "components/Typography/Quote.jsx";
-import Muted from "components/Typography/Muted.jsx";
-import Primary from "components/Typography/Primary.jsx";
-import Info from "components/Typography/Info.jsx";
-import Success from "components/Typography/Success.jsx";
-import Warning from "components/Typography/Warning.jsx";
-import Danger from "components/Typography/Danger.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
@@ -76,7 +69,7 @@ class RecordingStudio extends React.Component {
     this.recognition.onresult = (event) => {
       var {finalTranscript} = this.state;
       var interimResult = ''
-      console.log(event)
+    //   console.log(event);
       for(var i = event.resultIndex; i < event.results.length; i++){
         if(event.results[i].isFinal){
           finalTranscript.push(event.results[i][0].transcript)
@@ -84,7 +77,7 @@ class RecordingStudio extends React.Component {
           interimResult += event.results[i][0].transcript
         }
       }
-      console.log(interimResult)
+    //   console.log(interimResult);
       this.setState({
         finalTranscript: finalTranscript,
         interimResult: interimResult
@@ -116,7 +109,7 @@ class RecordingStudio extends React.Component {
     localStorage.setItem('pitch_transcription', transcript)
     localStorage.setItem('pitch_duration', duration)
 
-    console.log(duration);
+    // console.log(duration);
 
     fetch('http://localhost:5000/pitch/1/new_try', {
       method: 'POST',
