@@ -103,15 +103,25 @@ class RecordingStudio extends React.Component {
     })
   }
 
+  getPitchId() {
+    let hashProps = this.props.location.hash.split('#')
+    let pitchId = 13371337
+    if(hashProps.length > 1){
+      pitchId = hashProps[1]
+    }
+    return pitchId
+  }
+
   analyzePitch() {
     let transcript = this.state.finalTranscript.reduce((acum, curr) => acum + ' ' + curr, '')
     let duration = this.state.time
     localStorage.setItem('pitch_transcription', transcript)
     localStorage.setItem('pitch_duration', duration)
+    var pitch_id = this.getPitchId()
 
     // console.log(duration);
 
-    fetch('http://localhost:5000/pitch/1/new_try', {
+    fetch('http://localhost:5000/pitch/' + pitch_id + '/new_try', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

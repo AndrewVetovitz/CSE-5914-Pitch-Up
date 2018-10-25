@@ -40,7 +40,8 @@ class Pitch extends React.Component {
   }
 
   goToStudio() {
-    this.props.history.push('/recording')
+    let pitch_id = this.getPitchId()
+    this.props.history.push('/recording#' + pitch_id)
   };
 
   handleChange = (event, value) => {
