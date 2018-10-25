@@ -10,6 +10,32 @@ from watson.discovery import Discovery
 
 pitch_try_blueprint = Blueprint('pitch_try', __name__, url_prefix='/pitch_try')
 
+@pitch_try_blueprint.route('/test/<int:pitch_try_id>')
+def test(pitch_try_id):
+    print(pitch_try_id)
+
+    pitch_trys = PitchTry.query.filter_by(id=pitch_try_id).all()
+
+    # print(pitch_trys)
+
+    if pitch_trys:
+        data = []
+
+        for row in pitch_trys:
+            print(row)
+
+        data.append({
+            'attemps': '1',
+            'data': '2',
+            'duration': '3',
+            'results': '4'
+        })
+
+        # return ''
+        return jsonify(data)
+    else:
+        return ('', 404)
+
 @pitch_try_blueprint.route('/<int:pitch_try_id>')
 def get_pitch_try(pitch_try_id):
 

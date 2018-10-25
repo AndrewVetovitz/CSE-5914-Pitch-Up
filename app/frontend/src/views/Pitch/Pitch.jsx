@@ -32,16 +32,36 @@ class Pitch extends React.Component {
     pitch_tries: []
   };
 
+//   var obj = {"1":5,"2":7,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0,"10":0,"11":0,"12":0}
+// var result = Object.keys(obj).map(function(key) {
+//   return [Number(key), obj[key]];
+// });
+
   componentDidMount() {
       const id = this.getPitchId();
-    // fetch('http://localhost:5000/pitch_try/' + id).then((resp) => resp.json())
-    //     .then((res_json) => {
-    //         this.setState({
-    //             pitch_tries: [
-    //                 ...res_json.pitch_try
-    //             ]
-    //         });
-    // });
+    fetch('http://localhost:5000/pitch_try/test/' + id).then((resp) => resp.json())
+        .then((res_json) => {
+            console.log(res_json);
+            
+            if(res_json instanceof Array && res_json.length > 0){
+                const rows = []
+                
+                res_json.forEach(function(entry) {
+                    const table_row = []
+                    Object.values(entry).map(value => {
+                        table_row.push(value);
+                    });
+
+                    rows.push(table_row);
+                });
+
+                console.log('results: ', rows);
+
+                this.setState({
+                    pitch_tries: rows
+                });
+            }
+        });
   }
 
   fetchPitchData() {
@@ -60,11 +80,10 @@ class Pitch extends React.Component {
   getPitchId() {
     let hashProps = this.props.location.hash.split('#')
     let pitchId = 13371337
+
     if(hashProps.length > 1){
       pitchId = hashProps[1]
     }
-
-    console.log(pitchId);
 
     return pitchId
   }
