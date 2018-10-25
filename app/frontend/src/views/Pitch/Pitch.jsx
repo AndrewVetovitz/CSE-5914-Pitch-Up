@@ -20,8 +20,6 @@ import Button from "components/CustomButtons/Button.jsx"
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
-
-
 class Pitch extends React.Component {
   constructor(props){
     super(props);
@@ -57,7 +55,13 @@ class Pitch extends React.Component {
         if(json && json['pitch'] && json['pitch']['content_analysis'] && json['pitch']['content_analysis']['related_concepts']){
             const concepts = json['pitch']['content_analysis']['related_concepts'];
             
-            const conceptArray = JSON.parse(concepts);
+            let conceptArray;
+
+            try {
+                conceptArray = JSON.parse(concepts);
+            } catch(err) {
+                conceptArray = concepts;
+            }
 
             const temp = []
 
