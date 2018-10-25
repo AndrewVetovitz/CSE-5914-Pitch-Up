@@ -1,6 +1,6 @@
 import os
 
-from flask import Blueprint, request, current_app
+from flask import Blueprint, request, current_app, jsonify
 from six.moves.urllib.parse import urlencode
 from watson.discovery import Discovery
 

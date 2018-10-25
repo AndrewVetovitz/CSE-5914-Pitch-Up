@@ -22,6 +22,15 @@ def create_database(environment):
     db.create_all()
 
 
+def drop_database(environment):
+    ''' Delete a database for the given environment '''
+
+    flask_app = create_app(environment)
+    flask_app.app_context().push()
+
+    db.drop_all()
+
+
 if __name__ == "__main__":
 
     env = 'DEVELOPMENT'
