@@ -38,9 +38,9 @@ class PitchTry(db.Model):
         self.words_per_minute = analysis.words_per_minute(transcription, duration)
 
         word_analysis = {
-            'explitives': analysis.num_occurences(transcription, WORDS_EXPLITIVES),
+            'explitives': analysis.num_char_per_word(transcription, '*'),
             'stop_words': analysis.num_occurences(transcription, WORDS_STOP),
-            'tone': analysis.tone_anaysis('I hate testing my tone! Seeing if this works fuck life')
+            'tone': analysis.tone_anaysis(transcription)
         }
 
         self.analysis_words = json.dumps(word_analysis)

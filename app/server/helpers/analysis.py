@@ -12,12 +12,22 @@ class Analysis(object):
             words_per_minute = float(len(trans_list) * 60) / float(duration)
             return round(words_per_minute, 2)
 
-    def num_occurences(self, transcript, word_list):
+    def num_occurences(self, transcript, find_word_list):
         trans_list = transcript.split()
         count = 0
         
-        for word in word_list:
-            if word in trans_list:
+        for word in trans_list:
+            if word in find_word_list:
+                count += 1
+
+        return count
+
+    def num_char_per_word(self, transcript, char_to_find):
+        trans_list = transcript.split()
+        count = 0
+        
+        for word in trans_list:
+            if char_to_find in word:
                 count += 1
 
         return count
