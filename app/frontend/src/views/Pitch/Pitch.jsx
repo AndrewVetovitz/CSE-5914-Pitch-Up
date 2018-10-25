@@ -28,12 +28,15 @@ class Pitch extends React.Component {
   }
 
   state = {
-    value: 0
+    value: 0,
+    pitch_tries: []
   };
+  componentDidMount() {
+
+  }
 
   fetchPitchData() {
-      // TODO fix???????
-    // const pitch_id = this.props.location.hash.split('#')[1]
+    const pitch_id = this.props.location.hash.split('#')[1]
   }
 
   goToStudio() {
@@ -44,9 +47,19 @@ class Pitch extends React.Component {
     this.setState({ value });
   };
 
+  getPitchId() {
+    let hashProps = this.props.location.hash.split('#')
+    let pitchId = 13371337
+    if(hashProps.length > 1){
+      pitchId = hashProps[1]
+    }
+    return pitchId
+  }
+
   handleSubmit(event){
     event.preventDefault();
-    
+    var pitch_id = this.getPitchId()
+
     /*
     for(var i in this.filesInput.current.files){
       console.log(this.filesInput.current.files[i]);
@@ -57,8 +70,7 @@ class Pitch extends React.Component {
     for (const file of this.filesInput.current.files){
       data.append('files[]',file,file.name);
     }
-
-    return fetch('http://localhost:5000/user/1/upload/1',{
+    return fetch('http://localhost:5000/user/1/upload/' + pitch_id,{
       method: 'POST',
       body: data,
       mode: 'no-cors'
@@ -133,12 +145,7 @@ class Pitch extends React.Component {
                 <Table
                   tableHeaderColor="warning"
                   tableHead={["Attempt #", "Date", "Duration", "Results"]}
-                  tableData={[
-                    ["1", "9/25/2018 2:30pm", "45s", "View Results"],
-                    ["2", "9/25/2018 3:00pm", "50s", "View Results"],
-                    ["3", "9/25/2018 3:05pm", "85s", "View Results"],
-                    ["4", "9/26/2018 3:10pm", "87s", "View Results"]
-                  ]}
+                  tableData={this.state.pitch_tries}
                 />
               </CardBody>
             </Card>
