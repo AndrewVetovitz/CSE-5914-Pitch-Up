@@ -32,40 +32,27 @@ class Pitch extends React.Component {
     pitch_tries: []
   };
 
-//   var obj = {"1":5,"2":7,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0,"10":0,"11":0,"12":0}
-// var result = Object.keys(obj).map(function(key) {
-//   return [Number(key), obj[key]];
-// });
-
   componentDidMount() {
-      const id = this.getPitchId();
-    fetch('http://localhost:5000/pitch_try/test/' + id).then((resp) => resp.json())
-        .then((res_json) => {
-            console.log(res_json);
-            
-            if(res_json instanceof Array && res_json.length > 0){
-                const rows = []
-                
-                res_json.forEach(function(entry) {
-                    const table_row = []
-                    Object.values(entry).map(value => {
-                        table_row.push(value);
-                    });
-
-                    rows.push(table_row);
-                });
-
-                console.log('results: ', rows);
-
-                this.setState({
-                    pitch_tries: rows
-                });
-            }
-        });
+    this.fetchPitchTries().then((json) => {
+      console.log(json)
+      let pitchTries = json.pitches.map((p) => 
+        [
+          '' + p.id,
+          "Yesterday",
+          '' + p.duration + 's',
+          "View Results"
+        ]
+      )
+      console.log(pitchTries)
+      this.setState({
+        pitch_tries: pitchTries
+      })
+    })
   }
 
-  fetchPitchData() {
-    const pitch_id = this.props.location.hash.split('#')[1]
+  fetchPitchTries() {
+    const pitch_id = this.getPitchId()
+    return fetch('http://localhost:5000/pitch/' + pitch_id + '/pitch_tries').then((resp) => resp.json())
   }
 
   goToStudio() {
@@ -102,7 +89,7 @@ class Pitch extends React.Component {
     for (const file of this.filesInput.current.files){
       data.append('files[]',file,file.name);
     }
-    return fetch('http://localhost:5000/user/1/upload/' + pitch_id,{
+    return fetch('http://localhost:5000/pitch/' + pitch_id + '/upload/' + pitch_id,{
       method: 'POST',
       body: data,
       mode: 'no-cors'
