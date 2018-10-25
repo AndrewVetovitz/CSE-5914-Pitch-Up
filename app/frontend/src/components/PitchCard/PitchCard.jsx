@@ -14,14 +14,18 @@ import Button from "components/CustomButtons/Button.jsx"
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
-
 class PitchCard extends React.Component {
-    viewPitch() {
-        this.props.history.push('/pitch')
+    constructor(props) {
+        super(props)
+        this.viewPitch = this.viewPitch.bind(this)
+    }
+    
+    viewPitch(id) {
+        this.props.history.push('/pitch#' + id)
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, name, id } = this.props;
         return (
             <Card>
                 <CardHeader color="danger" stats icon>
@@ -30,11 +34,11 @@ class PitchCard extends React.Component {
                     </CardIcon>
                     <p className={classes.cardCategory}>Elevator Pitch</p>
                     <h4 className={classes.cardTitle}>
-                    Kitten Mittenz
+                    {name}
                     </h4>
                 </CardHeader>
                 <CardFooter stats>
-                    <Button onClick={this.viewPitch.bind(this)}>View Pitch</Button>
+                    <Button onClick={() => {this.viewPitch(id)}}>View Pitch</Button>
                 </CardFooter>
             </Card>
         );

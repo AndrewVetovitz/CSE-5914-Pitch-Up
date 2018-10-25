@@ -38,6 +38,11 @@ class Pitch extends React.Component {
     value: 0
   };
 
+  fetchPitchData() {
+    const pitch_id = this.props.location.hash.split('#')[1]
+    
+  }
+
   goToStudio() {
     this.props.history.push('/recording')
   };
