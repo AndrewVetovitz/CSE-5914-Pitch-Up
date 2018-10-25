@@ -126,7 +126,7 @@ class RecordingStudio extends React.Component {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({transcription: transcript, duration: duration})
+      body: JSON.stringify({transcription: 'this is a test of transcription', duration: duration})
     }).then((resp) => {
       if(!resp.ok){
         throw Error("ruh roh")
