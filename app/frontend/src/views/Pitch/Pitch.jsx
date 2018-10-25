@@ -31,7 +31,8 @@ class Pitch extends React.Component {
 
   state = {
     value: 0,
-    pitch_tries: []
+    pitch_tries: [],
+    topics: []
   };
 
   componentDidMount() {
@@ -49,16 +50,41 @@ class Pitch extends React.Component {
       this.setState({
         pitch_tries: pitchTries
       })
-    })
+    });
+
+    this.fetchDocuments().then(json => {
+        console.log(json);
+        if(json && json['pitch'] && json['pitch']['content_analysis'] && json['pitch']['content_analysis']['related_concepts']){
+            const concepts = json['pitch']['content_analysis']['related_concepts'];
+            
+            const conceptArray = JSON.parse(concepts);
+
+            const temp = []
+
+            if(conceptArray.length > 0){
+                for(let i = 0; i < conceptArray.length, i < 3; i++){
+                    temp.push(conceptArray[i]);
+                    temp.push(<br/>);
+                }
+
+                this.setState({
+                    topics: temp
+                });
+            }
+        }
+    });
   }
 
   handleClick = id =>{
     this.props.history.push('/pitch_analysis#' + id);
   }
 
+  fetchDocuments() {
+    return fetch('http://localhost:5000/pitch/' + this.getPitchId()).then((resp) => resp.json());
+  }
+
   fetchPitchTries() {
-    const pitch_id = this.getPitchId()
-    return fetch('http://localhost:5000/pitch/' + pitch_id + '/pitch_tries').then((resp) => resp.json())
+    return fetch('http://localhost:5000/pitch/' + this.getPitchId() + '/pitch_tries').then((resp) => resp.json());
   }
 
   goToStudio() {
@@ -95,7 +121,7 @@ class Pitch extends React.Component {
     for (const file of this.filesInput.current.files){
       data.append('files[]',file,file.name);
     }
-    return fetch('http://localhost:5000/pitch/' + pitch_id + '/upload/' + pitch_id,{
+    return fetch('http://localhost:5000/pitch/' + pitch_id + '/upload', {
       method: 'POST',
       body: data,
       mode: 'no-cors'
@@ -157,6 +183,28 @@ class Pitch extends React.Component {
             </Card>
           </GridItem>
         </GridContainer>
+
+        <GridContainer>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader color="warning">
+                <h4 className={classes.cardTitleWhite}>Pitch Concepts</h4>
+                <p className={classes.cardCategoryWhite}>
+                  Related topics from documents
+                </p>
+              </CardHeader>
+              <CardBody>
+                  {this.state.topics}
+                {/* <Table
+                  tableHeaderColor="warning"
+                  tableHead={["Attempt #", "Date", "Duration", "Results"]}
+                  tableData={this.state.pitch_tries}
+                /> */}
+              </CardBody>
+            </Card>
+          </GridItem>
+        </GridContainer>
+
         <GridContainer>
           <GridItem xs={12} sm={12} md={12}>
             <Card>
