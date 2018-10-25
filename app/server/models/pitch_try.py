@@ -35,23 +35,24 @@ class PitchTry(db.Model):
 
         analysis = Analysis()
 
-        self.words_per_minute = analysis.words_per_minute(transcription, duration)
+        if transcription:
+            self.words_per_minute = analysis.words_per_minute(transcription, duration)
 
-        print("\t\t", transcription)
-        print("\t\t", analysis.tone_anaysis(transcription))
+            print("\t\t", transcription)
+            print("\t\t", analysis.tone_anaysis(transcription))
 
-        word_analysis = {
-            'explitives': analysis.num_char_per_word(transcription, '*'),
-            'stop_words': analysis.num_occurences(transcription, WORDS_STOP),
-            'tone': analysis.tone_anaysis(transcription)
-        }
+            word_analysis = {
+                'explitives': analysis.num_char_per_word(transcription, '*'),
+                'stop_words': analysis.num_occurences(transcription, WORDS_STOP),
+                'tone': analysis.tone_anaysis(transcription)
+            }
 
-        self.analysis_words = json.dumps(word_analysis)
-        
-        pitch = Pitch.query.filter_by(id = self.pitch_id).first()
-        self.analysis_concepts = analysis.discovery_analysis(transcription, pitch)
-        
-        self.is_analyzed = True
+            self.analysis_words = json.dumps(word_analysis)
+            
+            pitch = Pitch.query.filter_by(id = self.pitch_id).first()
+            self.analysis_concepts = analysis.discovery_analysis(transcription, pitch)
+            
+            self.is_analyzed = True
 
     def __repr__(self):
         return "<PitchTry(Id: '{}', pitch_id: '{}', date: '{}', is_analyzed: '{}', duration: '{}', words_per_minute: '{}', transcription: '{}', analysis_words: '{}', analysis_concepts: '{}')>".format(
