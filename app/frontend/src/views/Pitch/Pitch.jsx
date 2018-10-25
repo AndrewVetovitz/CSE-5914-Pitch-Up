@@ -20,6 +20,8 @@ import Button from "components/CustomButtons/Button.jsx"
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
+
+
 class Pitch extends React.Component {
   constructor(props){
     super(props);
@@ -34,20 +36,24 @@ class Pitch extends React.Component {
 
   componentDidMount() {
     this.fetchPitchTries().then((json) => {
-      console.log(json)
+
       let pitchTries = json.pitches.map((p) => 
         [
           '' + p.id,
           "Yesterday",
           '' + p.duration + 's',
-          "View Results"
+          <Button onClick={() => this.handleClick(p.id)}>View Results</Button>
         ]
       )
-      console.log(pitchTries)
+
       this.setState({
         pitch_tries: pitchTries
       })
     })
+  }
+
+  handleClick = id =>{
+    this.props.history.push('/pitch_analysis#' + id);
   }
 
   fetchPitchTries() {

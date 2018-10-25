@@ -73,7 +73,6 @@ class Pitches extends React.Component {
       }
       return resp.json()
     }).then((json) => {
-      console.log(json);
       this.setState({
         showModal: false,
         pitches: json.pitches

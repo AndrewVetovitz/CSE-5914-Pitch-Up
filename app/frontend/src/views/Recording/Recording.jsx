@@ -133,9 +133,9 @@ class RecordingStudio extends React.Component {
       }
       return resp.json()
     }).then((json) => {
-      this.props.history.push('/pitch_analysis#' + json.pitch_try_id)
+      this.props.history.push('/pitch_analysis#' + json.pitch_try_id);
     }).catch((err) => {
-      this.props.history.push('/pitch_analysis#13371337')
+      this.props.history.push('/pitch_analysis#13371337');
     })
   }
 
