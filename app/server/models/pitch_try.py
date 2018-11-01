@@ -38,8 +38,8 @@ class PitchTry(db.Model):
         if transcription:
             self.words_per_minute = analysis.words_per_minute(transcription, duration)
 
-            print("\t\t", transcription)
-            print("\t\t", analysis.tone_anaysis(transcription))
+            # print("\t\t", transcription)
+            # print("\t\t", analysis.tone_anaysis(transcription))
 
             word_analysis = {
                 'explitives': analysis.num_char_per_word(transcription, '*'),
@@ -55,5 +55,5 @@ class PitchTry(db.Model):
             self.is_analyzed = True
 
     def __repr__(self):
-        return "<PitchTry(Id: '{}', pitch_id: '{}', date: '{}', is_analyzed: '{}', duration: '{}', words_per_minute: '{}', transcription: '{}', analysis_words: '{}', analysis_concepts: '{}')>".format(
-            str(self.id), self.pitch_id, self.date, self.is_analyzed, self.duration, self.words_per_minute, self.transcription, self.analysis_words, self.analysis_concepts)
+        return "<{}(Id={}, pitch_id={}, date={}, is_analyzed={}, duration={}, words_per_minute={}, transcription={}, analysis_words={}, analysis_concepts={})>".format(
+            self.__class__.__name__, str(self.id), self.pitch_id, self.date, self.is_analyzed, self.duration, self.words_per_minute, self.transcription, self.analysis_words, self.analysis_concepts)

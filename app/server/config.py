@@ -16,7 +16,6 @@ APP_ROOT = os.path.dirname(os.path.realpath(__file__))
 SQLITE_DB_LOCATION = 'sqlite:///database/dev.db'
 TEST_SQLITE_DB_LOCATION = 'sqlite:///database/test.db'
 
-
 # Paths
 FILESTORE_PATH = os.path.join(APP_ROOT, 'filestore')
 FILESTORE_USER_DOCUMENT_ROOT = os.path.join(FILESTORE_PATH, 'user')

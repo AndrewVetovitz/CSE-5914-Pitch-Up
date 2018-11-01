@@ -16,4 +16,4 @@ class Document(db.Model):
         self.date = datetime.now()
 
     def __repr__(self):
-        return "<Document(Id: {}, Name: '{}', PitchId: {})>".format(str(self.id), self.name, self.pitch_id)
+        return "<{}(Id={}, Name={}, PitchId={})>".format(self.__class__.__name__, str(self.id), self.name, self.pitch_id)

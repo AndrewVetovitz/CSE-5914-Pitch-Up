@@ -11,7 +11,6 @@ from db_dummy import add_dummy_data
 
 env = 'TESTING'
 
-
 class allTests(unittest.TestCase):
     ''' User entity test suite '''
 
@@ -87,7 +86,6 @@ class allTests(unittest.TestCase):
 
     #     self.assertFalse(deleted_pitch)
     
-
 if __name__ == "__main__":
 
     # Create database

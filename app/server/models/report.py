@@ -9,6 +9,4 @@ class Report(db.Model):
     user_id = Column(Integer, ForeignKey('users.id'))
 
     def __repr__(self):
-        return "<Report(date='%s', user_id='%s')>" % (
-                self.date, self.parent_id
-            )
+        return "<{}(date={}, user_id={})>".format(self.__class__.__name__, self.date, self.parent_id)

@@ -62,7 +62,6 @@ def create_app(environment='DEVELOPMENT'):
 
     return app
 
-
 if __name__ == "__main__":
 
     # Load the environment, checking first passed in as CLI argument, 

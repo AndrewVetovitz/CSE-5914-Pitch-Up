@@ -30,7 +30,6 @@ def drop_database(environment):
 
     db.drop_all()
 
-
 if __name__ == "__main__":
 
     env = 'DEVELOPMENT'

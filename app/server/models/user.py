@@ -15,6 +15,6 @@ class User(db.Model):
         self.name = name
         self.email = email
         self.password = password
-
+        
     def __repr__(self):
-        return "<User(Id: '{}', Name: '{}', Email: '{}')>".format(self.id, self.name, self.email)
+        return "<{}(Id={}, Name={}, Email={})>".format(self.__class__.__name__, self.id, self.name, self.email)
