@@ -20,7 +20,7 @@ def single(single_id):
         user = User.query.filter_by(id=single_id).first()
 
         if user:
-            return "ID: {}, Name: {}".format(str(user.id), user.name)
+            return "ID: {}, Name: {}, email: {}".format(str(user.id), user.name, user.email)
         else:
             return 'user not found'
     except Exception as e:
@@ -42,6 +42,34 @@ def add_single():
         print(inc_data)
 
         user = User(name=name, email=email, password=password)
+
+        if user:
+            db.session.add(user)
+            db.session.commit()
+
+            return str(user.id)
+        else:
+            return 'user not created'
+    except Exception as e:
+        raise e
+
+@user_blueprint.route('/update', methods=['PUT'])
+def update_single():
+    ''' Update a single user given an id '''
+
+    try:
+        # Get args and provide defaults
+        inc_data = request.json
+
+        id = inc_data.get('id', '')
+
+        user = User.query.filter_by(id=id).first()
+
+        name = inc_data.get('name', '')
+        email = inc_data.get('email', '')
+        password = inc_data.get('password', '')
+
+        user.update(name=name, email=email, password=password)
 
         if user:
             db.session.add(user)

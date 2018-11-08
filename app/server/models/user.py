@@ -15,6 +15,17 @@ class User(db.Model):
         self.name = name
         self.email = email
         self.password = password
+
+    def update(self, name, email, password):
+        ''' Update user '''
+
+        print("name={} email={} password={}".format(name, email, password))
+
+        print(name == '')
+
+        self.name = self.name if (name == None or name == '') else name
+        self.email = self.email if (email == None or email == '') else email
+        self.password = self.password if (password == None or password == '') else password
         
     def __repr__(self):
         return "<{}(Id={}, Name={}, Email={})>".format(self.__class__.__name__, self.id, self.name, self.email)
