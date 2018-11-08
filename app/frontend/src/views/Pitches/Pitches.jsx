@@ -40,6 +40,7 @@ class Pitches extends React.Component {
       pitches: []
     }
   }
+  
   componentDidMount() {
     this.fetchPitches()
   }
@@ -79,6 +80,7 @@ class Pitches extends React.Component {
       })
     })
   }
+
   createPitch() {
     // TODO: Prevent ppl from not using a name like a dingus
     let pitchName = this.state.newPitchName
@@ -95,6 +97,7 @@ class Pitches extends React.Component {
       this.fetchPitches()
     })
   }
+
   render() {
     const { classes } = this.props;
     let pitches = this.state.pitches

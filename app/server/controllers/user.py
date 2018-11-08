@@ -20,12 +20,11 @@ def single(single_id):
         user = User.query.filter_by(id=single_id).first()
 
         if user:
-            return "ID: {}, Name: {}, email: {}".format(str(user.id), user.name, user.email)
+            return jsonify(user.serialize)
         else:
             return 'user not found'
     except Exception as e:
         raise e
-
 
 @user_blueprint.route('/', methods=['POST'])
 def add_single():

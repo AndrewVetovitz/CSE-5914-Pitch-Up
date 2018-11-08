@@ -65,7 +65,7 @@ class Pitch extends React.Component {
                 const temp = []
 
                 if (conceptArray.length > 0) {
-                    for (let i = 0; i < conceptArray.length, i < 3; i++) {
+                    for (let i = 0; i < conceptArray.length && i < 3; i++) {
                         temp.push(conceptArray[i]);
                         temp.push(<br />);
                     }

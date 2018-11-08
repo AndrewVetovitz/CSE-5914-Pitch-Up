@@ -27,5 +27,15 @@ class User(db.Model):
         self.email = self.email if (email == None or email == '') else email
         self.password = self.password if (password == None or password == '') else password
         
+    @property
+    def serialize(self):
+        """ Return object data in easily serializeable format """
+        return {
+            'id': self.id,
+            'name': self.name,
+            'email': self.email,
+            'password': self.password
+        }
+    
     def __repr__(self):
         return "<{}(Id={}, Name={}, Email={})>".format(self.__class__.__name__, self.id, self.name, self.email)
