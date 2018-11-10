@@ -106,7 +106,6 @@ def new_pitch_try(pitch_id):
                 }
 
                 return jsonify(data)
-
             else:
                 return ('Pitch not created', 400)
 

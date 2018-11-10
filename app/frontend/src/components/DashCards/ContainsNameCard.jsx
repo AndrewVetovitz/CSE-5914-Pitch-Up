@@ -5,7 +5,7 @@ import CardIcon from "components/Card/CardIcon.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import Icon from "@material-ui/core/Icon";
 
-export default class WPMCard extends Component {
+export default class ContainsNameCard extends Component {
     render() {
         const { classes } = this.props;
 
@@ -15,14 +15,13 @@ export default class WPMCard extends Component {
                     <CardIcon color="success">
                         <Icon>watch_later</Icon>
                     </CardIcon>
-                    <p className={classes.cardCategory}>Words per minute</p>
+                    <p className={classes.cardCategory}>Contains Name</p>
                     <h3 className={classes.cardTitle}>
-                        {this.props.wpm}
+                        {this.props.truth === false ? 'False' : 'True'}
                     </h3>
                 </CardHeader>
                 <CardFooter stats>
-                    <div className={classes.stats}>
-                    </div>
+                    <div className={classes.stats}></div>
                 </CardFooter>
             </Card>
         )

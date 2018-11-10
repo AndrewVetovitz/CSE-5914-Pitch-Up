@@ -4,6 +4,8 @@ import json
 from datetime import datetime
 
 from models.pitch import Pitch
+from models.user import User
+
 from helpers.analysis import Analysis
 
 import re
@@ -38,13 +40,11 @@ class PitchTry(db.Model):
         if transcription:
             self.words_per_minute = analysis.words_per_minute(transcription, duration)
 
-            # print("\t\t", transcription)
-            # print("\t\t", analysis.tone_anaysis(transcription))
-
             word_analysis = {
                 'explitives': analysis.num_char_per_word(transcription, '*'),
                 'stop_words': analysis.num_occurences(transcription, WORDS_STOP),
-                'tone': analysis.tone_anaysis(transcription)
+                'tone': analysis.tone_anaysis(transcription),
+                'contains_name': analysis.contains_name(transcription, self.get_user_name())
             }
 
             self.analysis_words = json.dumps(word_analysis)
@@ -53,6 +53,11 @@ class PitchTry(db.Model):
             self.analysis_concepts = analysis.discovery_analysis(transcription, pitch)
             
             self.is_analyzed = True
+
+    def get_user_name(self):
+        pitch = Pitch.query.filter_by(id = self.pitch_id).first()
+        user = User.query.filter_by(id = pitch.user_id).first()
+        return user.name
 
     def __repr__(self):
         return "<{}(Id={}, pitch_id={}, date={}, is_analyzed={}, duration={}, words_per_minute={}, transcription={}, analysis_words={}, analysis_concepts={})>".format(

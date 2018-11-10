@@ -51,3 +51,13 @@ class Analysis(object):
         ta = ToneAnalyzer()
 
         return ta.analyzeTone(transcript)
+
+    def contains_name(self, transcript, name):
+        if name in transcript:
+            return True
+        else:
+            for _name in name.split(" "):
+                if _name in transcript:
+                    return True
+
+        return False

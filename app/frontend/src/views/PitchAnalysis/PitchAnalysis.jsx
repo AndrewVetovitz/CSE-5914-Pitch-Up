@@ -11,9 +11,10 @@ import PitchDurationCard from "components/DashCards/PitchDurationCard.jsx";
 import WPMCard from "components/DashCards/WPMCard.jsx";
 import TranscriptionCard from "components/DashCards/TranscriptionCard.jsx";
 import RawCard from "components/DashCards/RawCard.jsx";
+import ToneCard from "../../components/DashCards/ToneCard";
+import ContainsNameCard from "../../components/DashCards/ContainsNameCard";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
-import ToneCard from "../../components/DashCards/ToneCard";
 
 class PitchAnalysis extends React.Component {
     state = {
@@ -24,7 +25,8 @@ class PitchAnalysis extends React.Component {
             analysis_words: {
                 explitives: '',
                 stop_words: '',
-                tone: ''
+                tone: '',
+                contains_name: ''
             },
             transcription: null,
             words_per_minute: 0
@@ -43,7 +45,8 @@ class PitchAnalysis extends React.Component {
                 analysis_words: {
                     explitives: null,
                     stop_words: null,
-                    tone: null
+                    tone: null,
+                    contains_name: null
                 },
                 words_per_minute: null  
             }
@@ -51,11 +54,14 @@ class PitchAnalysis extends React.Component {
     } else {
         fetch('http://localhost:5000/pitch_try/' + pitch_attempt_id).then((resp) => resp.json())
             .then((res_json) => {
+                console.log(res_json);
                 this.setState({
                     pitch_try: {
                         ...res_json.pitch_try
                     }
                 });
+
+                console.log(res_json.pitch_try);
         });
     }
   }
@@ -74,7 +80,7 @@ class PitchAnalysis extends React.Component {
     const pitch_try = this.state.pitch_try;    
     
     const { duration, words_per_minute, transcription } = pitch_try;
-    const { stop_words, explitives, tone } = pitch_try.analysis_words;
+    const { stop_words, explitives, tone, contains_name } = pitch_try.analysis_words;
 
     return (
       <React.Fragment>
@@ -94,8 +100,14 @@ class PitchAnalysis extends React.Component {
           <GridItem xs={12} sm={6} md={3}>
             <WPMCard wpm={words_per_minute} classes={classes}/>
           </GridItem>
-
         </GridContainer>
+
+        <GridContainer>
+          <GridItem xs={12} sm={6} md={3}>
+            <ContainsNameCard truth={contains_name} classes={classes}></ContainsNameCard>
+          </GridItem>
+        </GridContainer>
+
         <GridContainer>
           <GridItem xs={12} sm={12} md={6}>
             <TranscriptionCard transcription={transcription} classes={classes}></TranscriptionCard>

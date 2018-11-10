@@ -19,10 +19,6 @@ class User(db.Model):
     def update(self, name, email, password):
         ''' Update user '''
 
-        print("name={} email={} password={}".format(name, email, password))
-
-        print(name == '')
-
         self.name = self.name if (name == None or name == '') else name
         self.email = self.email if (email == None or email == '') else email
         self.password = self.password if (password == None or password == '') else password
