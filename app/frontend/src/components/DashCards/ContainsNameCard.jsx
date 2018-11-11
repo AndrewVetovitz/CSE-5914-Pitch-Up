@@ -9,6 +9,13 @@ export default class ContainsNameCard extends Component {
     render() {
         const { classes } = this.props;
 
+        const truth = this.props.truth;
+        let content = '';
+
+        if (typeof truth === 'boolean') {
+            content = this.props.truth === false ? 'False' : 'True';
+        }
+
         return (
             <Card>
                 <CardHeader color="success" stats icon>
@@ -17,7 +24,7 @@ export default class ContainsNameCard extends Component {
                     </CardIcon>
                     <p className={classes.cardCategory}>Contains Name</p>
                     <h3 className={classes.cardTitle}>
-                        {this.props.truth === false ? 'False' : 'True'}
+                        {content}
                     </h3>
                 </CardHeader>
                 <CardFooter stats>
