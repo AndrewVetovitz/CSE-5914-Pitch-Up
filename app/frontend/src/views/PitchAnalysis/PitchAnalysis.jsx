@@ -18,19 +18,17 @@ import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardS
 
 class PitchAnalysis extends React.Component {
     state = {
-        pitch_try: {
-            transcript: '',
-            duration: 0,
-            analysis_concepts: {},
-            analysis_words: {
-                explitives: '',
-                stop_words: '',
-                tone: '',
-                contains_name: ''
-            },
-            transcription: null,
-            words_per_minute: 0
-        }
+        transcript: '',
+        duration: 0,
+        analysis_concepts: {},
+        analysis_words: {
+            explitives: '',
+            stop_words: '',
+            tone: '',
+            contains_name: ''
+        },
+        transcription: null,
+        words_per_minute: 0
     };
 
   componentDidMount() {
@@ -38,30 +36,23 @@ class PitchAnalysis extends React.Component {
 
     if(pitch_attempt_id === undefined){
         this.setState({
-            pitch_try: {
-                transcription: null,
-                duration: null,
-                analysis_concepts: {},
-                analysis_words: {
-                    explitives: null,
-                    stop_words: null,
-                    tone: null,
-                    contains_name: null
-                },
-                words_per_minute: null  
-            }
+            transcription: null,
+            duration: null,
+            analysis_concepts: {},
+            analysis_words: {
+                explitives: null,
+                stop_words: null,
+                tone: null,
+                contains_name: null
+            },
+            words_per_minute: null  
         })
     } else {
         fetch('http://localhost:5000/pitch_try/' + pitch_attempt_id).then((resp) => resp.json())
             .then((res_json) => {
-                console.log(res_json);
                 this.setState({
-                    pitch_try: {
-                        ...res_json.pitch_try
-                    }
+                    ...res_json
                 });
-
-                console.log(res_json.pitch_try);
         });
     }
   }
@@ -77,10 +68,8 @@ class PitchAnalysis extends React.Component {
   render() {
     const { classes } = this.props;
     
-    const pitch_try = this.state.pitch_try;    
-    
-    const { duration, words_per_minute, transcription } = pitch_try;
-    const { stop_words, explitives, tone, contains_name } = pitch_try.analysis_words;
+    const { duration, words_per_minute, transcription } = this.state;
+    const { stop_words, explitives, tone, contains_name } = this.state.analysis_words;
 
     return (
       <React.Fragment>
@@ -118,7 +107,7 @@ class PitchAnalysis extends React.Component {
           </GridItem>
           
           <GridItem xs={12} sm={12} md={6}>
-            <RawCard json={pitch_try} classes={classes}/>
+            <RawCard json={this.state} classes={classes}/>
           </GridItem>
         </GridContainer>
       </React.Fragment>

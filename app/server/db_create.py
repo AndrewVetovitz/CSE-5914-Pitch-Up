@@ -21,7 +21,6 @@ def create_database(environment):
 
     db.create_all()
 
-
 def drop_database(environment):
     ''' Delete a database for the given environment '''
 

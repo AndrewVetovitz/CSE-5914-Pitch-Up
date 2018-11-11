@@ -15,5 +15,15 @@ class Document(db.Model):
         self.name = name
         self.date = datetime.now()
 
+    @property
+    def serialize(self):
+        """ Return object data in easily serializeable format """
+        return {
+            'id': self.id,
+            'name': self.name,
+            'pitch_id': self.pitch_id,
+            'date': self.date
+        }
+
     def __repr__(self):
         return "<{}(Id={}, Name={}, PitchId={})>".format(self.__class__.__name__, str(self.id), self.name, self.pitch_id)

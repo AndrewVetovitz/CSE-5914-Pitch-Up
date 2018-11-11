@@ -59,6 +59,19 @@ class PitchTry(db.Model):
         user = User.query.filter_by(id = pitch.user_id).first()
         return user.name
 
+    @property
+    def serialize(self):
+        """ Return object data in easily serializeable format """
+        return {
+            'id': self.id,
+            'is_analyzed': self.is_analyzed,
+            'transcription': self.transcription,
+            'analysis_words': json.loads(self.analysis_words),
+            'analysis_concepts': self.analysis_concepts,
+            'duration': self.duration,
+            'words_per_minute': self.words_per_minute
+        }
+
     def __repr__(self):
         return "<{}(Id={}, pitch_id={}, date={}, is_analyzed={}, duration={}, words_per_minute={}, transcription={}, analysis_words={}, analysis_concepts={})>".format(
             self.__class__.__name__, str(self.id), self.pitch_id, self.date, self.is_analyzed, self.duration, self.words_per_minute, self.transcription, self.analysis_words, self.analysis_concepts)

@@ -14,7 +14,7 @@ user_blueprint = Blueprint('user', __name__, template_folder=None, url_prefix='/
 
 @user_blueprint.route('/<int:single_id>', methods=['GET'])
 def single(single_id):
-    ''' Get a single user given an id '''
+    ''' Returns a single user by id given they exist '''
 
     try:
         user = User.query.filter_by(id=single_id).first()
@@ -34,13 +34,17 @@ def add_single():
         # Get args and provide defaults
         inc_data = request.json
         name = inc_data.get('name', '')
+        username = inc_data.get('username', '')
         email = inc_data.get('email', '')
         password = inc_data.get('password', '')
+        company = inc_data.get('company', '')
+        city = inc_data.get('city', '')
+        state = inc_data.get('state', '')
+        country = inc_data.get('country', '')
+        postal = inc_data.get('postal', '')
+        bio = inc_data.get('bio', '')
 
-        #debug
-        print(inc_data)
-
-        user = User(name=name, email=email, password=password)
+        user = User(name=name, username=username, email=email, password=password, company=company, city=city, state=state, country = country, postal=postal, bio=bio)
 
         if user:
             db.session.add(user)
@@ -65,16 +69,23 @@ def update_single():
         user = User.query.filter_by(id=id).first()
 
         name = inc_data.get('name', '')
+        username = inc_data.get('username', '')
         email = inc_data.get('email', '')
         password = inc_data.get('password', '')
+        company = inc_data.get('company', '')
+        city = inc_data.get('city', '')
+        state = inc_data.get('state', '')
+        country = inc_data.get('country', '')
+        postal = inc_data.get('postal', '')
+        bio = inc_data.get('bio', '')
 
-        user.update(name=name, email=email, password=password)
+        user.update(name=name, username=username, email=email, password=password, company=company, city=city, state=state, country = country, postal=postal, bio=bio)
 
         if user:
             db.session.add(user)
             db.session.commit()
 
-            return str(user.id)
+            return ('ok', 200)
         else:
             return 'user not created'
     except Exception as e:
@@ -141,14 +152,13 @@ def get_user_pitches(single_id):
                         'name': pitch.name,
 
                     }
+
                     data['pitches'].append(pitch_data)
 
-            
                 return jsonify(data)
 
             else:
                 return ('No pitches available for this user ID', 404)
-
         else:
             return ('User does not exist in db', 404)
 

@@ -18,13 +18,11 @@ def add_dummy_data(environment):
     ''' Create dummy data for the given environment'''
 
     try:
-
         flask_app = create_app(environment)
         flask_app.app_context().push()
 
-
         # Create some useful dummy data for demos
-        user = User(name = "Chris Ellis", email = "chris@bingoogle.com", password="123456")
+        user = User(name = "Chris Ellis", username="chrisy", email = "chris@bingoogle.com", password="123456")
         db.session.add(user)
         db.session.commit()
         print("Added:", user)
@@ -70,9 +68,6 @@ def add_dummy_data(environment):
         # db.session.add(pitch_try)
         # db.session.commit()
         # print("Added:", pitch_try)
-
-
-        
 
         ### User: Dummy Data
         ##############################################
