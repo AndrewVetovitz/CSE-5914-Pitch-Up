@@ -35,6 +35,8 @@ class Pitch extends React.Component {
     };
 
     componentDidMount() {
+        this.mounted = true;
+
         this.fetchPitchTries().then((json) => {
             let pitchTries = json.pitches.map((pitchTry) =>
                 [
@@ -43,11 +45,13 @@ class Pitch extends React.Component {
                     '' + pitchTry.duration + 's',
                     <Button onClick={() => this.handleClick(pitchTry.id)}>View Results</Button>
                 ]
-            )
+            );
 
-            this.setState({
-                pitch_tries: pitchTries
-            })
+            if (this.mounted) {
+                this.setState({
+                    pitch_tries: pitchTries
+                });
+            }
         });
 
         this.fetchDocuments().then(json => {
@@ -70,12 +74,18 @@ class Pitch extends React.Component {
                         temp.push(<br key={i} />);
                     }
 
-                    this.setState({
-                        topics: temp
-                    });
+                    if (this.mounted) {
+                        this.setState({
+                            topics: temp
+                        });
+                    }
                 }
             }
         });
+    }
+
+    componentWillUnmount() {
+        this.mounted = false;
     }
 
     handleClick = id => {
@@ -119,7 +129,7 @@ class Pitch extends React.Component {
         for (const file of this.filesInput.current.files) {
             data.append('files[]', file, file.name);
         }
-        
+
         return fetch('http://localhost:5000/pitch/' + pitch_id + '/upload', {
             method: 'POST',
             body: data,
