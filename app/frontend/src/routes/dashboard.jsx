@@ -41,6 +41,8 @@ const dashboardRoutes = [
   },
   {
     path:"/pitch",
+    sidebarName: "Pitch",
+    navbarName: "Pitch",
     component: Pitch,
     invisible: true
   }
