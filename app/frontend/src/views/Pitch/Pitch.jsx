@@ -24,6 +24,7 @@ class Pitch extends React.Component {
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleClick = this.handleClick.bind(this);
         this.filesInput = React.createRef();
     }
 
@@ -35,13 +36,12 @@ class Pitch extends React.Component {
 
     componentDidMount() {
         this.fetchPitchTries().then((json) => {
-
-            let pitchTries = json.pitches.map((p) =>
+            let pitchTries = json.pitches.map((pitchTry) =>
                 [
-                    '' + p.id,
+                    '' + pitchTry.id,
                     "Yesterday",
-                    '' + p.duration + 's',
-                    <Button onClick={() => this.handleClick(p.id)}>View Results</Button>
+                    '' + pitchTry.duration + 's',
+                    <Button onClick={() => this.handleClick(pitchTry.id)}>View Results</Button>
                 ]
             )
 
@@ -67,7 +67,7 @@ class Pitch extends React.Component {
                 if (conceptArray.length > 0) {
                     for (let i = 0; i < conceptArray.length && i < 3; i++) {
                         temp.push(conceptArray[i]);
-                        temp.push(<br />);
+                        temp.push(<br key={i} />);
                     }
 
                     this.setState({
