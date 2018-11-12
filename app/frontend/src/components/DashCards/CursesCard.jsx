@@ -6,25 +6,31 @@ import CardFooter from "components/Card/CardFooter.jsx";
 import Icon from "@material-ui/core/Icon";
 
 export default class StopWordsCard extends Component {
-  render() {
-    const { classes } = this.props;
+    render() {
+        const { classes, explitives } = this.props;
 
-    return (
-      <Card>
-        <CardHeader color="danger" stats icon>
-          <CardIcon color="danger">
-            <Icon>warning</Icon>
-          </CardIcon>
-          <p className={classes.cardCategory}>Number of Expletives</p>
-          <h3 className={classes.cardTitle}>
-            {this.props.explitives} <small>curses</small>
-          </h3>
-        </CardHeader>
-        <CardFooter stats>
-          <div className={classes.stats}>
-          </div>
-        </CardFooter>
-      </Card>
-)
-  }
+        let color = 'rose';
+
+        if (typeof(explitives) === 'number') {
+            color = explitives === 0 ? 'success' : 'danger';
+        }
+
+        return (
+            <Card>
+                <CardHeader color="danger" stats icon>
+                    <CardIcon color={color}>
+                        <Icon>warning</Icon>
+                    </CardIcon>
+                    <p className={classes.cardCategory}>Number of Expletives</p>
+                    <h3 className={classes.cardTitle}>
+                        {explitives} <small>curses</small>
+                    </h3>
+                </CardHeader>
+                <CardFooter stats>
+                    <div className={classes.stats}>
+                    </div>
+                </CardFooter>
+            </Card>
+        )
+    }
 }

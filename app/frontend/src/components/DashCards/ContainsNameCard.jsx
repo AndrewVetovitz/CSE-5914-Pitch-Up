@@ -11,15 +11,17 @@ export default class ContainsNameCard extends Component {
 
         const truth = this.props.truth;
         let content = '';
+        let color = 'rose';
 
         if (typeof truth === 'boolean') {
             content = this.props.truth === false ? 'False' : 'True';
+            color = this.props.truth === false ? 'danger' : 'success';
         }
 
         return (
             <Card>
                 <CardHeader color="success" stats icon>
-                    <CardIcon color="success">
+                    <CardIcon color={color}>
                         <Icon>watch_later</Icon>
                     </CardIcon>
                     <p className={classes.cardCategory}>Contains Name</p>

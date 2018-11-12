@@ -31,92 +31,92 @@ class PitchAnalysis extends React.Component {
         words_per_minute: 0
     };
 
-  componentDidMount() {
-    const pitch_attempt_id = this.props.location.hash.split('#')[1]
+    componentDidMount() {
+        const pitch_attempt_id = this.props.location.hash.split('#')[1]
 
-    if(pitch_attempt_id === undefined){
-        this.setState({
-            transcription: null,
-            duration: null,
-            analysis_concepts: {},
-            analysis_words: {
-                explitives: null,
-                stop_words: null,
-                tone: null,
-                contains_name: null
-            },
-            words_per_minute: null  
-        })
-    } else {
-        fetch('http://localhost:5000/pitch_try/' + pitch_attempt_id).then((resp) => resp.json())
-            .then((res_json) => {
-                this.setState({
-                    ...res_json
+        if (pitch_attempt_id === undefined) {
+            this.setState({
+                transcription: null,
+                duration: null,
+                analysis_concepts: {},
+                analysis_words: {
+                    explitives: null,
+                    stop_words: null,
+                    tone: null,
+                    contains_name: null
+                },
+                words_per_minute: null
+            })
+        } else {
+            fetch('http://localhost:5000/pitch_try/' + pitch_attempt_id).then((resp) => resp.json())
+                .then((res_json) => {
+                    this.setState({
+                        ...res_json
+                    });
                 });
-        });
+        }
     }
-  }
 
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
+    handleChange = (event, value) => {
+        this.setState({ value });
+    };
 
-  handleChangeIndex = index => {
-    this.setState({ value: index });
-  };
+    handleChangeIndex = index => {
+        this.setState({ value: index });
+    };
 
-  render() {
-    const { classes } = this.props;
-    
-    const { duration, words_per_minute, transcription } = this.state;
-    const { stop_words, explitives, tone, contains_name } = this.state.analysis_words;
+    render() {
+        const { classes } = this.props;
 
-    return (
-      <React.Fragment>
-        <GridContainer>
-          <GridItem xs={12} sm={6} md={3}>
-            <StopWordsCard stopWords={stop_words} classes={classes}/>
-          </GridItem>
+        const { duration, words_per_minute, transcription } = this.state;
+        const { stop_words, explitives, tone, contains_name } = this.state.analysis_words;
 
-          <GridItem xs={12} sm={6} md={3}>
-            <CursesCard explitives={explitives} classes={classes}/>
-          </GridItem>
+        return (
+            <React.Fragment>
+                <GridContainer>
+                    <GridItem xs={12} sm={6} md={3}>
+                        <StopWordsCard stopWords={stop_words} classes={classes} />
+                    </GridItem>
 
-          <GridItem xs={12} sm={6} md={3}>
-            <PitchDurationCard duration={duration} classes={classes}/>
-          </GridItem>
+                    <GridItem xs={12} sm={6} md={3}>
+                        <CursesCard explitives={explitives} classes={classes} />
+                    </GridItem>
 
-          <GridItem xs={12} sm={6} md={3}>
-            <WPMCard wpm={words_per_minute} classes={classes}/>
-          </GridItem>
-        </GridContainer>
+                    <GridItem xs={12} sm={6} md={3}>
+                        <PitchDurationCard duration={duration} classes={classes} />
+                    </GridItem>
 
-        <GridContainer>
-          <GridItem xs={12} sm={6} md={3}>
-            <ContainsNameCard truth={contains_name} classes={classes}></ContainsNameCard>
-          </GridItem>
-        </GridContainer>
+                    <GridItem xs={12} sm={6} md={3}>
+                        <WPMCard wpm={words_per_minute} classes={classes} />
+                    </GridItem>
+                </GridContainer>
 
-        <GridContainer>
-          <GridItem xs={12} sm={12} md={6}>
-            <TranscriptionCard transcription={transcription} classes={classes}></TranscriptionCard>
-          </GridItem>
+                <GridContainer>
+                    <GridItem xs={12} sm={6} md={3}>
+                        <ContainsNameCard truth={contains_name} classes={classes}></ContainsNameCard>
+                    </GridItem>
+                </GridContainer>
 
-          <GridItem xs={12} sm={12} md={6}>
-            <ToneCard tone={tone} classes={classes}/>
-          </GridItem>
-          
-          <GridItem xs={12} sm={12} md={6}>
-            <RawCard json={this.state} classes={classes}/>
-          </GridItem>
-        </GridContainer>
-      </React.Fragment>
-    );
-  }
+                <GridContainer>
+                    <GridItem xs={12} sm={12} md={6}>
+                        <TranscriptionCard transcription={transcription} classes={classes}></TranscriptionCard>
+                    </GridItem>
+
+                    <GridItem xs={12} sm={12} md={6}>
+                        <ToneCard tone={tone} classes={classes} />
+                    </GridItem>
+
+                    <GridItem xs={12} sm={12} md={6}>
+                        <RawCard json={this.state} classes={classes} />
+                    </GridItem>
+                </GridContainer>
+            </React.Fragment>
+        );
+    }
 }
 
 PitchAnalysis.propTypes = {
-  classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired
 };
 
 export default withStyles(dashboardStyle)(PitchAnalysis);
