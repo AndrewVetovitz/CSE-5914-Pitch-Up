@@ -25,7 +25,7 @@ class allTests(unittest.TestCase):
 
     # Users
     def test_user_add(self):
-        new_user = User("Joey Smith", "joe@joe.com", "rofl1234")
+        new_user = User("Joey Smith", "joeys", "joe@joe.com", "rofl1234")
         db.session.add(new_user)
         db.session.commit()
         check_user = User.query.filter_by(id=new_user.id).first()
@@ -33,7 +33,7 @@ class allTests(unittest.TestCase):
         self.assertEqual(check_user, new_user)
 
     def test_user_delete(self):
-        new_user = User("Joey Smithzor", "deleteme@joe.com", "rofl1234")
+        new_user = User("Joey Smithzor", "joeys", "deleteme@joe.com", "rofl1234")
         db.session.add(new_user)
         db.session.commit()
         check_user = User.query.filter_by(id=new_user.id).first()
