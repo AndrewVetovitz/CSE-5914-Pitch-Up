@@ -30,14 +30,16 @@ const dashboardRoutes = [
     sidebarName: "Recording Studio",
     navbarName: "Recording Studio",
     icon: LibraryBooks,
-    component: RecordingPage
+    component: RecordingPage,
+    invisible: true
   },
   {
     path: "/pitch_analysis",
     sidebarName: "Pitch Results",
     navbarName: "Pitch Results",
     icon: Dashboard,
-    component: PitchAnalysisPage
+    component: PitchAnalysisPage,
+    invisible: true
   },
   {
     path:"/pitch",
