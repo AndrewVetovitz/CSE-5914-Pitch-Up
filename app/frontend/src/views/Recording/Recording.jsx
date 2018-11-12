@@ -154,7 +154,8 @@ class RecordingStudio extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const transcriptAvailable = (this.state.finalTranscript.length > 0 || true)
+    const transcriptAvailable = (this.state.finalTranscript.length > 0);
+    
     return (
       <Card>
         <CardHeader color="primary">
