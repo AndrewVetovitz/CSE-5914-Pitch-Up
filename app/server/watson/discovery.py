@@ -8,13 +8,12 @@ PITCHUP_DISCOVERY_SERVICE_NAME = 'pitchup_discovery'
 USER_COLLECTION_NAME_TEMPLATE = 'user_{}_pitch_{}'
 
 class Discovery(object):
-
     def __init__(self):
         self.discovery = DiscoveryV1(
-            version = os.getenv('DISCOVERY_VERSION'),
-            url = os.getenv('DISCOVERY_URL'),
-            username = os.getenv('DISCOVERY_USERNAME'),
-            password = os.getenv('DISCOVERY_PASSWORD')
+            version=os.getenv('DISCOVERY_VERSION'),
+            url=os.getenv('DISCOVERY_URL'),
+            username=os.getenv('DISCOVERY_USERNAME'),
+            password=os.getenv('DISCOVERY_PASSWORD')
         )
 
         # Get the Discovery service ID, if not found, create it.
@@ -33,7 +32,6 @@ class Discovery(object):
         if not self.environment_id:
             print("Failed to create Watson Discovery Service. Exiting.")
             exit()
-
 
     def createEnvironment(self, name, description):
         ''' Get the environments for this service '''

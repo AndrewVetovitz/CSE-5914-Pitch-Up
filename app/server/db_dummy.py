@@ -12,6 +12,8 @@ from models.pitch_try import PitchTry
 from models.user import User
 from run import create_app
 
+import settings
+
 DUMMY_DATA_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'database', 'dummy_data')
 
 def add_dummy_data(environment):
@@ -71,12 +73,12 @@ def add_dummy_data(environment):
 
         ### User: Dummy Data
         ##############################################
-        print("Adding user data.")
-        with open(os.path.join(DUMMY_DATA_PATH, 'user.csv'), newline='') as csvfile:
-            reader = csv.DictReader(csvfile)
-            for row in reader:
-                user = User(name = row['name'], email = row['email'], password="123456")
-                db.session.add(user)
+        # print("Adding user data.")
+        # with open(os.path.join(DUMMY_DATA_PATH, 'user.csv'), newline='') as csvfile:
+        #     reader = csv.DictReader(csvfile)
+        #     for row in reader:
+        #         user = User(name = row['name'], email = row['email'], password="123456")
+        #         db.session.add(user)
                 
         db.session.commit()
 

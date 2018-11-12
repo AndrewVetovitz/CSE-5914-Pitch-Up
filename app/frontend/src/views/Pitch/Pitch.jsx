@@ -119,6 +119,7 @@ class Pitch extends React.Component {
         for (const file of this.filesInput.current.files) {
             data.append('files[]', file, file.name);
         }
+        
         return fetch('http://localhost:5000/pitch/' + pitch_id + '/upload', {
             method: 'POST',
             body: data,
@@ -193,11 +194,6 @@ class Pitch extends React.Component {
                             </CardHeader>
                             <CardBody>
                                 {this.state.topics}
-                                {/* <Table
-                  tableHeaderColor="warning"
-                  tableHead={["Attempt #", "Date", "Duration", "Results"]}
-                  tableData={this.state.pitch_tries}
-                /> */}
                             </CardBody>
                         </Card>
                     </GridItem>

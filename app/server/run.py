@@ -6,6 +6,8 @@ from authlib.flask.client import OAuth
 from six.moves.urllib.parse import urlencode
 from flask_cors import CORS
 
+import settings
+
 from database import db
 from config import get_environment_config
 

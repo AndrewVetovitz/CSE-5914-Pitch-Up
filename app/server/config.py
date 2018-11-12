@@ -7,7 +7,7 @@
 ################################################################################
 
 import os
-from dotenv import load_dotenv
+import settings
 
 APP_NAME = 'PitchUp: Backend Application'
 APP_VERSION = "0.0.1"
@@ -26,8 +26,6 @@ def get_environment_config(environment):
     ''' Return variables based on the requested environment '''
 
     conf = {}
-
-    load_dotenv()
 
     if environment == 'DEVELOPMENT':
         conf['RDBMS_DATABASE_URI'] = SQLITE_DB_LOCATION
