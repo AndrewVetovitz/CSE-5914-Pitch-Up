@@ -31,7 +31,8 @@ class Pitch extends React.Component {
     state = {
         value: 0,
         pitch_tries: [],
-        topics: []
+        topics: [],
+        uploadInProgress: false
     };
 
     componentDidMount() {
@@ -129,12 +130,18 @@ class Pitch extends React.Component {
         for (const file of this.filesInput.current.files) {
             data.append('files[]', file, file.name);
         }
-
+        this.setState({uploadInProgress: true})
         return fetch('http://localhost:5000/pitch/' + pitch_id + '/upload', {
             method: 'POST',
             body: data,
             mode: 'no-cors'
-        });
+        }).then((resp) => {
+            this.filesInput.current.value = ''
+            this.setState({uploadInProgress: false})
+            if(!resp.ok){
+                alert("Document Upload Failed")
+            }
+        })
     }
 
     handleChangeIndex = index => {
@@ -154,7 +161,7 @@ class Pitch extends React.Component {
                                 </CardIcon>
                                 <p className={classes.cardCategory}>Knowledge Base</p>
                                 <h3 className={classes.cardTitle} >
-                                    Upload Documents
+                                    {this.state.uploadInProgress ? "Uploading..." : "Upload Documents"}
                                 </h3>
                             </CardHeader>
                             <CardFooter stats>
@@ -163,7 +170,7 @@ class Pitch extends React.Component {
                                         <GridItem sm={6}>
                                             <div className={classes.fileUploadDiv}>
                                                 <label>
-                                                    <input type="file" ref={this.filesInput} multiple required name="files" />
+                                                    <input type="file" ref={this.filesInput} multiple required name="files" accept="application/pdf" />
                                                 </label>
                                             </div>
                                         </GridItem>
