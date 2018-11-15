@@ -50,6 +50,7 @@ def create_app(environment='DEVELOPMENT'):
     app.config["UPLOAD_FOLDER"] = os.getenv("UPLOAD_FOLDER")
     app.config['SQLALCHEMY_DATABASE_URI'] = env_config['RDBMS_DATABASE_URI']
     app.config['TESTING'] = env_config['TESTING']
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # Database
     db.init_app(app)

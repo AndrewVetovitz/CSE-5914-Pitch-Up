@@ -97,9 +97,6 @@ def new_pitch_try(pitch_id):
             if pitch_try:
                 db.session.add(pitch_try)
                 db.session.commit()
-                
-                # debug
-                print(pitch_try)
 
                 data = {
                     'pitch_try_id': pitch_try.id
@@ -175,7 +172,6 @@ def upload_document(pitch_id):
             file_names = []
 
             for file_obj in files:
-
                 print("Getting file:", file_obj)
 
                 # Add file name to a list to use for Discovery

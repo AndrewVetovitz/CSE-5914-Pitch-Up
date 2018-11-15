@@ -107,7 +107,7 @@ class Discovery(object):
             description = "User {}, Pitch {} - Discovery Docs Collection".format(user_id, pitch_id)
         )
 
-        if collection:
+        if collection.get('collections', False):
             return collection.get('collections', False)[0]
         else:
             return False

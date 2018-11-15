@@ -142,12 +142,12 @@ class Pitch extends React.Component {
         }).then((resp) => {
             this.filesInput.current.value = ''
             this.setState({uploadInProgress: false})
-            if(!resp.ok){
-                alert("Document Upload Failed")
-            }
-            if(resp.status === 200){
-                alert("Successful Document Upload!")
-            }
+            // if(!resp.ok){
+            //     alert("Document Upload Failed")
+            // }
+            // if(resp.status === 200){
+            //     alert("Successful Document Upload!")
+            // }
         })
     }
 
