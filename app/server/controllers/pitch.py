@@ -30,6 +30,9 @@ def get_pitch(pitch_id):
             try:
                 wat = Discovery()
                 collection = wat.getUserCollection(user_id = pitch.user_id, pitch_id = pitch.id)
+                # if not collection:
+                #     wat.createCollection()
+                
                 watson_query = wat.queryCollection(collection['collection_id'])[0]
 
             except Exception as e:
@@ -204,6 +207,7 @@ def upload_document(pitch_id):
                         db.session.add(local_doc)
                         db.session.commit()
                         print("Added to DB!")
+                        return 'Added Document'
 
             except Exception as e:
                 print("[!] An error occurred when attempting to upload a file to Watson.")

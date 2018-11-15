@@ -9,6 +9,8 @@ from models.pitch import Pitch
 from database import db
 from helpers.authenticate import requires_auth
 
+from config import FILESTORE_USER_DOCUMENT_TEMPLATE
+
 
 user_blueprint = Blueprint('user', __name__, template_folder=None, url_prefix='/user')
 
@@ -114,6 +116,11 @@ def add_pitch(single_id):
                 db.session.add(pitch)
                 db.session.commit()
                 
+                pitch_dir = os.path.join(FILESTORE_USER_DOCUMENT_TEMPLATE.format(user.id, pitch.id))
+                # Add directory for file upload
+                if not os.path.isdir(pitch_dir):
+                    os.mkdir(pitch_dir)
+
                 # debug
                 print(pitch)
 

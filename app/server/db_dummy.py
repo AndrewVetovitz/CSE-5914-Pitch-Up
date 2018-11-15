@@ -29,26 +29,26 @@ def add_dummy_data(environment):
         db.session.commit()
         print("Added:", user)
 
-        # Audio engineering
-        pitch = Pitch(name = "Amazing new speaker technology", user_id = user.id)
-        db.session.add(pitch)
-        db.session.commit()
-        print("Added:", pitch)
+        # # Audio engineering
+        # pitch = Pitch(name = "Amazing new speaker technology", user_id = user.id)
+        # db.session.add(pitch)
+        # db.session.commit()
+        # print("Added:", pitch)
 
-        pitch_try = PitchTry(pitch_id=pitch.id, transcription="Hey there I am doing research for new audio technologies are you interested in hearing more", duration=8)
-        db.session.add(pitch_try)
-        db.session.commit()
-        print("Added:", pitch_try)
+        # pitch_try = PitchTry(pitch_id=pitch.id, transcription="Hey there I am doing research for new audio technologies are you interested in hearing more", duration=8)
+        # db.session.add(pitch_try)
+        # db.session.commit()
+        # print("Added:", pitch_try)
 
-        pitch_try = PitchTry(pitch_id=pitch.id, transcription="Hey i am interested in audio engineering how about you there are some cool things we can do with it", duration=12)
-        db.session.add(pitch_try)
-        db.session.commit()
-        print("Added:", pitch_try)
+        # pitch_try = PitchTry(pitch_id=pitch.id, transcription="Hey i am interested in audio engineering how about you there are some cool things we can do with it", duration=12)
+        # db.session.add(pitch_try)
+        # db.session.commit()
+        # print("Added:", pitch_try)
 
-        pitch_try = PitchTry(pitch_id=pitch.id, transcription="My name is Chris and I work with audio technologies we have new research that is paving the way for some exciting breakthroughs that will push the boundaries of audio engineering as we know it today", duration=20)
-        db.session.add(pitch_try)
-        db.session.commit()
-        print("Added:", pitch_try)
+        # pitch_try = PitchTry(pitch_id=pitch.id, transcription="My name is Chris and I work with audio technologies we have new research that is paving the way for some exciting breakthroughs that will push the boundaries of audio engineering as we know it today", duration=20)
+        # db.session.add(pitch_try)
+        # db.session.commit()
+        # print("Added:", pitch_try)
 
         # Pet sitting service
         # pitch = Pitch(name = "Pet sitting service", user_id = user.id)
@@ -80,7 +80,7 @@ def add_dummy_data(environment):
         #         user = User(name = row['name'], email = row['email'], password="123456")
         #         db.session.add(user)
                 
-        db.session.commit()
+        # db.session.commit()
 
     except Exception as e:
         print(e)
