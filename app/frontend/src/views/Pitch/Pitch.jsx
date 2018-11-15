@@ -129,7 +129,7 @@ class Pitch extends React.Component {
 
         for (const file of this.filesInput.current.files) {
             let ext = file.name.split(".").pop()
-            if(ext != "pdf"){
+            if(ext !== "pdf"){
                 alert("Failed To Upload " + file.name + " it's not a PDF")
             }
             data.append('files[]', file, file.name);
@@ -145,7 +145,7 @@ class Pitch extends React.Component {
             if(!resp.ok){
                 alert("Document Upload Failed")
             }
-            if(resp.status == 200){
+            if(resp.status === 200){
                 alert("Successful Document Upload!")
             }
         })
