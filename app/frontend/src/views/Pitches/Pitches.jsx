@@ -64,10 +64,6 @@ class Pitches extends React.Component {
       if(!resp.ok){
         let dummyPitches = {
           pitches: [
-            {
-              id: 13371337,
-              name: 'KittenMittenz'
-            }
           ]
         }
         return dummyPitches

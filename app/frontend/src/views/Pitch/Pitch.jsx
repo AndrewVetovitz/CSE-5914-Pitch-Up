@@ -128,6 +128,10 @@ class Pitch extends React.Component {
         const data = new FormData();
 
         for (const file of this.filesInput.current.files) {
+            let ext = file.name.split(".").pop()
+            if(ext != "pdf"){
+                alert("Failed To Upload " + file.name + " it's not a PDF")
+            }
             data.append('files[]', file, file.name);
         }
         this.setState({uploadInProgress: true})
@@ -140,6 +144,9 @@ class Pitch extends React.Component {
             this.setState({uploadInProgress: false})
             if(!resp.ok){
                 alert("Document Upload Failed")
+            }
+            if(resp.status == 200){
+                alert("Successful Document Upload!")
             }
         })
     }
