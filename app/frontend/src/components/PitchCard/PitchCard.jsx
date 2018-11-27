@@ -16,8 +16,9 @@ import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardS
 
 class PitchCard extends React.Component {
     constructor(props) {
-        super(props)
-        this.viewPitch = this.viewPitch.bind(this)
+        super(props);
+        this.viewPitch = this.viewPitch.bind(this);
+        this.deletePitch = this.props.delete.bind(this);
     }
     
     viewPitch(id) {
@@ -39,6 +40,7 @@ class PitchCard extends React.Component {
                 </CardHeader>
                 <CardFooter stats>
                     <Button onClick={() => {this.viewPitch(id)}}>View Pitch</Button>
+                    <Button onClick={() => {this.deletePitch(id)}}>Delete</Button>
                 </CardFooter>
             </Card>
         );

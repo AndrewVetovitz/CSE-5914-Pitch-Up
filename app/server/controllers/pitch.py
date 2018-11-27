@@ -151,13 +151,13 @@ def get_pitch_tries_for_pitch(pitch_id):
         # TODO something meaningful
         raise e
 
-@pitch_blueprint.route('/delete/<int:pitch_id>/<int:pitch_try_id>')
-def delete_pitch_try(pitch_id, pitch_try_id):
+@pitch_blueprint.route('/delete/<int:pitch_id>')
+def delete_pitch(pitch_id):
     try:
-        pitch_try = PitchTry.query.filter_by(pitch_id=pitch_id).filter_by(id=pitch_try_id).first()
+        pitch = Pitch.query.filter_by(id=pitch_id).first()
 
-        if pitch_try:
-            db.session.delete(pitch_try)
+        if pitch:
+            db.session.delete(pitch)
             db.session.commit()
 
             return ('', 200)

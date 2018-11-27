@@ -17,7 +17,6 @@ user_blueprint = Blueprint('user', __name__, template_folder=None, url_prefix='/
 @user_blueprint.route('/<int:single_id>', methods=['GET'])
 def single(single_id):
     ''' Returns a single user by id given they exist '''
-
     try:
         user = User.query.filter_by(id=single_id).first()
 
@@ -54,14 +53,13 @@ def add_single():
 
             return str(user.id)
         else:
-            return 'user not created'
+            return ('User not created', 404)
     except Exception as e:
         raise e
 
 @user_blueprint.route('/update', methods=['PUT'])
 def update_single():
     ''' Update a single user given an id '''
-
     try:
         # Get args and provide defaults
         inc_data = request.json
@@ -97,7 +95,6 @@ def update_single():
 @user_blueprint.route('/<int:single_id>/new_pitch', methods=['POST'])
 def add_pitch(single_id):
     ''' Add a pitch to a user and return the newly created pitch id '''
-
     try:
         # Make sure user exists
         user = User.query.filter_by(id=single_id).first()
@@ -137,7 +134,6 @@ def add_pitch(single_id):
 @user_blueprint.route('/<int:single_id>/pitches', methods=['GET'])
 def get_user_pitches(single_id):
     ''' Get all pitches associated with a user ID '''
-
     data = {
         'pitches': []
     }

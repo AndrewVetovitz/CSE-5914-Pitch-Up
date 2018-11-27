@@ -95,7 +95,7 @@ class Pitch extends React.Component {
     }
 
     delete = id => {
-        fetch('http://localhost:5000/pitch/delete/' + this.getPitchId() + '/' + id)
+        fetch('http://localhost:5000/pitch_try/delete/' + this.getPitchId() + '/' + id)
             .then(resp => resp.ok)
             .then(() => {
                 this.setState({

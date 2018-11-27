@@ -44,7 +44,7 @@ class PitchTry(db.Model):
                 'explitives': analysis.num_char_per_word(transcription, '*'),
                 'stop_words': analysis.num_occurences(transcription, WORDS_STOP),
                 'tone': analysis.tone_anaysis(transcription),
-                'contains_name': analysis.contains_name(transcription, self.get_user_name())
+                'contains_name': analysis.contains_name(transcription, self.get_user_name)
             }
 
             self.analysis_words = json.dumps(word_analysis)
@@ -54,6 +54,7 @@ class PitchTry(db.Model):
             
             self.is_analyzed = True
 
+    @property
     def get_user_name(self):
         pitch = Pitch.query.filter_by(id = self.pitch_id).first()
         user = User.query.filter_by(id = pitch.user_id).first()
