@@ -44,7 +44,8 @@ class Pitch extends React.Component {
                     '' + pitchTry.id,
                     "Yesterday",
                     '' + pitchTry.duration + 's',
-                    <Button onClick={() => this.handleClick(pitchTry.id)}>View Results</Button>
+                    <Button onClick={() => this.handleClick(pitchTry.id)}>View Results</Button>,
+                    <Button onClick={() => this.delete(pitchTry.id)}>Delete</Button>
                 ]
             );
 
@@ -91,6 +92,18 @@ class Pitch extends React.Component {
 
     handleClick = id => {
         this.props.history.push('/pitch_analysis#' + id);
+    }
+
+    delete = id => {
+        fetch('http://localhost:5000/pitch/delete/' + this.getPitchId() + '/' + id)
+            .then(resp => resp.ok)
+            .then(() => {
+                this.setState({
+                    pitch_tries: this.state.pitch_tries.filter(item => {
+                        return Number(item[0]) !== id;
+                    })
+                });
+            });
     }
 
     fetchDocuments() {
@@ -162,8 +175,8 @@ class Pitch extends React.Component {
                 <GridContainer>
                     <GridItem xs={12} sm={6} md={6} lg={6}>
                         <Card>
-                            <CardHeader color="warning" stats icon>
-                                <CardIcon color="warning">
+                            <CardHeader color="success" stats icon>
+                                <CardIcon color="success">
                                     <Icon>content_copy</Icon>
                                 </CardIcon>
                                 <p className={classes.cardCategory}>Knowledge Base</p>
@@ -210,7 +223,7 @@ class Pitch extends React.Component {
                 <GridContainer>
                     <GridItem xs={12} sm={12} md={12}>
                         <Card>
-                            <CardHeader color="warning">
+                            <CardHeader color="success">
                                 <h4 className={classes.cardTitleWhite}>Pitch Concepts</h4>
                                 <p className={classes.cardCategoryWhite}>
                                     Related topics from documents
@@ -226,7 +239,7 @@ class Pitch extends React.Component {
                 <GridContainer>
                     <GridItem xs={12} sm={12} md={12}>
                         <Card>
-                            <CardHeader color="warning">
+                            <CardHeader color="success">
                                 <h4 className={classes.cardTitleWhite}>Pitch Attempts</h4>
                                 <p className={classes.cardCategoryWhite}>
                                     All Pitch Attempts on Record
@@ -235,7 +248,7 @@ class Pitch extends React.Component {
                             <CardBody>
                                 <Table
                                     tableHeaderColor="warning"
-                                    tableHead={["Attempt #", "Date", "Duration", "Results"]}
+                                    tableHead={["Attempt #", "Date", "Duration", "Results", "Delete"]}
                                     tableData={this.state.pitch_tries}
                                 />
                             </CardBody>

@@ -151,6 +151,20 @@ def get_pitch_tries_for_pitch(pitch_id):
         # TODO something meaningful
         raise e
 
+@pitch_blueprint.route('/delete/<int:pitch_id>/<int:pitch_try_id>')
+def delete_pitch_try(pitch_id, pitch_try_id):
+    try:
+        pitch_try = PitchTry.query.filter_by(pitch_id=pitch_id).filter_by(id=pitch_try_id).first()
+
+        if pitch_try:
+            db.session.delete(pitch_try)
+            db.session.commit()
+
+            return ('', 200)
+        else:
+            return ('This pitch try does not exist', 404)
+    except Exception as e:
+        return (e, 500)
 
 @pitch_blueprint.route('/<int:pitch_id>/upload', methods=['POST'])
 def upload_document(pitch_id):

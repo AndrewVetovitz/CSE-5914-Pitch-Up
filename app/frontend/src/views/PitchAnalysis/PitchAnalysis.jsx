@@ -106,9 +106,9 @@ class PitchAnalysis extends React.Component {
                         <ToneCard tone={tone} classes={classes} />
                     </GridItem>
 
-                    <GridItem xs={12} sm={12} md={6}>
+                    {/* <GridItem xs={12} sm={12} md={6}>
                         <RawCard json={this.state} classes={classes} />
-                    </GridItem>
+                    </GridItem> */}
                 </GridContainer>
             </React.Fragment>
         );
