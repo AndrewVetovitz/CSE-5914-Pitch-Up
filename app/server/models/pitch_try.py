@@ -27,7 +27,7 @@ class PitchTry(db.Model):
     analysis_words = Column(String)
     analysis_concepts = Column(String)
 
-    def __init__(self, pitch_id, transcription, duration):
+    def __init__(self, pitch_id, transcription, duration, company):
         self.pitch_id = pitch_id
         self.transcription = transcription
         self.duration = duration
@@ -44,7 +44,9 @@ class PitchTry(db.Model):
                 'explitives': analysis.num_char_per_word(transcription, '*'),
                 'stop_words': analysis.num_occurences(transcription, WORDS_STOP),
                 'tone': analysis.tone_anaysis(transcription),
-                'contains_name': analysis.contains_name(transcription, self.get_user_name)
+                'contains_name': analysis.contains_name(transcription, self.get_user_name),
+                'company': company,
+                'score': analysis.company_similarity(transcription, company)
             }
 
             self.analysis_words = json.dumps(word_analysis)

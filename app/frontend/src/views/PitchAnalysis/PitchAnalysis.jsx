@@ -10,9 +10,10 @@ import CursesCard from "components/DashCards/CursesCard.jsx";
 import PitchDurationCard from "components/DashCards/PitchDurationCard.jsx";
 import WPMCard from "components/DashCards/WPMCard.jsx";
 import TranscriptionCard from "components/DashCards/TranscriptionCard.jsx";
-import RawCard from "components/DashCards/RawCard.jsx";
 import ToneCard from "../../components/DashCards/ToneCard";
 import ContainsNameCard from "../../components/DashCards/ContainsNameCard";
+
+import CompanySimilarity from "../../components/DashCards/CompanySimilarity";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
@@ -25,7 +26,9 @@ class PitchAnalysis extends React.Component {
             explitives: '',
             stop_words: '',
             tone: '',
-            contains_name: ''
+            contains_name: '',
+            company: '',
+            score: ''
         },
         transcription: null,
         words_per_minute: 0
@@ -43,7 +46,9 @@ class PitchAnalysis extends React.Component {
                     explitives: null,
                     stop_words: null,
                     tone: null,
-                    contains_name: null
+                    contains_name: null,
+                    company: null,
+                    score: null
                 },
                 words_per_minute: null
             })
@@ -69,7 +74,7 @@ class PitchAnalysis extends React.Component {
         const { classes } = this.props;
 
         const { duration, words_per_minute, transcription } = this.state;
-        const { stop_words, explitives, tone, contains_name } = this.state.analysis_words;
+        const { company, score, stop_words, explitives, tone, contains_name } = this.state.analysis_words;
 
         return (
             <React.Fragment>
@@ -94,6 +99,9 @@ class PitchAnalysis extends React.Component {
                 <GridContainer>
                     <GridItem xs={12} sm={6} md={3}>
                         <ContainsNameCard truth={contains_name} classes={classes}></ContainsNameCard>
+                    </GridItem>
+                    <GridItem xs={12} sm={6} md={6}>
+                        <CompanySimilarity company={company} score={score} classes={classes}></CompanySimilarity>
                     </GridItem>
                 </GridContainer>
 

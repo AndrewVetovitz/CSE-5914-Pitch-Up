@@ -2,6 +2,12 @@ import json
 
 from watson.tone_analyzer import ToneAnalyzer 
 
+company_keywords = {}
+company_keywords['Amazon'] = ['leaders', 'customer', 'standards', 'hire', 'invention', 'customers', 'ways', 'trust', 'decisions', 'quality'] 
+company_keywords['Microsoft'] = ['computing', 'laptop', 'sustainability', 'labs', 'technologies', 'inclusion', 'trustworthy', 'environment', 'computer', 'employee']
+company_keywords['Facebook'] = ['everyone', 'risks', 'things', 'facebook', 'impact', 'decisions', 'focus', 'companies', 'mistakes', 'problems']
+company_keywords['Google'] = ['web', 'google', 'search', 'ads', 'email', 'content', 'advertising', 'android', 'pages', 'users']
+
 class Analysis(object):
     def words_per_minute(self, transcript, duration):
         if duration == 0:
@@ -61,3 +67,17 @@ class Analysis(object):
                     return True
 
         return False
+
+    def company_similarity(self, transcript, company):
+        if company == '':
+            return 0
+        
+        keywords = company_keywords[company]
+        score = 0
+
+        for word in transcript.split(' '):
+            for keyword in keywords:
+                if keyword == word:
+                    score += 1
+
+        return score

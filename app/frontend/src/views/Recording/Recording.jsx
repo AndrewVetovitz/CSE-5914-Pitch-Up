@@ -43,6 +43,9 @@ const style = {
         fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
         marginBottom: "3px",
         textDecoration: "none"
+    },
+    selected: {
+        color: 'red'
     }
 };
 class RecordingStudio extends React.Component {
@@ -53,7 +56,8 @@ class RecordingStudio extends React.Component {
             interimResult: '',
             recording: false,
             currentPitch: "Kitten Mittenz",
-            time: 0
+            time: 0,
+            selected: ''
         }
         const BrowserSpeechRecognition =
             typeof window !== 'undefined' &&
@@ -113,10 +117,10 @@ class RecordingStudio extends React.Component {
     }
 
     analyzePitch() {
-        let transcript = this.state.finalTranscript.reduce((acum, curr) => acum + ' ' + curr, '')
-        let duration = this.state.time
-        localStorage.setItem('pitch_transcription', transcript)
-        localStorage.setItem('pitch_duration', duration)
+        let transcript = this.state.finalTranscript.reduce((acum, curr) => acum + ' ' + curr, '');
+        let duration = this.state.time;
+        localStorage.setItem('pitch_transcription', transcript);
+        localStorage.setItem('pitch_duration', duration);
         var pitch_id = this.getPitchId()
 
         fetch('http://localhost:5000/pitch/' + pitch_id + '/new_try', {
@@ -124,7 +128,7 @@ class RecordingStudio extends React.Component {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ transcription: transcript, duration: duration })
+            body: JSON.stringify({ transcription: transcript, duration: duration, company: this.state.selected })
         }).then((resp) => {
             if (!resp.ok) {
                 throw Error("ruh roh")
@@ -152,6 +156,22 @@ class RecordingStudio extends React.Component {
         }
     }
 
+    select(name){
+        if(this.state.selected === name){
+            this.setState({
+                selected: ''
+            });
+        } else {
+            this.setState({
+                selected: name
+            });
+        }
+    }
+
+    getCompanyStyle(name){
+        return this.state.selected === name ? 'danger' : null
+    }
+
     render() {
         const { classes } = this.props;
         const transcriptAvailable = (this.state.finalTranscript.length > 0);
@@ -166,6 +186,29 @@ class RecordingStudio extends React.Component {
                 </CardHeader>
                 <CardBody style={{ height: '600px', display: 'flex', flexDirection: 'column' }}>
                     <h3> Ready to start Recording? </h3>
+                    <div style={{ alignSelf: 'center', display: 'flex' }}>
+                        {
+                            this.state.selected === 'Amazon' || (!transcriptAvailable && !this.state.recording && this.state.selected === '')
+                                ? <Button color={this.getCompanyStyle('Amazon')} onClick={this.select.bind(this, 'Amazon')}>Amazon</Button>
+                                : <Button disabled>Amazon</Button>
+                        }
+                        {
+                            this.state.selected === 'Microsoft' || (!transcriptAvailable && !this.state.recording && this.state.selected === '')
+                                ? <Button color={this.getCompanyStyle('Microsoft')} onClick={this.select.bind(this, 'Microsoft')}>Microsoft</Button>
+                                : <Button disabled>Microsoft</Button>
+                        }
+                        {
+                            this.state.selected === 'Google' || (!transcriptAvailable && !this.state.recording && this.state.selected === '')
+                                ? <Button color={this.getCompanyStyle('Google')} onClick={this.select.bind(this, 'Google')}>Google</Button>
+                                : <Button disabled>Google</Button>
+                        }
+                        {
+                            this.state.selected === 'Facebook' || (!transcriptAvailable && !this.state.recording && this.state.selected === '')
+                                ? <Button color={this.getCompanyStyle('Facebook')} onClick={this.select.bind(this, 'Facebook')}>Facebook</Button>
+                                : <Button disabled>Facebook</Button>
+                        }
+                    </div>
+                    <br />
                     <div style={{ alignSelf: 'center', display: 'flex', flexDirection: 'column' }}>
                         <Button style={{ alignSelf: 'center' }} onClick={this.toggleRecording.bind(this)}> {!this.state.recording ? "Start Recording" : "Stop Recording"} </Button>
                         <h2 style={{ alignSelf: 'center' }}> {this.state.time} </h2>

@@ -86,12 +86,14 @@ def new_pitch_try(pitch_id):
             inc_data = request.json
             transcription = inc_data.get('transcription', '')
             duration = inc_data.get('duration', 0)
+            company = inc_data.get('company', '')
             
             # Create pitch try and analyze
             pitch_try = PitchTry(
                 pitch_id = pitch.id,
                 transcription = transcription,
                 duration = duration,
+                company = company
             )
 
             if pitch_try:
