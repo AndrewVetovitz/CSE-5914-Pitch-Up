@@ -118,6 +118,10 @@ def add_pitch(single_id):
                 if not os.path.isdir(pitch_dir):
                     os.mkdir(pitch_dir)
 
+                # Create Watson Collection              
+                wat = Discovery()
+                wat.createUserCollection(user.id, pitch.id)
+
                 # debug
                 print(pitch)
 

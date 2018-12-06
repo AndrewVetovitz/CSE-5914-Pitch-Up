@@ -63,6 +63,24 @@ class Discovery(object):
 
         return new_collection
 
+    def deleteCollection(self, user_id, pitch_id):
+        ''' Delete a collection '''
+
+        print("here")
+        collection = self.getUserCollection(user_id, pitch_id)
+        print("Type of collection:", type(collection))
+        print(collection)
+
+        if collection:
+            resp = self.discovery.delete_collection(
+                environment_id = self.environment_id,
+                collection_id = collection['collection_id']
+            )
+
+            print(resp)
+
+        return True
+
 
     def getSingleCollection(self, environment_id, collection_id, **kwargs):
         ''' Get a single collection '''
@@ -92,9 +110,11 @@ class Discovery(object):
         ).get_result()
 
         if collection.get('collections', False):
+            print("Found user collections:")
             col_list = collection.get('collections', False)
             return col_list[0]
         else:
+            print("SECOND ELSE")
             return False
         
 

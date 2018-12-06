@@ -159,10 +159,23 @@ def delete_pitch(pitch_id):
         pitch = Pitch.query.filter_by(id=pitch_id).first()
 
         if pitch:
+
+            # Delete collection on Watson
+            try:
+                print("Deleting")
+                wat = Discovery()
+                del_collection = wat.deleteCollection(1, pitch_id)
+                print("Deleted!")
+            
+            except Exception as e:
+                print(e)
+
             db.session.delete(pitch)
             db.session.commit()
+            print("Deleted from DB!")
 
             return ('', 200)
+
         else:
             return ('This pitch try does not exist', 404)
     except Exception as e:
